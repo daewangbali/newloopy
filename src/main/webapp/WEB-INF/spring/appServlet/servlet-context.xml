@@ -21,8 +21,14 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="kr.co.Test" />
+	<context:component-scan base-package="kr.co.loopy" />
 	
+	<context:component-scan base-package="kr.co.dbtest"/>
+	
+	<context:component-scan base-package="kr.co.controller"/>
+	
+		<context:component-scan
+		base-package="kr.co.loopy" />
 	
 	
 </beans:beans>

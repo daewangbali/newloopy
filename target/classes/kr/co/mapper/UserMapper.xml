@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.mapper.UserMapper">
+
+	<select id="getList" resultType="kr.co.domain.UserVO">
+		select * from tbl_user
+	</select>	
+
+	<insert id="insert">
+		insert into tbl_user (user_number,user_id, user_pw, user_name, user_email,user_hp1,user_hp2,user_hp3,user_zipcode, user_roadAddress, user_jibunAddress, user_namujiAddress, 
+			user_birthY, user_birthM, user_birthD, user_del_yn)  
+		values (seq_user.nextval, #{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_hp1}, #{user_hp2}, #{user_hp3}, #{user_zipcode}, #{user_roadAddress}, #{user_jibunAddress}, #{user_namujiAddress}
+			, #{user_birthY}, #{user_birthM}, #{user_birthD}, 1 )
+	</insert>
+	
+	
+	<select id="idcheck" resultType="Long">
+		 select COUNT(*) from tbl_user where user_id = #{user_id} 
+	</select>
+	
+	<select id="read" resultType="kr.co.domain.UserVO">
+		select *
+		from tbl_user 
+		where user_id = #{user_id} 
+		and user_pw =#{user_pw} 
+	</select>
+	
+	
+	<update id="update">
+		UPDATE tbl_user set
+		user_id = #{user_id},
+		user_pw = #{user_pw},
+		user_name = #{user_name},
+		user_email = #{user_email},
+		user_hp1 = #{user_hp1},
+		user_hp2 = #{user_hp2},
+		user_hp3 = #{user_hp3},
+		user_zipcode = #{user_zipcode},
+		user_roadAddress = #{user_roadAddress},
+		user_jibunAddress = #{user_jibunAddress},
+		user_namujiAddress = #{user_namujiAddress},
+		user_birthY = #{user_birthY},
+		user_birthM = #{user_birthM}	
+		where user_number = #{user_number}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_user where user_number = #{user_number}
+	</delete>
+
+</mapper>

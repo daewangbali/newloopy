@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.mapper.CartMapper">
+
+	<insert id="insert">
+		insert into tbl_cart (user_number, book_id, amount)
+		 values(#{user_number}, #{book_id}, #{amount})
+	</insert>
+	
+	<select id="select" resultType="String" parameterType="kr.co.domain.CartVO">
+		<![CDATA[
+		select decode(count(*),0,'false','true') from tbl_cart
+		 where book_id = #{book_id} and user_number = #{user_number}
+		 ]]>
+	</select>
+
+</mapper>

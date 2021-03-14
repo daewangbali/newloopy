@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.mapper.BookMapper">
+
+	<select id="getList" resultType="kr.co.domain.BookVO">
+		select * from tbl_book where
+		<if test="book_kategorie != 'all'">
+			book_kategorie=#{book_kategorie} and
+		</if>
+		book_id>=0
+	</select>
+	
+	<insert id="insert">
+		insert into tbl_book (book_id, fileName, book_title, book_writer, book_publisher, book_kategorie, book_intro, book_price )  
+		values (seq_book.nextval, #{fileName}, #{book_title}, #{book_writer}, #{book_publisher}, #{book_kategorie}, #{book_intro}, #{book_price} )
+	</insert>
+	
+	<select id="read" resultType="kr.co.domain.BookVO">
+		select * from tbl_book where book_id = #{book_id}
+	</select>
+	
+	<update id="update">
+		UPDATE tbl_book set
+		fileName = #{fileName},
+		book_title = #{book_title},
+		book_writer = #{book_writer},
+		book_publisher = #{book_publisher},
+		book_kategorie = #{book_kategorie},
+		book_intro = #{book_intro},
+		book_price = #{book_price}
+		where book_id = #{book_id}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_book where book_id = #{book_id}
+	</delete>
+
+
+</mapper>
