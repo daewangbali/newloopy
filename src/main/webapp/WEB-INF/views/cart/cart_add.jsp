@@ -8,6 +8,8 @@
 <title>Insert title here</title>
 <script>
 alert("장바구니에 담겼습니다!")
+${cart.getBook_id}
+${cart.getUser_number}
 </script>
 </head>
 <body>

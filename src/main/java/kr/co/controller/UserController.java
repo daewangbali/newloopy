@@ -97,6 +97,7 @@ public class UserController {
 		user = userService.login(user);
 		if(user != null && user.getUser_id() != null) {
 			session = request.getSession();
+			session.setAttribute("user_number", user.getUser_number());
 			session.setAttribute("user_id", user.getUser_id());
 			session.setAttribute("user_pw", user.getUser_pw());
 			log.info(referer);

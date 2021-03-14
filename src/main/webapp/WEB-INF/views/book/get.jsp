@@ -12,7 +12,7 @@
 		<div class="row" style="justify-content: center">
 
 			<div class="col-lg-9" style="text-align: center; width: 800px">
-				<form action="/cart/addcart" method="post" 
+				<form action="/cart/addCart" method="post" 
 							style="margin: 0 0 10px">
 				<div class="card mt-4">
 					<img class="card-img-top" src="${book.fileName}" alt="">
@@ -46,9 +46,10 @@
 						
 
 						<div class="card-body">
-							<input type="hidden" name="book_id" value="${book.book_id }">
-							<input type="hidden" name="user_number" value="${sessionScope.user_number }">
-							<button type="submit" class="btn btn-success">장바구니 추가</button>
+							<input type="hidden" id="book_id" name="book_id" value="${book.book_id }">
+							<input type="hidden" id="user_number" name="user_number" value="${sessionScope.user_number }">						
+							<input type="submit" class="btn btn-success" value="장바구니 추가">
+							<!-- <button type="submit" class="btn btn-success">장바구니 추가</button> -->
 							<button class="btn btn-warning">바로 구매하기</button>
 						</div>
 					</div>

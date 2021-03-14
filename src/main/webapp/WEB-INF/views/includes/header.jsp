@@ -52,6 +52,8 @@
 					<c:when test="${sessionScope.user_id != null}">
 						<ul class="navbar-nav">
 							<li class="nav-item"><a class="nav-link active"
+								aria-current="page" href="#">${sessionScope.user_id} 님, </a></li>
+							<li class="nav-item"><a class="nav-link active"
 								aria-current="page" href="#">My Page</a></li>
 							<li class="nav-item"><a class="nav-link active"
 								aria-current="page" href="/cart/list">Cart</a></li>
