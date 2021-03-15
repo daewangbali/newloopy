@@ -5,6 +5,10 @@
 
 <mapper namespace="kr.co.mapper.CartMapper">
 
+	<select id="getList" resultType="kr.co.domain.CartVO">
+		select * from tbl_cart
+	</select>
+
 	<insert id="insert">
 		insert into tbl_cart (user_number, book_id, amount)
 		 values(#{user_number}, #{book_id}, #{amount})
@@ -16,5 +20,20 @@
 		 where book_id = #{book_id} and user_number = #{user_number}
 		 ]]>
 	</select>
+	
+	<!-- 장바구니 리스트에서 수량 수정 할 경우 -->
+	<update id="update">
+		update tbl_cart set
+		amount = #{amount}
+		where book_id = #{book_id} and user_number = #{user_number}
+	
+	</update>
+	
+	<!-- 이미 장바구니에 존재하는 경우  -->
+	<update id="addupdate">
+		update tbl_cart set
+		amount = amount + #{amount}
+		where book_id = #{book_id} and user_number = #{user_number}
+	</update>
 
 </mapper>

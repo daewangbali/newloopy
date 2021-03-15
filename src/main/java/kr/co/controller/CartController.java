@@ -29,7 +29,7 @@ public class CartController {
 	public void list(CartVO cart) {
 		log.info("list....................");
 	}
-	
+	/* 메인 카트 추가
 	@PostMapping("/addCart")
 	public String addCart(@ModelAttribute("cartvo")CartVO cartvo, Model model) {
 		log.info("addCart......................");
@@ -37,6 +37,7 @@ public class CartController {
 
 		if(isAlready.equals("true")) {
 			log.info("true!!!!!!");
+			cartService.addModify(cartvo);
 			return "/cart/cart_already";
 		}else { 
 			log.info("false!!!!");
@@ -45,6 +46,38 @@ public class CartController {
 		}
 		
 	}
+	*/
+	
+	//모달창 이용해서 만들어봄 
+	@PostMapping("/addCart")
+	public String addCart(@ModelAttribute("cartvo")CartVO cartvo, Model model) {
+		log.info("addCart......................");
+		String isAlready = cartService.findcartbook(cartvo);
+
+		if(isAlready.equals("true")) {
+			log.info("장바구니에 이미 존재하는 상품");
+			cartService.addModify(cartvo);
+//			model.addAttribute("addMessage", "장바구니에 추가되었습니다.");
+//			model.addAttribute("already", cartvo);
+//			model.addAttribute("already", cartvo.getBook_id());
+//			model.addAttribute("already", cartvo.getUser_number());
+//			model.addAttribute("already", cartvo.getAmount());
+			return "redirect:/book/get?book_id="+cartvo.getBook_id();
+		}else { 
+			log.info("장바구니에 상품 추가");
+			cartService.addcart(cartvo);
+//			model.addAttribute("addMessage", "장바구니에 추가되었습니다.");
+//			model.addAttribute("addSuccess", cartvo);
+//			model.addAttribute("addSuccess", cartvo.getBook_id());
+//			model.addAttribute("addSuccess", cartvo.getUser_number());
+//			model.addAttribute("addSuccess", cartvo.getAmount());
+			return "redirect:/book/get?book_id="+cartvo.getBook_id();
+		}
+		
+		
+	}
+	
+	
 	/*
 	 * 
 	 * 

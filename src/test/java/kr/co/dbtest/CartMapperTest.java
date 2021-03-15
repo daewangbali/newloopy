@@ -1,5 +1,7 @@
 package kr.co.dbtest;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,17 @@ public class CartMapperTest {
 
 	@Autowired
 	CartMapper cartMapper;
+	
+	@Test
+	public void getListTest(){
+		log.info("getListTest............");
+		List<CartVO> vo = cartMapper.getList();
+		
+		for(CartVO cartVO : vo) {
+			log.info(cartVO);
+		}
+
+	}
 	
 	@Test
 	public void insertTest() {
@@ -42,5 +55,28 @@ public class CartMapperTest {
 		log.info(cartMapper.select(cvo));
 	}
 	
+	@Test
+	public void updateTest() {
+		log.info("updateTest...............");
+		CartVO cvo = new CartVO();
+		cvo.setBook_id(18);
+		cvo.setUser_number(41);
+		cvo.setAmount(3);
+		
+		log.info(cvo);
+		log.info(cartMapper.update(cvo));		
+	}
+	
+	@Test
+	public void addupdateTest() {
+		log.info("addupdateTest...............");
+		CartVO cvo = new CartVO();
+		cvo.setBook_id(18);
+		cvo.setUser_number(41);
+		cvo.setAmount(2);
+		
+		log.info(cvo);
+		log.info(cartMapper.addupdate(cvo));
+	}
 	
 }
