@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import kr.co.domain.BookVO;
 import kr.co.domain.CartVO;
 import kr.co.service.CartService;
 import lombok.extern.log4j.Log4j2;
@@ -24,7 +25,7 @@ public class CartServiceTest {
 	@Test
 	public void getListTest(){
 		log.info("getListTest............");
-		List<CartVO> vo = cs.getList();
+		List<CartVO> vo = cs.cartList();
 		
 		for(CartVO cartVO : vo) {
 			log.info(cartVO);
@@ -77,6 +78,12 @@ public class CartServiceTest {
 		log.info(cvo);
 		log.info(cs.addModify(cvo));
 	}
+	
+//	@Test
+//	public void cartList() {
+//		log.info("cartLis...................");
+//		List<BookVO> list = 
+//	}
 	
 }
 

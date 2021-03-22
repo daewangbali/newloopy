@@ -49,7 +49,7 @@
 						<div class="card-body">
 							<input type="hidden" id="book_id" name="book_id" value="${book.book_id }">
 							<input type="hidden" id="user_number" name="user_number" value="${sessionScope.user_number }">						
-							<input type="submit" class="btn btn-success" id="addcartBtn" value="장바구니 추가">
+							<input class="btn btn-success" id="addcartBtn" value="장바구니 추가">
 							<!--<button id="addCartBtn" class="btn btn-success">장바구니 추가</button> -->
 							<button class="btn btn-warning">바로 구매하기</button>
 						</div>
@@ -73,11 +73,11 @@
 					aria-label="Close"></button>
 			</div>
 			<div class="modal-body" id="board_modal_body">
-				<p>${addMessage }</p>
+				<p>장바구니에 담겼습니다.</p>
 			</div>
 			<div class="modal-footer">
-			 <a href="/cart/list" class="btn btn-primary" data-dismiss="modal">장바구니로 이동</a>
-			 <button type="button" class="btn btn-secondary" data-dismiss="modal">계속 쇼핑하기</button>
+			 <button type="button" id="goCartList" name="result" value="goCartList" class="btn btn-primary" data-dismiss="modal">장바구니로 이동</button>
+			 <button type="button" id="stay" name="result" value="stay" class="btn btn-secondary" data-dismiss="modal">계속 쇼핑하기</button>
 			</div>
 		</div>
 	</div>
@@ -86,19 +86,42 @@
 
 <script type="text/javascript">
 	function gocart(){
+		$('#cartCheck').modal('show');
    		var form = document.goCart;
    		form.submit();
+
+   		
 	}
 
 	$(document).ready(function() {
 		var actionForm = $("#actionForm");
-
+		
 		
 		$('#addcartBtn').click(function(e) {
 			e.preventDefault();//이벤트 자동발생 막아줌
+			gocart();
+			/*
+			if(modalShow != null){
+				
 			$('#cartCheck').modal('show');
+			}
+			*/
+			
+		});
+		
+		$('#goCartList').click(function(e) {
 			gocart();
 		});
+		
+		$('#stay').click(function(e) {
+			gocart();
+		});
+		
+		
+		// $('#stayBtn').click(function(e) {
+		//	actionForm.attr("action", "/board/remove").attr("method", "post");
+		//	actionForm.submit();
+		//});
 
 	});
 </script>

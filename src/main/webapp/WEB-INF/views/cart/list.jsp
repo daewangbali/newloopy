@@ -70,13 +70,11 @@
 					<tr class="xans-record-">
 						<td><input type="checkbox" id="basket_chk_id_0"
 							name="basket_product_normal_type_normal"></td>
-						<td class="thumb"><a
-							href="/product/detail.html?product_no=31630&amp;cate_no=136"><img
-								src="//www.maybe-baby.co.kr/web/product/tiny/202103/2888b89963810fbff53239e684e8fee4.webp"
-								onerror="this.src='http://img.echosting.cafe24.com/thumb/img_product_small.gif';"
-								alt="[Dearest] Grier (jk) -블랙" title=""></a></td>
+						<td class="fileName"> 
+							<a href="#"><img class="card-img-top" src= "${bookList.fileName}" alt=""></a>
+						</td>
 						<td class="product">
-							<!-- WIDERPLANET CART SCRIPT START 2016.9.21 --> <span
+							<span
 							style="display: none;" name="wp_detection" tag="i">31630</span> <script
 								type="text/javascript">
 								var wp_page_type = 'Cart';

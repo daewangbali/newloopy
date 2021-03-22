@@ -6,7 +6,7 @@ import kr.co.domain.CartVO;
 
 public interface CartService {
 	
-	public List<CartVO> getList();
+	public List<CartVO> cartList();
 
 	public void addcart(CartVO cart);
 	

@@ -35,7 +35,7 @@ public class CartServiceImp implements CartService {
 	}
 
 	@Override
-	public List<CartVO> getList() {
+	public List<CartVO> cartList() {
 		return cartMapper.getList();
 	}
 
