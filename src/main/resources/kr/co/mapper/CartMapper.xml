@@ -8,6 +8,18 @@
 	<select id="getList" resultType="kr.co.domain.CartVO">
 		select * from tbl_cart
 	</select>
+	
+	<select id="getCartList" resultType="kr.co.domain.CartVO">
+		select * from tbl_cart c, tbl_user u, tbl_book b
+		where c.user_number = u.user_number and
+		b.book_id = c.book_id and c.user_number=#{c.user_number}
+	</select>
+	
+	<select id="getBookList" resultType="kr.co.domain.BookVO">
+		select * from tbl_cart c, tbl_user u, tbl_book b
+		where c.user_number = u.user_number and
+		b.book_id = c.book_id and c.user_number=#{c.user_number}
+	</select>
 
 	<insert id="insert">
 		insert into tbl_cart (user_number, book_id, amount)

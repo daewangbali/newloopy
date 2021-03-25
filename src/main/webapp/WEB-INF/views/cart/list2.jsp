@@ -4,45 +4,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ include file="../includes/header.jsp"%>
- <!--
-<script>
-  function numcheck(val,jaego){
-                        if (val>jaego-1){
-                                alert("재고량이 없습니다")
-                                document.frm.ea.value=jaego}
-                        else if (val<2){
-                                document.frm.ea.value=1        }
-        }
-function up(val,jaego){
-                        if (val>jaego-1){
-                                alert("재고량이 없습니다")
-                                document.frm.ea.value=jaego}
-                        else{
-                                document.frm.ea.value=(val/1)+1}
-}
-                                                         
-function down(val){
-                        if (val<2){
-                                document.frm.ea.value=1}
-                        else{
-                                document.frm.ea.value=val-1}
-}
-</script>
-  -->
-<div class="container-fluid">
-<br>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="container-fluid" >
-			
-			<h2>CART</h2>
-			
-			<div class="collapse navbar-collapse" id="navbarNav"></div>
-		</div>
-	</nav>
-<br>
 
-	
 <div id="contents">
+
+
+	<div class="titleArea">
+		<h2>
+			<span>${sessionScope.user_number }의 CART </span>
+		</h2>
+	</div>
+
 	<!-- EDNplus 장바구나 스크립트 -->
 	<script type="text/javascript"
 		src="//script.about.co.kr/templates/script/cm/adbay.cart.controller.js"></script>
@@ -60,6 +31,14 @@ function down(val){
 		<!-- 할인금액 노출 : 삭제 시 할인금액이 노출되지 않습니다.-->
 		<!-- 일반상품 -->
 		<div class="orderListArea">
+			<div class="xans-element- xans-order xans-order-normtitle title ">
+				<h3>일반상품 (2)</h3>
+			</div>
+
+			<!-- s. mklaudAP Basket -->
+			
+			<!-- e. mklaudAP Basket -->
+
 
 			<!-- 일반상품 (기본배송) -->
 			<table border="1" summary=""
@@ -80,6 +59,7 @@ function down(val){
 				</thead>
 				<tfoot>
 				
+					
 					<tr>
 						<td colspan="10"><strong class="type">[기본배송]</strong> 상품구매금액
 							<strong>138,000 <span class="displaynone">()</span></strong><span
@@ -89,56 +69,47 @@ function down(val){
 					</tr>
 				</tfoot>
 				<tbody class="xans-element- xans-order xans-order-list">
-					
-					<c:forEach items="${bookList }" var="bookList" varStatus="status">
-					
+					<c:forEach items="${cartList }" var="cartList">
+					<c:forEach items="${bookList }" var="bookList">
 					<tr class="xans-record-">
-						<td>
-							<input type="checkbox">
+						<td><input type="checkbox" id="basket_chk_id_0"
+							name="basket_product_normal_type_normal"></td>
+						<td class="fileName"> 
+							<a href="#"><img class="card-img-top" src= "${bookList.fileName}" alt=""></a>
 						</td>
-						<td>
-							<a><img style="width: 220px;" src= "${bookList.fileName}"></a>
-						</td>
-						<td>
+						<td class="product">
+							<input type="text" name="book_title" value="${bookList.book_title }"> 
 							<p>${bookList.book_title }</p>
 						</td>
-						<td>
-							<p><fmt:formatNumber value="${bookList.book_price }" type="currency"></fmt:formatNumber></p>
+						<td class="price">
+							<div class="discount">
+								<strong><fmt:setLocale value="ko_KR"/><fmt:formatNumber value="${bookList.book_price }" type="currency"></fmt:formatNumber></strong>
+								<p class="displaynone"></p>
+							</div>
 						</td>
-						
 						<td>
-							
-						<span class="quantity">
-						
-								<a href="javascript:;" onclick="Basket.addQuantityShortcut('quantity_id_0', 0);">
-									
-									<i class="far fa-minus-square" onclick=down(${cartList[status.index].amount })></i>
-								
-								</a>
-								<input id="quantity_id_0"
-								name="quantity_name_0" size="2" value="${cartList[status.index].amount }" type="text">
-								<a href="javascript:;"
-								onclick="Basket.outQuantityShortcut('quantity_id_0', 0);">
-									<i class="far fa-plus-square"></i>
-								</a></span> 
-									<a href="javascript:;"
-							onclick="Basket.modifyQuantity()">
-							<img
+							<p class="amount"> ${cartList.amount }</p>
+						</td>
+						<td><span class="quantity"><input id="quantity_id_0"
+								name="quantity_name_0" size="2" value="1" type="text"><a
+								href="javascript:;"
+								onclick="Basket.addQuantityShortcut('quantity_id_0', 0);"><img
+									src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_quantity_up.gif"
+									alt="증가" class="QuantityUp"></a><a href="javascript:;"
+								onclick="Basket.outQuantityShortcut('quantity_id_0', 0);"><img
+									src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_quantity_down.gif"
+									alt="감소" class="QuantityDown"></a></span> <a href="javascript:;"
+							onclick="Basket.modifyQuantity()"><img
 								src="/web/season2_skin/base/btn/btn_quantity_modify.png"
-								alt="변경" title=""></a>
-								
-                
+								alt="변경" title=""></a></td>
 
 						<td>
 							<p class="displaynone">
 								0원<span class="displaynone"><br></span><br>
 							</p>무료
 						</td>
-						<td class="total">
-						
-							<strong><fmt:formatNumber value="${bookList.book_price * cartList[status.index].amount  }" type="currency"></fmt:formatNumber></strong>
-							
-						</td>
+						<td class="total"><strong>90,000원</strong>
+							<div class="displaynone"></div></td>
 						<td class="button"><a href="javascript:;"
 							onclick="Basket.orderBasketItem(0);" class="btntype6">주문하기</a> <a
 							href="javascript:;" onclick="Basket.deleteBasketItem(0);"
@@ -146,9 +117,9 @@ function down(val){
 					</tr>
 					
 					 </c:forEach>
-					
+					</c:forEach>
+
 				</tbody>
-			
 			</table>
 			
 		</div>
@@ -200,9 +171,7 @@ function down(val){
     -->
 
 	</div>
-</div>
-</div>
 
-
+</div>
 
 <%@ include file="../includes/footer.jsp"%>

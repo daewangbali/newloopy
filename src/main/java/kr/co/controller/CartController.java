@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.domain.BookVO;
 import kr.co.domain.CartVO;
+import kr.co.service.BookService;
 import kr.co.service.CartService;
 import lombok.extern.log4j.Log4j2;
 
@@ -26,36 +28,46 @@ public class CartController {
 	CartService cartService;
 	
 	@GetMapping("/list")
-	public void list(CartVO cart) {
+	public void list(CartVO cart, BookVO book,Model model,HttpSession session) {
 		log.info("list....................");
+		int user_number = (int)session.getAttribute("user_number");
+		model.addAttribute("user_numer", user_number);
+		model.addAttribute("cartList", cartService.readCartList(user_number));
+		model.addAttribute("bookList", cartService.readBookList(user_number));
+		int totalPrice = book.getBook_price() *  cart.getAmount();
+		model.addAttribute("totalPrice", totalPrice);
 	}
 	
 	@PostMapping("/list")
-	public String goList(CartVO cart) {
-		log.info("list....................");
+	public String goList(CartVO cart, BookVO book,Model model,HttpSession session) {
+		log.info("listttt....................");
+		int user_number = (int)session.getAttribute("user_number");
+		model.addAttribute("user_numer", user_number);
+		model.addAttribute("cartList", cartService.readCartList(user_number));
+		model.addAttribute("bookList", cartService.readBookList(user_number));
 		return "/cart/list";
 	}
 	
 	
-	/* 메인 카트 추가
+	// 메인 카트 추가
 	@PostMapping("/addCart")
 	public String addCart(@ModelAttribute("cartvo")CartVO cartvo, Model model) {
 		log.info("addCart......................");
 		String isAlready = cartService.findcartbook(cartvo);
 
 		if(isAlready.equals("true")) {
-			log.info("true!!!!!!");
+			log.info("장바구니에 이미 존재하는 상품");
 			cartService.addModify(cartvo);
-			return "/cart/cart_already";
+
 		}else { 
-			log.info("false!!!!");
+			log.info("장바구니에 상품 추가");
 			cartService.addcart(cartvo);
-			return "/cart/cart_add";
-		}
+
+		}return "/cart/cartAdd";
 		
 	}
-	*/
 	
+	/*
 	//모달창 이용해서 만들어봄 
 	@PostMapping("/addCart")
 	public void addCart(@ModelAttribute("cartvo")CartVO cartvo,Model model) {

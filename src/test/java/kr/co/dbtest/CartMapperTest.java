@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import kr.co.domain.BookVO;
 import kr.co.domain.CartVO;
 import kr.co.mapper.BookMapper;
 import kr.co.mapper.CartMapper;
@@ -77,6 +78,30 @@ public class CartMapperTest {
 		
 		log.info(cvo);
 		log.info(cartMapper.addupdate(cvo));
+	}
+	
+	@Test
+	public void readCartListTest() {
+		log.info("readListTest()................");
+		CartVO cartvo = new CartVO();
+		cartvo.setUser_number(41);
+		List<CartVO> list = cartMapper.getCartList(cartvo.getUser_number());
+
+		for (CartVO cartVO : list) {
+			log.info(cartVO);
+		}
+	}
+	
+	@Test
+	public void readBookListTest() {
+		log.info("readListTest()................");
+		CartVO cartvo = new CartVO();
+		cartvo.setUser_number(41);
+		List<BookVO> list = cartMapper.getBookList(cartvo.getUser_number());
+
+		for (BookVO bookVO : list) {
+			log.info(bookVO);
+		}
 	}
 	
 }

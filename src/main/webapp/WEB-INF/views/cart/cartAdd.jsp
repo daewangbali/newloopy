@@ -7,9 +7,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
-alert("장바구니에 담겼습니다!")
-${cart.getBook_id}
-${cart.getUser_number}
+if(confirm("장바구니에 담겼습니다! 지금 바로 장바구니로 이동하시겠습니까? ")) {
+	location.href="/cart/list";
+}else {
+	history.go(-1);
+}
 </script>
 </head>
 <body>

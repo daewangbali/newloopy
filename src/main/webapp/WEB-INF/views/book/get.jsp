@@ -49,8 +49,8 @@
 						<div class="card-body">
 							<input type="hidden" id="book_id" name="book_id" value="${book.book_id }">
 							<input type="hidden" id="user_number" name="user_number" value="${sessionScope.user_number }">						
-							<input class="btn btn-success" id="addcartBtn" value="장바구니 추가">
-							<!--<button id="addCartBtn" class="btn btn-success">장바구니 추가</button> -->
+							<!--<input class="btn btn-success" id="addcartBtn" value="장바구니 추가"> -->
+							<button type="submit" class="btn btn-success">장바구니 추가</button>
 							<button class="btn btn-warning">바로 구매하기</button>
 						</div>
 					</div>
@@ -85,6 +85,15 @@
 
 
 <script type="text/javascript">
+	if(${message} != null){
+		if(confirm("장바구니에 담겼습니다! 지금 바로 장바구니로 이동하시겠습니까? ")) {
+			location.href="/cart/list";
+		}else {
+			history.go(-1);
+		}
+	}
+
+/*
 	function gocart(){
 		$('#cartCheck').modal('show');
    		var form = document.goCart;
@@ -100,12 +109,12 @@
 		$('#addcartBtn').click(function(e) {
 			e.preventDefault();//이벤트 자동발생 막아줌
 			gocart();
-			/*
+			
 			if(modalShow != null){
 				
 			$('#cartCheck').modal('show');
 			}
-			*/
+			
 			
 		});
 		
@@ -118,12 +127,13 @@
 		});
 		
 		
-		// $('#stayBtn').click(function(e) {
-		//	actionForm.attr("action", "/board/remove").attr("method", "post");
-		//	actionForm.submit();
-		//});
+		$('#stayBtn').click(function(e) {
+			actionForm.attr("action", "/board/remove").attr("method", "post");
+			actionForm.submit();
+		});
 
 	});
+*/
 </script>
 
 <%@ include file="../includes/footer.jsp"%>

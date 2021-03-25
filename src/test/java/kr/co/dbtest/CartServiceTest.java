@@ -85,6 +85,18 @@ public class CartServiceTest {
 //		List<BookVO> list = 
 //	}
 	
+	@Test
+	public void readListTest() {
+		log.info("readListTest()................");
+		CartVO cartvo = new CartVO();
+		cartvo.setUser_number(1);
+		List<CartVO> list = cs.readCartList(cartvo.getUser_number());
+
+		for (CartVO cartVO : list) {
+			log.info(cartVO);
+		}
+	}
+	
 }
 
 	
