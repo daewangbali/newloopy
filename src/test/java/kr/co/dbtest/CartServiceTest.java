@@ -97,6 +97,16 @@ public class CartServiceTest {
 		}
 	}
 	
+	@Test
+	public void removeTest() {
+		log.info("removeTest...............");
+		CartVO cvo = new CartVO();
+		cvo.setBook_id(15);
+		
+		log.info(cvo);
+		log.info(cs.remove(cvo.getBook_id()));
+	}
+	
 }
 
 	

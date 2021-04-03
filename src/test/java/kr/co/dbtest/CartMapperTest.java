@@ -104,4 +104,14 @@ public class CartMapperTest {
 		}
 	}
 	
+	@Test
+	public void deleteTest() {
+		log.info("deleteTest...............");
+		CartVO cvo = new CartVO();
+		cvo.setBook_id(15);
+		
+		log.info(cvo);
+		log.info(cartMapper.delete(cvo.getBook_id()));
+	}
 }
+	

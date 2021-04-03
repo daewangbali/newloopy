@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.domain.BookVO;
 import kr.co.domain.CartVO;
@@ -34,6 +35,8 @@ public class CartController {
 		model.addAttribute("user_numer", user_number);
 		model.addAttribute("cartList", cartService.readCartList(user_number));
 		model.addAttribute("bookList", cartService.readBookList(user_number));
+		session.setAttribute("cartList", cartService.readCartList(user_number));
+		session.setAttribute("bookList", cartService.readBookList(user_number));
 		int totalPrice = book.getBook_price() *  cart.getAmount();
 		model.addAttribute("totalPrice", totalPrice);
 	}
@@ -67,7 +70,19 @@ public class CartController {
 		
 	}
 	
+	@PostMapping("/remove")
+	public String remove(@RequestParam("book_id")int book_id,HttpServletRequest request) {
+		log.info("remove...............");
+		cartService.remove(book_id);
+//		String referer = request.getHeader("referer");
+		return "redirect:/cart/list";
+
+	}
+	
 	/*
+	
+	
+	
 	//모달창 이용해서 만들어봄 
 	@PostMapping("/addCart")
 	public void addCart(@ModelAttribute("cartvo")CartVO cartvo,Model model) {

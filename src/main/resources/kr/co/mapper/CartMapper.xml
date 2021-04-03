@@ -47,5 +47,9 @@
 		amount = amount + #{amount}
 		where book_id = #{book_id} and user_number = #{user_number}
 	</update>
+	
+	<delete id="delete">
+		delete from tbl_cart where book_id = #{book_id}
+	</delete>
 
 </mapper>

@@ -89,7 +89,7 @@ function down(val){
 					</tr>
 				</tfoot>
 				<tbody class="xans-element- xans-order xans-order-list">
-					
+				<form id="actionForm">
 					<c:forEach items="${bookList }" var="bookList" varStatus="status">
 					
 					<tr class="xans-record-">
@@ -101,7 +101,8 @@ function down(val){
 						</td>
 						<td>
 							<p>${bookList.book_title }</p>
-						</td>
+							<input type="hidden" name="book_id" id="book_id" value="${bookList.book_id }">
+							</td>
 						<td>
 							<p><fmt:formatNumber value="${bookList.book_price }" type="currency"></fmt:formatNumber></p>
 						</td>
@@ -110,19 +111,15 @@ function down(val){
 							
 						<span class="quantity">
 						
-								<a href="javascript:;" onclick="Basket.addQuantityShortcut('quantity_id_0', 0);">
-									
-									<i class="far fa-minus-square" onclick=down(${cartList[status.index].amount })></i>
-								
+								<a id="down" href="javascript:;" onclick="">
+									<i class="fas fa-sort-down" ></i>
 								</a>
-								<input id="quantity_id_0"
-								name="quantity_name_0" size="2" value="${cartList[status.index].amount }" type="text">
-								<a href="javascript:;"
-								onclick="Basket.outQuantityShortcut('quantity_id_0', 0);">
-									<i class="far fa-plus-square"></i>
+								<input type="button" id="down" onclick="amount('down')" <i class="fas fa-sort-down" ></i>>
+								<input id="cartAmount" name="cartAmount" size="2" value="${cartList[status.index].amount }" type="text">
+								<a id="up" href="javascript:;"  onclick="">
+									<i class="fas fa-sort-up"></i>
 								</a></span> 
-									<a href="javascript:;"
-							onclick="Basket.modifyQuantity()">
+									<a href="javascript:;" onclick="Basket.modifyQuantity()">
 							<img
 								src="/web/season2_skin/base/btn/btn_quantity_modify.png"
 								alt="변경" title=""></a>
@@ -140,20 +137,22 @@ function down(val){
 							
 						</td>
 						<td class="button"><a href="javascript:;"
-							onclick="Basket.orderBasketItem(0);" class="btntype6">주문하기</a> <a
-							href="javascript:;" onclick="Basket.deleteBasketItem(0);"
-							class="btntype7">삭제</a></td>
+							onclick="Basket.orderBasketItem(0);" class="btntype6">주문하기</a> 
+							<a href="javascript:;" onclick="cart()">삭제</a>
+							
+							
+							
 					</tr>
 					
 					 </c:forEach>
-					
+				</form>
 				</tbody>
 			
 			</table>
 			
 		</div>
 		
-
+		
 		<!-- 선택상품 제어 버튼 -->
 		<div class="xans-element- xans-order xans-order-selectorder ">
 			<span class="left"> <strong class="ctrlTxt">선택상품을</strong> <a
@@ -201,8 +200,59 @@ function down(val){
 
 	</div>
 </div>
+
+</div>
+<div class="modal" tabindex="-1" id="cartDelete_modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Modal title</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body" id="cart_modal_body">
+				<p>Modal body text goes here.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal"
+					id="deleteBtn" onclick="cartdelete()">삭제</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+			</div>
+		</div>
+	</div>
 </div>
 
+<script type="text/javascript">
+	function cart(){
+		var actionForm = $("#actionForm");
 
+	    $('#cart_modal_body').html("선택하신 상품을 삭제하시겠습니까?");
+		$('#cartDelete_modal').modal('show');
+		
+		$('#deleteBtn').click(function(e) {
+			actionForm.attr("action", "/cart/remove").attr("method", "post");
+			actionForm.submit();
+		});
+	}	
+	
+	function upAmount(){
+		var cart_amount = ${cartList[status.index].amount };
+		cart_amount = cart_amount + 1;
+		}
+	
+	function amount(){
+		  var cart_amount = ${cartList[status.index].amount };
+		 if(amount.id === 'up'){
+			 console.log("ggggg")
+		  cart_amount = cart_amount + 1;
+		 }else if(amount.id === 'down'){
+			 cart_amount = cart_amount - 1;
+		  
+		 }
+	}
+	
+
+
+</script>
 
 <%@ include file="../includes/footer.jsp"%>

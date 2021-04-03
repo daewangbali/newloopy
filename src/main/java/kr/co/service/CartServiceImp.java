@@ -50,4 +50,9 @@ public class CartServiceImp implements CartService {
 		return cartMapper.getBookList(user_number);
 	}
 
+	@Override
+	public int remove(int book_id) {
+		return cartMapper.delete(book_id);
+	}
+
 }
