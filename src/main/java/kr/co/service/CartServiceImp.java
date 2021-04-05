@@ -55,4 +55,9 @@ public class CartServiceImp implements CartService {
 		return cartMapper.delete(book_id);
 	}
 
+	@Override
+	public int amountModify(CartVO cart) {
+		return cartMapper.amountUpdate(cart);
+	}
+
 }

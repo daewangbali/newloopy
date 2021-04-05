@@ -21,6 +21,9 @@ public interface CartMapper {
 	//장바구니에 이미 존재하는 책 추가
 	public int addupdate(CartVO cart);
 	
+	//장바구니 수량 변경
+	public int amountUpdate(CartVO cart);
+	
 	//장바구니에서 삭제
 	public int delete(int book_id);
 

@@ -79,6 +79,18 @@ public class CartController {
 
 	}
 	
+	@PostMapping("/modify")
+	public String modify(@RequestParam("cartAmount")int cartAmount,@RequestParam("book_id")int book_id,HttpSession session) {
+		log.info("modify...............");
+		int user_number = (int)session.getAttribute("user_number");
+		CartVO cartvo = new CartVO();
+		cartvo.setUser_number(user_number);
+		cartvo.setBook_id(book_id);
+		cartvo.setAmount(cartAmount);
+		cartService.amountModify(cartvo);
+		return "redirect:/cart/list";
+	}
+	
 	/*
 	
 	

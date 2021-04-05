@@ -60,7 +60,7 @@ function down(val){
 		<!-- 할인금액 노출 : 삭제 시 할인금액이 노출되지 않습니다.-->
 		<!-- 일반상품 -->
 		<div class="orderListArea">
-
+<form action="/cart/modify" method="post">
 			<!-- 일반상품 (기본배송) -->
 			<table border="1" summary=""
 				class="xans-element- xans-order xans-order-normnormal boardList xans-record-">
@@ -90,6 +90,7 @@ function down(val){
 				</tfoot>
 				<tbody class="xans-element- xans-order xans-order-list">
 				<form id="actionForm">
+				
 					<c:forEach items="${bookList }" var="bookList" varStatus="status">
 					
 					<tr class="xans-record-">
@@ -108,23 +109,22 @@ function down(val){
 						</td>
 						
 						<td>
-							
+						
 						<span class="quantity">
 						
-								<a id="down" href="javascript:;" onclick="">
+								<a id="down" type="button" onclick="${cartList[status.index].amount +1 }">
 									<i class="fas fa-sort-down" ></i>
 								</a>
 								<input type="button" id="down" onclick="amount('down')" <i class="fas fa-sort-down" ></i>>
 								<input id="cartAmount" name="cartAmount" size="2" value="${cartList[status.index].amount }" type="text">
-								<a id="up" href="javascript:;"  onclick="">
+								<a id="up" href="javascript:;"  onclick="setAmount('up')">
 									<i class="fas fa-sort-up"></i>
 								</a></span> 
-									<a href="javascript:;" onclick="Basket.modifyQuantity()">
-							<img
-								src="/web/season2_skin/base/btn/btn_quantity_modify.png"
-								alt="변경" title=""></a>
-								
-                
+				
+							
+							<input class="btn btn-outline-secondary btn-sm" type="submit" value="변경">	
+						
+                		
 
 						<td>
 							<p class="displaynone">
@@ -145,11 +145,12 @@ function down(val){
 					</tr>
 					
 					 </c:forEach>
-				</form>
+					 </form>
+				
 				</tbody>
 			
 			</table>
-			
+			</form>
 		</div>
 		
 		
@@ -235,21 +236,18 @@ function down(val){
 		});
 	}	
 	
-	function upAmount(){
-		var cart_amount = ${cartList[status.index].amount };
-		cart_amount = cart_amount + 1;
+	function setAmount(choice){
+		
+
+		if(choice === 'up'){
+			return console.log($('#cartAmount').value+1);
+			
+			
+			
 		}
+	}	
 	
-	function amount(){
-		  var cart_amount = ${cartList[status.index].amount };
-		 if(amount.id === 'up'){
-			 console.log("ggggg")
-		  cart_amount = cart_amount + 1;
-		 }else if(amount.id === 'down'){
-			 cart_amount = cart_amount - 1;
-		  
-		 }
-	}
+	
 	
 
 

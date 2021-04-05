@@ -113,5 +113,17 @@ public class CartMapperTest {
 		log.info(cvo);
 		log.info(cartMapper.delete(cvo.getBook_id()));
 	}
+	
+	@Test
+	public void cartAmountUpdateTest() {
+		log.info("cartAmountUpdateTest...............");
+		CartVO cvo = new CartVO();
+		cvo.setBook_id(5);
+		
+		cvo.setUser_number(41);
+		cvo.setAmount(5);
+		log.info(cvo);
+		log.info(cartMapper.amountUpdate(cvo));
+	}
 }
 	
