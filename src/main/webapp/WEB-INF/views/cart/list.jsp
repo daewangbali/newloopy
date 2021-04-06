@@ -109,22 +109,13 @@ function down(val){
 						</td>
 						
 						<td>
-						
-						<span class="quantity">
-						
-								<a id="down" type="button" onclick="${cartList[status.index].amount +1 }">
-									<i class="fas fa-sort-down" ></i>
-								</a>
-								<input type="button" id="down" onclick="amount('down')" <i class="fas fa-sort-down" ></i>>
-								<input id="cartAmount" name="cartAmount" size="2" value="${cartList[status.index].amount }" type="text">
-								<a id="up" href="javascript:;"  onclick="setAmount('up')">
-									<i class="fas fa-sort-up"></i>
-								</a></span> 
-				
-							
-							<input class="btn btn-outline-secondary btn-sm" type="submit" value="변경">	
-						
-                		
+							<span class="btn-group-vertical">
+								<button type="submit" name="cartAmount" value="${cartList[status.index].amount + 1 }" style="border: 0; background-color: #ffffff;"><i class="fas fa-sort-up" ></i></button>
+								<button type="submit" name="cartAmount" value="${cartList[status.index].amount - 1 }" style="border: 0; background-color: #ffffff;margin: 10 10"><i class="fas fa-sort-down" ></i></button>
+							</span>
+							<input id="cartAmount" name="cartAmount" size="2" value="${cartList[status.index].amount }" type="text">		
+							<input class="btn btn-outline-secondary btn-sm" type="submit" value="변경">
+                		</td>
 
 						<td>
 							<p class="displaynone">
@@ -238,9 +229,10 @@ function down(val){
 	
 	function setAmount(choice){
 		
-
 		if(choice === 'up'){
-			return console.log($('#cartAmount').value+1);
+			var amount = $('#cartAmount').val()
+			amount *= 1;
+			++amount;
 			
 			
 			

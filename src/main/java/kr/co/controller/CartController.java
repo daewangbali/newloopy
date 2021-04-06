@@ -86,7 +86,16 @@ public class CartController {
 		CartVO cartvo = new CartVO();
 		cartvo.setUser_number(user_number);
 		cartvo.setBook_id(book_id);
+		log.info("changeAmount.......");
 		cartvo.setAmount(cartAmount);
+		if(cartAmount < 1) {
+			log.info("amount<1");
+			cartvo.setAmount(1);
+		}
+		if(cartAmount >50) {
+			log.info("amount>50");
+			cartvo.setAmount(50);
+		}
 		cartService.amountModify(cartvo);
 		return "redirect:/cart/list";
 	}
