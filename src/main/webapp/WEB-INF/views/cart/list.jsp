@@ -60,15 +60,14 @@ function down(val){
 		<!-- 할인금액 노출 : 삭제 시 할인금액이 노출되지 않습니다.-->
 		<!-- 일반상품 -->
 		<div class="orderListArea">
-<form action="/cart/modify" method="post">
+<form id="actionForm">
 			<!-- 일반상품 (기본배송) -->
 			<table border="1" summary=""
 				class="xans-element- xans-order xans-order-normnormal boardList xans-record-">
 				
 				<thead>
 					<tr>
-						<th scope="col" class="chk"><input type="checkbox"
-							onclick="Basket.setCheckBasketList('basket_product_normal_type_normal', this);"></th>
+						<th scope="col" class="chk"></th>
 						<th scope="col" class="thumb">&nbsp;</th>
 						<th scope="col" class="product">ITEM</th>
 						<th scope="col" class="price">PRICE</th>
@@ -78,24 +77,15 @@ function down(val){
 						<th scope="col" class="button">SELECT</th>
 					</tr>
 				</thead>
-				<tfoot>
 				
-					<tr>
-						<td colspan="10"><strong class="type">[기본배송]</strong> 상품구매금액
-							<strong>138,000 <span class="displaynone">()</span></strong><span
-							class="displaynone"> </span> + 배송비 0 (무료)<span
-							class="displaynone"> </span> = 합계 : <strong class="total"><span>133,500</span>원</strong>
-							<span class="displaynone"> </span></td>
-					</tr>
-				</tfoot>
 				<tbody class="xans-element- xans-order xans-order-list">
-				<form id="actionForm">
 				
+					<c:set var="sum" value="0" />
 					<c:forEach items="${bookList }" var="bookList" varStatus="status">
 					
 					<tr class="xans-record-">
 						<td>
-							<input type="checkbox">
+							<input type="checkbox" id="checkBook">
 						</td>
 						<td>
 							<a><img style="width: 220px;" src= "${bookList.fileName}"></a>
@@ -109,12 +99,14 @@ function down(val){
 						</td>
 						
 						<td>
+						
 							<span class="btn-group-vertical">
-								<button type="submit" name="cartAmount" value="${cartList[status.index].amount + 1 }" style="border: 0; background-color: #ffffff;"><i class="fas fa-sort-up" ></i></button>
-								<button type="submit" name="cartAmount" value="${cartList[status.index].amount - 1 }" style="border: 0; background-color: #ffffff;margin: 10 10"><i class="fas fa-sort-down" ></i></button>
+								<button onclick="modifyAmount()" name="cartAmount" value="${cartList[status.index].amount + 1 }" style="border: 0; background-color: #ffffff;"><i class="fas fa-sort-up" ></i></button>
+								<button onclick="modifyAmount()" name="cartAmount" value="${cartList[status.index].amount - 1 }" style="border: 0; background-color: #ffffff;margin: 10 10"><i class="fas fa-sort-down" ></i></button>
 							</span>
-							<input id="cartAmount" name="cartAmount" size="2" value="${cartList[status.index].amount }" type="text">		
-							<input class="btn btn-outline-secondary btn-sm" type="submit" value="변경">
+							<input id="cartAmount" name="cartAmount" size="2" value="${cartList[status.index].amount }"type="text">		
+							<input class="btn btn-outline-secondary btn-sm" onclick="modifyAmount()" type="button" value="변경">
+                		
                 		</td>
 
 						<td>
@@ -125,19 +117,26 @@ function down(val){
 						<td class="total">
 						
 							<strong><fmt:formatNumber value="${bookList.book_price * cartList[status.index].amount  }" type="currency"></fmt:formatNumber></strong>
-							
+							<input type="hidden" name ="totalPrice" value="${bookList.book_price * cartList[status.index].amount  }">
 						</td>
 						<td class="button"><a href="javascript:;"
 							onclick="Basket.orderBasketItem(0);" class="btntype6">주문하기</a> 
 							<a href="javascript:;" onclick="cart()">삭제</a>
 							
-							
-							
 					</tr>
-					
+					<c:set var="sum" value="${sum + (bookList.book_price * cartList[status.index].amount )}" />
 					 </c:forEach>
-					 </form>
+					
+					<tfoot>
 				
+					<tr>
+						<td colspan="10">상품구매금액
+							<strong><fmt:formatNumber value="${sum}"></fmt:formatNumber></strong>
+							<span class="displaynone"> </span> + 배송비 <strong><fmt:formatNumber value="${sum < 30000 ? 2500 : 0 }"></fmt:formatNumber></strong>
+							<span class="displaynone"> </span> = 합계 : <strong><fmt:formatNumber value="${sum < 30000 ? sum+2500 : sum }" type="currency" ></fmt:formatNumber></strong>
+							<span class="displaynone"> </span></td>
+					</tr>
+				</tfoot>
 				</tbody>
 			
 			</table>
@@ -158,22 +157,8 @@ function down(val){
 
 		<!-- 주문 버튼 -->
 		<div class="xans-element- xans-order xans-order-totalorder">
-			<a href="#none" onclick="Basket.orderSelectBasket(this)"
-				link-order="/order/orderform.html?basket_type=all_buy"
-				link-login="/member/login.html" class=""><img
-				src="/web/season2_skin/base/btn/btn_order_select.png"
-				onmouseover="this.src='/web/season2_skin/base/btn/btn_order_select_over.png' "
-				onmouseout="this.src='/web/season2_skin/base/btn/btn_order_select.png' "
-				alt="선택상품주문" title=""></a> <a href="#none"
-				onclick="Basket.orderAll(this)"
-				link-order="/order/orderform.html?basket_type=all_buy"
-				link-login="/member/login.html" class=" "><img
-				src="/web/season2_skin/base/btn/btn_order_all.png"
-				onmouseover="this.src='/web/season2_skin/base/btn/btn_order_all_over.png' "
-				onmouseout="this.src='/web/season2_skin/base/btn/btn_order_all.png' "
-				alt="전체상품주문"></a><span class="right"> <a href="/"
-				class="btntype8">쇼핑계속하기</a>
-			</span>
+			<button class="btn btn-dark" onclick="location.href='/order/list'"> 선택상품 주문하기</button>
+			
 		</div>
 		<br>
 		<!-- 네이버 체크아웃 구매 버튼  -->
@@ -226,6 +211,14 @@ function down(val){
 			actionForm.submit();
 		});
 	}	
+	function modifyAmount(){
+		var actionForm = $("#actionForm");
+		
+			actionForm.attr("action", "/cart/modify").attr("method", "post");
+			actionForm.submit();
+		
+		
+	}
 	
 	function setAmount(choice){
 		

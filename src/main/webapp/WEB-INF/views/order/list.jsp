@@ -19,65 +19,73 @@
 
 <div id="container">
     <div id="contents">
-        
 
-<!-- 타이틀 -->
-
-<div class="titleArea">
-<h2><span>ORDER</span></h2>
-</div>
-<!-- //타이틀 -->
 
 <form id="frm_order_act" name="frm_order_act" action="" method="post" target="_self" enctype="multipart/form-data">
+			<!-- 일반상품 (기본배송) -->
+			<table border="1" summary=""
+				class="xans-element- xans-order xans-order-normnormal boardList xans-record-">
+				
+				<thead>
+					<tr>
+						
+						<th scope="col" class="product">ITEM</th>
+						<th scope="col" class="price">TITLE</th>
+						<th scope="col" class="amount" style="width: 76px">PRICE</th>
+						<th scope="col" class="amount">AMOUNT</th>
+						<th scope="col" class="total" style="width: 76px">TOTAL</th>
+						
+					</tr>
+				</thead>
+				
+				<tbody class="xans-element- xans-order xans-order-list">
+				<form id="actionForm">
+					<c:set var="sum" value="0" />
+					<c:forEach items="${bookList }" var="bookList" varStatus="status">
+					
+					<tr class="xans-record-">
+						
+						<td>
+							<a><img style="width: 110px;" src= "${bookList.fileName}"></a>
+						</td>
+						<td>
+							<p>${bookList.book_title }</p>
+							<input type="hidden" name="book_id" id="book_id" value="${bookList.book_id }">
+							</td>
+						<td>
+							<p><fmt:formatNumber value="${bookList.book_price }" type="currency"></fmt:formatNumber></p>
+						</td>
+						
+						<td>
+							<p>${cartList[status.index].amount } 권</p>
+                		</td>
 
-<!-- 국내배송상품 주문내역 -->
-<div class="orderListArea ">
-<div class="titleT">
-    <h3>국내배송상품 주문내역</h3>
-</div>
-
-<!-- 기본배송 -->
-<div class="boardList ">
-    <table border="1" summary="">
-
-        <thead><tr>
-<th scope="col" class="chk displaynone"><input type="checkbox" onclick="EC_SHOP_FRONT_ORDERFORM_PRODUCT.proc.setCheckOrderList('chk_order_cancel_list_basic', this);" disabled=""></th>
-                <th scope="col" class="thumb">&nbsp;</th>
-                <th scope="col" class="product">ITEM</th>
-                <th scope="col" class="price">PRICE</th>
-                <th scope="col" class="quantity">QUA</th>
-                <th scope="col" class="mileage">SAVE</th>
-                <th scope="col" class="delivery">DELIVERY</th>
-                <th scope="col" class="charge">CHARGE</th>
-                <th scope="col" class="total">TOTAL</th>
-            </tr></thead>
-<tfoot><tr>
-<td colspan="9">
-<strong class="type">[기본배송]</strong> 상품구매금액 <strong>46,000<span class="displaynone"> (0)</span></strong> + 배송비 2,500 = 합계 : <strong class="total"><span>48,500</span>원</strong> <span class="displaynone"></span>
-</td>
-            </tr></tfoot><tbody class="xans-element- xans-order xans-order-normallist"><tr class="xans-record-">
-<td class="chk displaynone"><input id="chk_order_cancel_list0" name="chk_order_cancel_list_basic0" value="29789:000A:F:2804408" type="checkbox" disabled=""></td>
-                <td class="thumb"><a href="/product/detail.html?product_no=29789&amp;cate_no=136"><img src="//www.maybe-baby.co.kr/web/product/tiny/20200317/ce2e4a8ff2f4d8d6961ba518fd5ec927.webp" onerror="this.src='http://img.echosting.cafe24.com/thumb/img_product_small.gif';" alt=""></a></td>
-                <td class="product">
-<a href="/product/detail.html?product_no=29789&amp;cate_no=136"><strong>[Dearest] Shy (니트) 파인울70% -멜론</strong></a>
-                    <div class="option displaynone"></div>
-                    </td>
-                <td class="price">
-                    <div class="">
-<strong>46,000원</strong><p class="displaynone"></p>
-</div>
-                    <div class="displaynone"><strong></strong></div>
-                </td>
-                <td class="quantity">1</td>
-                <td class="mileage">-</td>
-                <td class="delivery">기본배송</td>
-                <td class="charge">[조건]</td>
-                <td class="total">
-<strong>46,000원</strong><div class="displaynone"></div>
-                </td>
-            </tr>
-</tbody>
-</table>
+						<td class="total">
+						
+							<strong id="price" name ="totalPrice" style="text-align: center;"><fmt:formatNumber value="${bookList.book_price * cartList[status.index].amount  }" type="currency"></fmt:formatNumber></strong>
+							<input type="hidden" name ="totalPrice" value="">
+						</td>
+						
+							
+					</tr>
+					<c:set var="sum" value="${sum + (bookList.book_price * cartList[status.index].amount )}" />	
+					 </c:forEach>
+					 </form>
+					<tfoot>
+				
+					<tr>
+						<td colspan="10">상품구매금액
+							<strong><fmt:formatNumber value="${sum}"></fmt:formatNumber></strong>
+							<span class="displaynone"> </span> + 배송비 <strong> ${sum < 30000 ? 2500 : 0 }</strong>
+							<span class="displaynone"> </span> = 합계 : <strong><fmt:formatNumber value="${sum < 30000 ? sum+2500 : sum }" type="currency" ></fmt:formatNumber></strong>
+							<span class="displaynone"> </span></td>
+					</tr>
+				</tfoot>
+				</tbody>
+			
+			</table>
+			</form>
+		</div>
 </div>
 
   
@@ -200,7 +208,7 @@
                                                                                                                                                 </tbody>
         </table>
     </div><!-- .tbl-order -->
-</div>
+    
 
 
 <!-- 결제 예정 금액 -->
@@ -378,9 +386,7 @@
 </div>
 </div>
 
-</div>
-    </div>
-</form>
+
 
 
 <%@ include file="../includes/footer.jsp"%>

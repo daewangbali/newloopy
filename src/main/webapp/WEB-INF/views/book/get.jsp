@@ -50,8 +50,8 @@
 							<input type="hidden" id="book_id" name="book_id" value="${book.book_id }">
 							<input type="hidden" id="user_number" name="user_number" value="${sessionScope.user_number }">						
 							<!--<input class="btn btn-success" id="addcartBtn" value="장바구니 추가"> -->
+							<button type="button" class="btn btn-warning" onclick="location.href='/order/list'">바로 구매하기</button>
 							<button type="submit" class="btn btn-success">장바구니 추가</button>
-							<button class="btn btn-warning">바로 구매하기</button>
 						</div>
 					</div>
 					</div>

@@ -24,6 +24,12 @@ public class OrderController {
 	@GetMapping("/list")
 	public void list(CartVO cart, BookVO book,Model model,HttpSession session) {
 		log.info("list....................");
+		int user_number = (int)session.getAttribute("user_number");
+		model.addAttribute("user_numer", user_number);
+		model.addAttribute("cartList", orderService.readCartList(user_number));
+		model.addAttribute("bookList", orderService.readBookList(user_number));
+		session.setAttribute("cartList", orderService.readCartList(user_number));
+		session.setAttribute("bookList", orderService.readBookList(user_number));
 	}
 
 }

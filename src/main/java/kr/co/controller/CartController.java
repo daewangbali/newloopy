@@ -37,8 +37,8 @@ public class CartController {
 		model.addAttribute("bookList", cartService.readBookList(user_number));
 		session.setAttribute("cartList", cartService.readCartList(user_number));
 		session.setAttribute("bookList", cartService.readBookList(user_number));
-		int totalPrice = book.getBook_price() *  cart.getAmount();
-		model.addAttribute("totalPrice", totalPrice);
+//		int totalPrice = book.getBook_price() *  cart.getAmount();
+//		model.addAttribute("totalPrice", totalPrice);
 	}
 	
 	@PostMapping("/list")
