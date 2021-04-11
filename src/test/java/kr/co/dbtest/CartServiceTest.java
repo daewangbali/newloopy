@@ -89,9 +89,9 @@ public class CartServiceTest {
 	public void readListTest() {
 		log.info("readListTest()................");
 		CartVO cartvo = new CartVO();
-		cartvo.setUser_number(1);
+		cartvo.setUser_number(41);
 		List<CartVO> list = cs.readCartList(cartvo.getUser_number());
-
+		log.info(list.size());
 		for (CartVO cartVO : list) {
 			log.info(cartVO);
 		}

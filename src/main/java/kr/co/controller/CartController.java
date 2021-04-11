@@ -35,6 +35,7 @@ public class CartController {
 		model.addAttribute("user_numer", user_number);
 		model.addAttribute("cartList", cartService.readCartList(user_number));
 		model.addAttribute("bookList", cartService.readBookList(user_number));
+		model.addAttribute("listSize", cartService.readBookList(user_number).size());
 		session.setAttribute("cartList", cartService.readCartList(user_number));
 		session.setAttribute("bookList", cartService.readBookList(user_number));
 //		int totalPrice = book.getBook_price() *  cart.getAmount();

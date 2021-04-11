@@ -29,6 +29,7 @@ function down(val){
 }
 </script>
   -->
+ 
 <div class="container-fluid">
 <br>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -79,14 +80,20 @@ function down(val){
 				</thead>
 				
 				<tbody class="xans-element- xans-order xans-order-list">
-				
+					
+					
 					<c:set var="sum" value="0" />
 					<c:forEach items="${bookList }" var="bookList" varStatus="status">
 					
 					<tr class="xans-record-">
+						
 						<td>
-							<input type="checkbox" id="checkBook">
+						<label> 
+							<input type="checkbox" id="checkBox${status.index}">
+						</label> 
+						
 						</td>
+						
 						<td>
 							<a><img style="width: 220px;" src= "${bookList.fileName}"></a>
 						</td>
@@ -124,6 +131,7 @@ function down(val){
 							<a href="javascript:;" onclick="cart()">삭제</a>
 							
 					</tr>
+					
 					<c:set var="sum" value="${sum + (bookList.book_price * cartList[status.index].amount )}" />
 					 </c:forEach>
 					
@@ -157,7 +165,8 @@ function down(val){
 
 		<!-- 주문 버튼 -->
 		<div class="xans-element- xans-order xans-order-totalorder">
-			<button class="btn btn-dark" onclick="location.href='/order/list'"> 선택상품 주문하기</button>
+			<button class="btn btn-dark" onclick="location.href='/order/list'"> 전체상품 주문하기</button>
+			<button class="btn btn-dark" onclick="checkBtn()"> 선택상품 주문하기</button>
 			
 		</div>
 		<br>
@@ -200,6 +209,7 @@ function down(val){
 </div>
 
 <script type="text/javascript">
+
 	function cart(){
 		var actionForm = $("#actionForm");
 
@@ -232,9 +242,18 @@ function down(val){
 		}
 	}	
 	
-	
-	
-
+	function checkBtn(){
+		
+		
+		for(var i=0;i<${listSize};i++){
+			if(($('#checkBox${status.index}'+i)).prop("checked")){
+				
+				location.href='/order/list';
+			}else{
+				console.log('no');
+			}
+		}
+	}
 
 </script>
 
