@@ -165,7 +165,7 @@ function down(val){
 
 		<!-- 주문 버튼 -->
 		<div class="xans-element- xans-order xans-order-totalorder">
-			<button class="btn btn-dark" onclick="location.href='/order/list'"> 전체상품 주문하기</button>
+			<button class="btn btn-dark" onclick="allcheckBtn()"> 전체상품 주문하기</button>
 			<button class="btn btn-dark" onclick="checkBtn()"> 선택상품 주문하기</button>
 			
 		</div>
@@ -252,33 +252,96 @@ function down(val){
 				console.log('yes');
 				
 			}else{
-				indexArray[i] = -1;
-				console.log('no');
+				continue;
 			}
 		}
 			
 		console.log(indexArray);
 		
-		jQuery.ajaxSettings.traditional = true;
-
-		  $.ajax({
-			    url: "/order/selectList",
-			    type: "GET",
+		if(indexArray === null){
+			alert("상품을 선택해주세요!");
+			location.href = "/";
+		}else{
+			$.ajaxSettings.traditional = true;
+			$.ajax({
+			    url: "/order/selectlist",
+			    type: "POST",
 			    data: { "indexArray" : indexArray },
-			    traditional : true,
 			    success : function(){
-			      console.log("good");
-			      console.log(indexArray[1].value);
-			      
-			      
+			     	location = '/order/selectlist';
 			    },
 			    error : function(){
-			      alert("에러")		
+			    	alert("상품을 선택해주세요!");	
 			    }
 			  });
 			
-			console.log(indexArray);
+		}
 	}
+	
+function checkBtn(){
+		
+		var indexArray = [];
+		
+		for(var i=0;i<${listSize};i++){
+			if(($('#checkBox${status.index}'+i)).prop("checked")){
+				indexArray[i] = i;
+				console.log('yes');
+				
+			}else{
+				continue;
+			}
+		}
+			
+		console.log(indexArray);
+		
+			$.ajaxSettings.traditional = true;
+			$.ajax({
+			    url: "/order/selectlist",
+			    type: "POST",
+			    data: { "indexArray" : indexArray },
+			    success : function(){
+			     	location = '/order/selectlist';
+			    },
+			    error : function(){
+			    	alert("상품을 선택해주세요!");	
+			    }
+			  });
+			
+		
+	}
+	
+	
+function allcheckBtn(){
+	
+	var indexArray = [];
+	
+	for(var i=0;i<${listSize};i++){
+		indexArray[i] = i;
+		console.log('yes');
+		
+	}
+		
+	console.log(indexArray);
+	
+		$.ajaxSettings.traditional = true;
+		$.ajax({
+		    url: "/order/selectlist",
+		    type: "POST",
+		    data: { "indexArray" : indexArray },
+		    success : function(){
+		     	location = '/order/selectlist';
+		    },
+		    error : function(){
+		    	alert("상품을 선택해주세요!");	
+		    }
+		  });
+		
+	
+}
+	
+	
+	
+	
 
 
 </script>

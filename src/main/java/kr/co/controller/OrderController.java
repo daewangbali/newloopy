@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,22 +30,15 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	
-	@GetMapping("/list")
-	public void list(CartVO cart, BookVO book,Model model,HttpSession session) {
-		log.info("list....................");
-		int user_number = (int)session.getAttribute("user_number");
-		model.addAttribute("user_numer", user_number);
-		model.addAttribute("cartList", orderService.readCartList(user_number));
-		model.addAttribute("bookList", orderService.readBookList(user_number));
-		session.setAttribute("cartList", orderService.readCartList(user_number));
-		session.setAttribute("bookList", orderService.readBookList(user_number));
+	@GetMapping("/selectlist")
+	public void getselectlist() {
+		log.info("selectlist get................");
 	}
 	
-	/*
-	@GetMapping("/selectList")
+	@PostMapping("/selectlist" )
 	@ResponseBody
 	public String selectList(CartVO cart, BookVO book,Model model,HttpSession session,
-			@RequestParam(value="indexArray") List<Integer> indexArray) {
+			@RequestParam List<Integer> indexArray) {
 		log.info("selectList....................");
 		int user_number = (int)session.getAttribute("user_number");
 		log.info(indexArray);
@@ -53,18 +47,20 @@ public class OrderController {
 		List<CartVO> newCartList = new ArrayList<CartVO>();
 		List<BookVO> newBookList = new ArrayList<BookVO>();
 		
-		log.info(orderService.readCartList(user_number).get(1));
-		newCartList.add(orderService.readCartList(user_number).get(0));
-		newCartList.add(orderService.readCartList(user_number).get(1));
-		log.info(newCartList);
 		
 		//받아온 index 확인
 		for(int i=0;i<indexArray.size();i++) {
-			if(indexArray.get(i) != -1) {
+			
+			if(indexArray.get(i) != null) {
+				log.info(i);
 				newCartList.add(orderService.readCartList(user_number).get(i));
 				newBookList.add(orderService.readBookList(user_number).get(i));
 			}
+			log.info(i);
 		}
+		
+		log.info(newCartList);
+		log.info(newBookList);
 		
 		model.addAttribute("user_numer", user_number);
 		model.addAttribute("cartList", newCartList);
@@ -72,10 +68,48 @@ public class OrderController {
 		session.setAttribute("cartList", newCartList);
 		session.setAttribute("bookList", newBookList);
 		
-		return "/order/selectList";
+		return "/order/selectlist";
 	}
 	
-	*/
+	
+	/*
+	@GetMapping("/selectlist" )
+	@ResponseBody
+	public String selectList(CartVO cart, BookVO book,Model model,HttpSession session,
+			@RequestParam List<Integer> indexArray) {
+		log.info("selectList....................");
+		int user_number = (int)session.getAttribute("user_number");
+		log.info(indexArray);
+		log.info(indexArray.size());
+		//새로 담을 리스트 
+		List<CartVO> newCartList = new ArrayList<CartVO>();
+		List<BookVO> newBookList = new ArrayList<BookVO>();
+		
+		
+		//받아온 index 확인
+		for(int i=0;i<indexArray.size();i++) {
+			
+			if(indexArray.get(i) != -1) {
+				log.info(i);
+				newCartList.add(orderService.readCartList(user_number).get(i));
+				newBookList.add(orderService.readBookList(user_number).get(i));
+			}
+			log.info(i);
+		}
+		
+		log.info(newCartList);
+		log.info(newBookList);
+		
+		model.addAttribute("user_numer", user_number);
+		model.addAttribute("cartList", newCartList);
+		model.addAttribute("bookList", newBookList);
+		session.setAttribute("cartList", newCartList);
+		session.setAttribute("bookList", newBookList);
+		
+		return "/order/selectlist";
+	}
+	
+	
 	
 	@GetMapping("/selectList")
 	@ResponseBody
@@ -91,8 +125,7 @@ public class OrderController {
 		List<BookVO> newBookList = new ArrayList<BookVO>();
 		
 		log.info(orderService.readCartList(user_number).get(1));
-		newCartList.add(orderService.readCartList(user_number).get(0));
-		newCartList.add(orderService.readCartList(user_number).get(1));
+		
 		log.info(newCartList);
 		
 		//받아온 index 확인
@@ -111,6 +144,11 @@ public class OrderController {
 		
 		return "/order/selectList";
 	}
+	*/
 	
-
+	
+	
+	
+	
+	
 }
