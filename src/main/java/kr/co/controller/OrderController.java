@@ -41,26 +41,19 @@ public class OrderController {
 			@RequestParam List<Integer> indexArray) {
 		log.info("selectList....................");
 		int user_number = (int)session.getAttribute("user_number");
-		log.info(indexArray);
-		log.info(indexArray.size());
+		
 		//새로 담을 리스트 
 		List<CartVO> newCartList = new ArrayList<CartVO>();
 		List<BookVO> newBookList = new ArrayList<BookVO>();
-		
 		
 		//받아온 index 확인
 		for(int i=0;i<indexArray.size();i++) {
 			
 			if(indexArray.get(i) != null) {
-				log.info(i);
 				newCartList.add(orderService.readCartList(user_number).get(i));
 				newBookList.add(orderService.readBookList(user_number).get(i));
 			}
-			log.info(i);
 		}
-		
-		log.info(newCartList);
-		log.info(newBookList);
 		
 		model.addAttribute("user_numer", user_number);
 		model.addAttribute("cartList", newCartList);
