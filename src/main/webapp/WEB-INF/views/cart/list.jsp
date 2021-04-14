@@ -95,7 +95,7 @@ function down(val){
 						</td>
 						
 						<td>
-							<a><img style="width: 220px;" src= "${bookList.fileName}"></a>
+							<a><img id="fileName" style="width: 220px;" src= "${bookList.fileName}"></a>
 						</td>
 						<td>
 							<p>${bookList.book_title }</p>
@@ -244,16 +244,42 @@ function down(val){
 	
 	function checkBtn(){
 		
+		var indexArray = [];
 		
 		for(var i=0;i<${listSize};i++){
 			if(($('#checkBox${status.index}'+i)).prop("checked")){
+				indexArray[i] = i;
+				console.log('yes');
 				
-				location.href='/order/list';
 			}else{
+				indexArray[i] = -1;
 				console.log('no');
 			}
 		}
+			
+		console.log(indexArray);
+		
+		jQuery.ajaxSettings.traditional = true;
+
+		  $.ajax({
+			    url: "/order/selectList",
+			    type: "GET",
+			    data: { "indexArray" : indexArray },
+			    traditional : true,
+			    success : function(){
+			      console.log("good");
+			      console.log(indexArray[1].value);
+			      
+			      
+			    },
+			    error : function(){
+			      alert("에러")		
+			    }
+			  });
+			
+			console.log(indexArray);
 	}
+
 
 </script>
 
