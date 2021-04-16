@@ -74,7 +74,7 @@ public class CartController {
 	@PostMapping("/modify")
 	public String modify(@RequestParam("cartAmount")int cartAmount,@RequestParam("book_id")int book_id,HttpSession session) {
 		log.info("modify...............");
-		log.info(book_id);
+		log.info("book_id : " + book_id);
 		int user_number = (int)session.getAttribute("user_number");
 		CartVO cartvo = new CartVO();
 		cartvo.setUser_number(user_number);
@@ -93,24 +93,26 @@ public class CartController {
 		return "redirect:/cart/list";
 	}
 	
+	@ResponseBody
 	@PostMapping("/remove")
 	public String remove(@RequestParam("book_id")int book_id,HttpServletRequest request) {
 		log.info("remove...............");
-		log.info(book_id);
+		log.info("book_id : " + book_id);
 		cartService.remove(book_id);
 //		String referer = request.getHeader("referer");
 		return "redirect:/cart/list";
 
 	}
-	
-	
 	
 	/*
 	
 	
+	
+	@ResponseBody
 	@PostMapping("/remove")
 	public String remove(@RequestParam("book_id_index")int book_id_index,HttpSession session) {
 		log.info("remove...............");
+		log.info("book_id_index...: " + book_id_index);
 		int user_number = (int)session.getAttribute("user_number");
 		int book_id = cartService.readCartList(user_number).get(book_id_index).getBook_id();
 		
@@ -120,10 +122,11 @@ public class CartController {
 
 	}
 	
-	
+	@ResponseBody
 	@PostMapping("/modify")
 	public String modify(@RequestParam("cartAmount")int cartAmount,@RequestParam("book_id_index")int book_id_index,HttpSession session) {
 		log.info("modify...............");
+		log.info("book_id_index...: " + book_id_index);
 		int user_number = (int)session.getAttribute("user_number");
 		int book_id = cartService.readCartList(user_number).get(book_id_index).getBook_id();
 		CartVO cartvo = new CartVO();
@@ -142,44 +145,6 @@ public class CartController {
 		cartService.amountModify(cartvo);
 		return "redirect:/cart/list";
 	}
-	
-	
-	@PostMapping("/remove")
-	public String remove(@RequestParam("book_id_index")int book_id_index,HttpSession session) {
-		log.info("remove...............");
-		int user_number = (int)session.getAttribute("user_number");
-		int book_id = cartService.readCartList(user_number).get(book_id_index).getBook_id();
-		
-		cartService.remove(book_id);
-//		String referer = request.getHeader("referer");
-		return "redirect:/cart/list";
-
-	}
-	
-	
-	@PostMapping("/modify")
-	public String modify(@RequestParam("cartAmount")int cartAmount,@RequestParam("book_id_index")int book_id_index,HttpSession session) {
-		log.info("modify...............");
-		int user_number = (int)session.getAttribute("user_number");
-		int book_id = cartService.readCartList(user_number).get(book_id_index).getBook_id();
-		CartVO cartvo = new CartVO();
-		cartvo.setUser_number(user_number);
-		cartvo.setBook_id(book_id);
-		log.info("changeAmount.......");
-		cartvo.setAmount(cartAmount);
-		if(cartAmount < 1) {
-			log.info("amount<1");
-			cartvo.setAmount(1);
-		}
-		if(cartAmount >50) {
-			log.info("amount>50");
-			cartvo.setAmount(50);
-		}
-		cartService.amountModify(cartvo);
-		return "redirect:/cart/list";
-	}
-	
-	
 	
 	
 	

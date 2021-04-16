@@ -96,37 +96,37 @@
 					<tbody class="xans-element- xans-order xans-order-list">
 						
 							<c:set var="sum" value="0" />
-							<c:forEach items="${bookList }" var="bookList" varStatus="status">
+							<c:forEach items="${newBookList }" var="newBookList" varStatus="status">
 
 								<tr class="xans-record-">
 
 									<td><a><img style="width: 110px;"
-											src="${bookList.fileName}"></a></td>
+											src="${newBookList.fileName}"></a></td>
 									<td>
-										<p>${bookList.book_title }</p> <input type="hidden"
-										name="book_id" id="book_id" value="${bookList.book_id }">
+										<p>${newBookList.book_title }</p> <input type="hidden"
+										name="book_id" id="book_id" value="${newBookList.book_id }">
 									</td>
 									<td>
 										<p>
-											<fmt:formatNumber value="${bookList.book_price }"
+											<fmt:formatNumber value="${newBookList.book_price }"
 												type="currency"></fmt:formatNumber>
 										</p>
 									</td>
 
 									<td>
-										<p>${cartList[status.index].amount }권</p>
+										<p>${newCartList[status.index].amount }권</p>
 									</td>
 
 									<td class="total"><strong id="price" name="totalPrice"
 										style="text-align: center;"><fmt:formatNumber
-												value="${bookList.book_price * cartList[status.index].amount  }"
+												value="${newBookList.book_price * newCartList[status.index].amount  }"
 												type="currency"></fmt:formatNumber></strong> <input type="hidden"
 										name="totalPrice" value=""></td>
 
 
 								</tr>
 								<c:set var="sum"
-									value="${sum + (bookList.book_price * cartList[status.index].amount )}" />
+									value="${sum + (newBookList.book_price * newCartList[status.index].amount )}" />
 							</c:forEach>
 						
 					<tfoot>

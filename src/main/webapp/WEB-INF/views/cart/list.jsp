@@ -69,8 +69,8 @@ function down(val){
 				<thead align="left">
 					<tr>
 						<th scope="col" class="chk"></th>
-						<th scope="col" class="thumb" style="width: 20%">ITEM</th>
-						<th scope="col" class="product" style="width: 30%">TITLE</th>
+						<th scope="col" class="thumb"style="width: 20%" >ITEM</th>
+						<th scope="col" class="product"style="width: 30%" >TITLE</th>
 						<th scope="col" class="price">PRICE</th>
 						<th scope="col" class="amount">AMOUNT</th>
 						<th scope="col" class="total">TOTAL</th>
@@ -80,9 +80,9 @@ function down(val){
 				
 				<tbody class="xans-element- xans-order xans-order-list">
 					
-					
 					<c:set var="sum" value="0" />
 					<c:forEach items="${bookList }" var="bookList" varStatus="status">
+					
 					
 					<tr class="xans-record-">
 						
@@ -94,24 +94,24 @@ function down(val){
 						</td>
 						
 						<td>
-							<a><img id="fileName"  style="width: 220px;" src= "${bookList.fileName}"></a>
+							<a><img style="width: 220px;" src= "${bookList.fileName}"></a>
 						</td>
 						<td>
 							<p>${bookList.book_title }</p>
-							<input type="hidden" name="book_id" id="book_id" value="${cartList[status.index].book_id }">
+							<input type="hidden" name="book_id" id="book_id${status.index }" value="${bookList.book_id }">
 							</td>
 						<td>
 							<p><fmt:formatNumber value="${bookList.book_price }" type="currency"></fmt:formatNumber></p>
 						</td>
 						
 						<td>
-							
+						
 							<span class="btn-group-vertical">
-								<button onclick="modifyAmount()" name="cartAmount" value="${cartList[status.index].amount + 1 }" style="border: 0; background-color: #ffffff;"><i class="fas fa-sort-up" ></i></button>
-								<button onclick="modifyAmount()" name="cartAmount" value="${cartList[status.index].amount - 1 }" style="border: 0; background-color: #ffffff;margin: 10 10"><i class="fas fa-sort-down" ></i></button>
+								<button onclick="modifyAmount(${bookList.book_id } , ${cartList[status.index].amount + 1 })" name="cartAmount" value="${cartList[status.index].amount + 1 }" style="border: 0; background-color: #ffffff;"><i class="fas fa-sort-up" ></i></button>
+								<button onclick="modifyAmount(${bookList.book_id } , ${cartList[status.index].amount - 1 })" name="cartAmount" value="${cartList[status.index].amount - 1 }" style="border: 0; background-color: #ffffff;margin: 10 10"><i class="fas fa-sort-down" ></i></button>
 							</span>
-							<input id="cartAmount" name="cartAmount" size="2" value="${cartList[status.index].amount }"type="text">		
-							<input class="btn btn-outline-secondary btn-sm" onclick="modifyAmount()" type="button" value="변경">
+							<input id="cartAmount${status.index }" name="cartAmount" size="2" value="${cartList[status.index].amount }"type="text">		
+							<input class="btn btn-outline-secondary btn-sm" onclick="modifyAmount2(${bookList.book_id }, cartAmount${status.index })" type="button" value="변경">
                 		
                 		</td>
 
@@ -121,18 +121,18 @@ function down(val){
 							<input type="hidden" name ="totalPrice" value="${bookList.book_price * cartList[status.index].amount  }">
 						</td>
 						<td class="button"><a href="javascript:;"
-							onclick="Basket.orderBasketItem(0);" class="btntype6">주문하기</a> 
-							<a href="javascript:;" onclick="cart2()">삭제</a>
-							<input type="hidden" name ="book_id_index" id="book_id_index" value="${status.index}">
+							onclick="Basket.orderBasketItem(0);" class="btntype6">주문하기</a>
+							
+							<a href="javascript:;" onclick="cart(${bookList.book_id })" >삭제</a>
+						</td>	
 					</tr>
-					
 					<c:set var="sum" value="${sum + (bookList.book_price * cartList[status.index].amount )}" />
 					 </c:forEach>
 					
 					<tfoot>
 				
 					<tr>
-						<td style="font-size: 20px" colspan="10">상품구매금액
+						<td colspan="10">상품구매금액
 							<strong><fmt:formatNumber value="${sum}"></fmt:formatNumber></strong>
 							<span class="displaynone"> </span> + 배송비 <strong><fmt:formatNumber value="${sum < 30000 ? 2500 : 0 }"></fmt:formatNumber></strong>
 							<span class="displaynone"> </span> = 합계 : <strong><fmt:formatNumber value="${sum < 30000 ? sum+2500 : sum }" type="currency" ></fmt:formatNumber></strong>
@@ -191,105 +191,96 @@ function down(val){
 	</div>
 </div>
 
+
 <script type="text/javascript">
 
-	function cart(){
-		var actionForm = $("#actionForm");
-
-	    $('#cart_modal_body').html("선택하신 상품을 삭제하시겠습니까?");
-		$('#cartDelete_modal').modal('show');
-		
-		$('#deleteBtn').click(function(e) {
-			actionForm.attr("action", "/cart/remove").attr("method", "post");
-			actionForm.submit();
-		});
-	}	
+function cart(id){
+	var book_id = id;
+	var actionForm = $("#actionForm");
+    $('#cart_modal_body').html("선택하신 상품을 삭제하시겠습니까?");
+	$('#cartDelete_modal').modal('show');
 	
-	function cart2(){
-		var book_id = $('#book_id').val();
-		var actionForm = $("#actionForm");
+	$('#deleteBtn').click(function(e) {
+		$.ajax({
+		    url: "/cart/remove",
+		    type: "POST",
+		    data: { "book_id" : book_id },
+		    success : function(){
+		     	location = '/cart/list';
+		    },
+		    error : function(){
+		    	alert("!!!!!!");	
+		    }
+		  });
+	});
+}	
 
-	    $('#cart_modal_body').html("선택하신 상품을 삭제하시겠습니까?");
-		$('#cartDelete_modal').modal('show');
+function cart2(){
+	var actionForm = $("#actionForm");
+    $('#cart_modal_body').html("선택하신 상품을 삭제하시겠습니까?");
+	$('#cartDelete_modal').modal('show');
+	
+	$('#deleteBtn').click(function(e) {
+		actionForm.attr("action", "/cart/remove").attr("method", "post");
+		actionForm.submit();
+	});
+}	
+function modifyAmount(id,amount){
+	var book_id = id;
+	var cartAmount = amount;
+	$.ajax({
+	    url: "/cart/modify",
+	    type: "POST",
+	    data: { "book_id" : book_id , "cartAmount" : cartAmount },
+	    success : function(){
+	     	location = '/cart/list';
+	    },
+	    error : function(){
+	    	alert("!!!!!!");	
+	    }
+	  });	
+}
+
+function modifyAmount2(id,amount){
+	var book_id = id;
+	var cartAmount = amount.value;
+	$.ajax({
+	    url: "/cart/modify",
+	    type: "POST",
+	    data: { "book_id" : book_id , "cartAmount" : cartAmount },
+	    success : function(){
+	     	location = '/cart/list';
+	    },
+	    error : function(){
+	    	alert("!!!!!!");	
+	    }
+	  });	
+}
+
+function setAmount(choice){
+	
+	if(choice === 'up'){
+		var amount = $('#cartAmount').val()
+		amount *= 1;
+		++amount;
 		
-		$('#deleteBtn').click(function(e) {
-			$.ajax({
-			    url: "/cart/remove",
-			    type: "POST",
-			    data: { "book_id" : book_id },
-			    success : function(){
-			     	location = '/';
-			    },
-			    error : function(){
-			    	alert("에러!");	
-			    }
-			  });
-			
-		});
+		
 		
 	}
-	
-	
-	
-	function modifyAmount(){
-		var actionForm = $("#actionForm");
-		
-			actionForm.attr("action", "/cart/modify").attr("method", "post");
-			actionForm.submit();
-		
-	}
-	
-	function setAmount(choice){
-		
-		if(choice === 'up'){
-			var amount = $('#cartAmount').val()
-			amount *= 1;
-			++amount;
-			
-		}
-	}	
-	
-	
+}
+
 function checkBtn(){
-		
-		var indexArray = [];
-		
-		for(var i=0;i<${listSize};i++){
-			if(($('#checkBox${status.index}'+i)).prop("checked")){
-				indexArray[i] = i;
-				console.log('yes');
-				
-			}else{
-				continue;
-			}
-		}
-			
-		console.log(indexArray);
-		
-			$.ajaxSettings.traditional = true;
-			$.ajax({
-			    url: "/order/selectlist",
-			    type: "POST",
-			    data: { "indexArray" : indexArray },
-			    success : function(){
-			     	location = '/order/selectlist';
-			    },
-			    error : function(){
-			    	alert("상품을 선택해주세요!");	
-			    }
-			  });
-			
-		
-	}
-	
-	
-function allcheckBtn(){
 	
 	var indexArray = [];
 	
 	for(var i=0;i<${listSize};i++){
-		indexArray[i] = i;
-		console.log('yes');
+		if(($('#checkBox${status.index}'+i)).prop("checked")){
+			indexArray[i] = i;
+			console.log('yes');
+			
+		}else{
+			continue;
+		}
 	}
 		
 	console.log(indexArray);
@@ -309,12 +300,35 @@ function allcheckBtn(){
 		
 	
 }
-	
-	
-	
-	
 
 
+function allcheckBtn(){
+
+var indexArray = [];
+
+for(var i=0;i<${listSize};i++){
+	indexArray[i] = i;
+	console.log('yes');
+}
+	
+console.log(indexArray);
+
+	$.ajaxSettings.traditional = true;
+	$.ajax({
+	    url: "/order/selectlist",
+	    type: "POST",
+	    data: { "indexArray" : indexArray },
+	    success : function(){
+	     	location = '/order/selectlist';
+	    },
+	    error : function(){
+	    	alert("상품을 선택해주세요!");	
+	    }
+	  });
+	
+
+}
+	
 </script>
 
 <%@ include file="../includes/footer.jsp"%>

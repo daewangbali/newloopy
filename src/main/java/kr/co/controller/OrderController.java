@@ -61,10 +61,10 @@ public class OrderController {
 		}
 		
 		model.addAttribute("user_numer", user_number);
-		model.addAttribute("cartList", newCartList);
-		model.addAttribute("bookList", newBookList);
-		session.setAttribute("cartList", newCartList);
-		session.setAttribute("bookList", newBookList);
+		model.addAttribute("newCartList", newCartList);
+		model.addAttribute("newBookList", newBookList);
+		session.setAttribute("newCartList", newCartList);
+		session.setAttribute("newBookList", newBookList);
 		
 		return "/order/selectlist";
 	}
