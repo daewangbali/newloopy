@@ -61,19 +61,18 @@ function down(val){
 		<!-- 할인금액 노출 : 삭제 시 할인금액이 노출되지 않습니다.-->
 		<!-- 일반상품 -->
 		<div class="orderListArea">
-<form id="actionForm">
+<form id="actionForm" >
 			<!-- 일반상품 (기본배송) -->
-			<table border="1" summary=""
+			<table style="width: 100%" summary=""
 				class="xans-element- xans-order xans-order-normnormal boardList xans-record-">
 				
-				<thead>
+				<thead align="left">
 					<tr>
 						<th scope="col" class="chk"></th>
-						<th scope="col" class="thumb">&nbsp;</th>
-						<th scope="col" class="product">ITEM</th>
+						<th scope="col" class="thumb" style="width: 20%">ITEM</th>
+						<th scope="col" class="product" style="width: 30%">TITLE</th>
 						<th scope="col" class="price">PRICE</th>
 						<th scope="col" class="amount">AMOUNT</th>
-						<th scope="col" class="charge">CHARGE</th>
 						<th scope="col" class="total">TOTAL</th>
 						<th scope="col" class="button">SELECT</th>
 					</tr>
@@ -95,18 +94,18 @@ function down(val){
 						</td>
 						
 						<td>
-							<a><img id="fileName" style="width: 220px;" src= "${bookList.fileName}"></a>
+							<a><img id="fileName"  style="width: 220px;" src= "${bookList.fileName}"></a>
 						</td>
 						<td>
 							<p>${bookList.book_title }</p>
-							<input type="hidden" name="book_id" id="book_id" value="${bookList.book_id }">
+							<input type="hidden" name="book_id" id="book_id" value="${cartList[status.index].book_id }">
 							</td>
 						<td>
 							<p><fmt:formatNumber value="${bookList.book_price }" type="currency"></fmt:formatNumber></p>
 						</td>
 						
 						<td>
-						
+							
 							<span class="btn-group-vertical">
 								<button onclick="modifyAmount()" name="cartAmount" value="${cartList[status.index].amount + 1 }" style="border: 0; background-color: #ffffff;"><i class="fas fa-sort-up" ></i></button>
 								<button onclick="modifyAmount()" name="cartAmount" value="${cartList[status.index].amount - 1 }" style="border: 0; background-color: #ffffff;margin: 10 10"><i class="fas fa-sort-down" ></i></button>
@@ -116,11 +115,6 @@ function down(val){
                 		
                 		</td>
 
-						<td>
-							<p class="displaynone">
-								0원<span class="displaynone"><br></span><br>
-							</p>무료
-						</td>
 						<td class="total">
 						
 							<strong><fmt:formatNumber value="${bookList.book_price * cartList[status.index].amount  }" type="currency"></fmt:formatNumber></strong>
@@ -128,8 +122,8 @@ function down(val){
 						</td>
 						<td class="button"><a href="javascript:;"
 							onclick="Basket.orderBasketItem(0);" class="btntype6">주문하기</a> 
-							<a href="javascript:;" onclick="cart()">삭제</a>
-							
+							<a href="javascript:;" onclick="cart2()">삭제</a>
+							<input type="hidden" name ="book_id_index" id="book_id_index" value="${status.index}">
 					</tr>
 					
 					<c:set var="sum" value="${sum + (bookList.book_price * cartList[status.index].amount )}" />
@@ -138,7 +132,7 @@ function down(val){
 					<tfoot>
 				
 					<tr>
-						<td colspan="10">상품구매금액
+						<td style="font-size: 20px" colspan="10">상품구매금액
 							<strong><fmt:formatNumber value="${sum}"></fmt:formatNumber></strong>
 							<span class="displaynone"> </span> + 배송비 <strong><fmt:formatNumber value="${sum < 30000 ? 2500 : 0 }"></fmt:formatNumber></strong>
 							<span class="displaynone"> </span> = 합계 : <strong><fmt:formatNumber value="${sum < 30000 ? sum+2500 : sum }" type="currency" ></fmt:formatNumber></strong>
@@ -150,23 +144,12 @@ function down(val){
 			</table>
 			</form>
 		</div>
-		
-		
-		<!-- 선택상품 제어 버튼 -->
-		<div class="xans-element- xans-order xans-order-selectorder ">
-			<span class="left"> <strong class="ctrlTxt">선택상품을</strong> <a
-				href="#none" onclick="Basket.deleteBasket()" class="btntype8">삭제하기</a>
-
-			</span> <span class="right"> <a href="#none"
-				onclick="Basket.emptyBasket()" class="btntype8">장바구니비우기</a>
-			</span>
-		</div>
-
-
+		<button style="border:1px; border-color: b4b4b4;" onclick="allcheckBtn()"> 선택상품 삭제하기</button>
+		<br>
 		<!-- 주문 버튼 -->
-		<div class="xans-element- xans-order xans-order-totalorder">
-			<button class="btn btn-dark" onclick="allcheckBtn()"> 전체상품 주문하기</button>
-			<button class="btn btn-dark" onclick="checkBtn()"> 선택상품 주문하기</button>
+		<div class="xans-element- xans-order xans-order-totalorder" align="center" >
+			<button class="btn btn-dark" style="background-color: pink; color: black; border: 0;" onclick="checkBtn()"> 선택상품 주문하기</button>
+			<button class="btn btn-dark" style="background-color: #b4b4b4; color: black; border: 0;" onclick="allcheckBtn()"> 전체상품 주문하기</button>
 			
 		</div>
 		<br>
@@ -221,12 +204,38 @@ function down(val){
 			actionForm.submit();
 		});
 	}	
+	
+	function cart2(){
+		var book_id = $('#book_id').val();
+		var actionForm = $("#actionForm");
+
+	    $('#cart_modal_body').html("선택하신 상품을 삭제하시겠습니까?");
+		$('#cartDelete_modal').modal('show');
+		
+		$('#deleteBtn').click(function(e) {
+			$.ajax({
+			    url: "/cart/remove",
+			    type: "POST",
+			    data: { "book_id" : book_id },
+			    success : function(){
+			     	location = '/';
+			    },
+			    error : function(){
+			    	alert("에러!");	
+			    }
+			  });
+			
+		});
+		
+	}
+	
+	
+	
 	function modifyAmount(){
 		var actionForm = $("#actionForm");
 		
 			actionForm.attr("action", "/cart/modify").attr("method", "post");
 			actionForm.submit();
-		
 		
 	}
 	
@@ -237,46 +246,9 @@ function down(val){
 			amount *= 1;
 			++amount;
 			
-			
-			
 		}
 	}	
 	
-	function checkBtn(){
-		
-		var indexArray = [];
-		
-		for(var i=0;i<${listSize};i++){
-			if(($('#checkBox${status.index}'+i)).prop("checked")){
-				indexArray[i] = i;
-				console.log('yes');
-				
-			}else{
-				continue;
-			}
-		}
-			
-		console.log(indexArray);
-		
-		if(indexArray === null){
-			alert("상품을 선택해주세요!");
-			location.href = "/";
-		}else{
-			$.ajaxSettings.traditional = true;
-			$.ajax({
-			    url: "/order/selectlist",
-			    type: "POST",
-			    data: { "indexArray" : indexArray },
-			    success : function(){
-			     	location = '/order/selectlist';
-			    },
-			    error : function(){
-			    	alert("상품을 선택해주세요!");	
-			    }
-			  });
-			
-		}
-	}
 	
 function checkBtn(){
 		
@@ -318,7 +290,6 @@ function allcheckBtn(){
 	for(var i=0;i<${listSize};i++){
 		indexArray[i] = i;
 		console.log('yes');
-		
 	}
 		
 	console.log(indexArray);

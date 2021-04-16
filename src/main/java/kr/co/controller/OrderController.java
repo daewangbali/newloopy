@@ -35,6 +35,11 @@ public class OrderController {
 		log.info("selectlist get................");
 	}
 	
+	@GetMapping("/orderGoodsForm")
+	public void orderGoodsForm() {
+		log.info("orderGoodsForm get................");
+	}
+	
 	@PostMapping("/selectlist" )
 	@ResponseBody
 	public String selectList(CartVO cart, BookVO book,Model model,HttpSession session,

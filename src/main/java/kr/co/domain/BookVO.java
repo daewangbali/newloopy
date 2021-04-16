@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class BookVO implements Serializable {
+	
 	private int book_id ,book_price ;
 	private String fileName, book_title ,book_writer,book_publisher, 
 			book_kategorie,book_intro;
