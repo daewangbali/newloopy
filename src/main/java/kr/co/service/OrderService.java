@@ -9,5 +9,6 @@ public interface OrderService {
 	
 	public List<CartVO> readCartList(int user_number);
 	public List<BookVO> readBookList(int user_number);
+	public BookVO readOneBook(int book_id);
 
 }

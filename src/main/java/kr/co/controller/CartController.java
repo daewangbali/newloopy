@@ -1,5 +1,8 @@
 package kr.co.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -100,6 +103,30 @@ public class CartController {
 		log.info("book_id : " + book_id);
 		cartService.remove(book_id);
 //		String referer = request.getHeader("referer");
+		return "redirect:/cart/list";
+
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/selectRemove")
+	public String selectRemove(@RequestParam List<Integer> indexArray,HttpServletRequest request
+			, HttpSession session) {
+		log.info("selectRemove...............");
+		int user_number = (int)session.getAttribute("user_number");
+		List<Integer> newbook_id= new ArrayList<Integer>();
+		//받아온 index 확인
+		for(int i=0;i<indexArray.size();i++) {
+			if(indexArray.get(i) != null) {
+				log.info("book_id : " + cartService.readCartList(user_number).get(i).getBook_id());
+				newbook_id.add(cartService.readCartList(user_number).get(i).getBook_id());
+			}
+		}
+		for(int i=0;i<newbook_id.size();i++) {
+			cartService.remove(newbook_id.get(i));
+		}
+		
+
 		return "redirect:/cart/list";
 
 	}

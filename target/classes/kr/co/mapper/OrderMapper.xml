@@ -16,5 +16,13 @@
 		where c.user_number = u.user_number and
 		b.book_id = c.book_id and c.user_number=#{c.user_number}
 	</select>
+	
+	<select id="getOneBook" resultType="kr.co.domain.BookVO">
+		select * from tbl_book where book_id = #{book_id}
+	</select>
+	
+	
+	
+	
 
 </mapper>

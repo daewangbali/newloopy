@@ -45,6 +45,15 @@ public class OrderServiceTest {
 			log.info(bookVO);
 		}
 	}
+	
+	@Test
+	public void readOneBookTest() {
+		log.info("readOneBookTest()................");
+		BookVO bookVO = new BookVO();
+		;
+		log.info(os.readOneBook(1));
+		log.info(bookVO);
+	}
 
 
 }

@@ -35,9 +35,9 @@ public class OrderController {
 		log.info("selectlist get................");
 	}
 	
-	@GetMapping("/orderGoodsForm")
-	public void orderGoodsForm() {
-		log.info("orderGoodsForm get................");
+	@GetMapping("/oneBookOrder")
+	public void getoneBookOrder() {
+		log.info("oneBookOrder get................");
 	}
 	
 	@PostMapping("/selectlist" )
@@ -67,6 +67,23 @@ public class OrderController {
 		session.setAttribute("newBookList", newBookList);
 		
 		return "/order/selectlist";
+	}
+	
+	@ResponseBody
+	@PostMapping("/oneBookOrder" )
+	public void oneBookOrder(Model model,HttpSession session,
+			@RequestParam("cartAmount")int cartAmount,@RequestParam("book_id")int book_id) {
+		log.info("oneItemOrder....................");
+		int user_number = (int)session.getAttribute("user_number");
+
+		log.info("book_id : " + book_id);
+		log.info("cartAmount : " + cartAmount);
+		
+		model.addAttribute("user_numer", user_number);
+		model.addAttribute("cartAmount", cartAmount);
+		model.addAttribute("bookVO", orderService.readOneBook(book_id));
+		session.setAttribute("cartAmount", cartAmount);
+		session.setAttribute("bookVO", orderService.readOneBook(book_id));
 	}
 	
 	

@@ -120,10 +120,15 @@ function down(val){
 							<strong><fmt:formatNumber value="${bookList.book_price * cartList[status.index].amount  }" type="currency"></fmt:formatNumber></strong>
 							<input type="hidden" name ="totalPrice" value="${bookList.book_price * cartList[status.index].amount  }">
 						</td>
-						<td class="button"><a href="javascript:;"
-							onclick="Basket.orderBasketItem(0);" class="btntype6">주문하기</a>
-							
-							<a href="javascript:;" onclick="cart(${bookList.book_id })" >삭제</a>
+						
+						<td>
+							<span class="btn-group-vertical">
+								<input id="index${status.index }" name="index" value="${status.index }"type="hidden">		
+								<a href="javascript:;" class="btn btn-outline-secondary btn-sm"
+								onclick="oneBookOrder(${bookList.book_id },cartAmount${status.index })" >주문하기</a>
+								
+								<a href="javascript:;" class="btn btn-outline-secondary btn-sm" onclick="cart(${bookList.book_id })" >삭제</a>
+							</span>
 						</td>	
 					</tr>
 					<c:set var="sum" value="${sum + (bookList.book_price * cartList[status.index].amount )}" />
@@ -144,7 +149,7 @@ function down(val){
 			</table>
 			</form>
 		</div>
-		<button style="border:1px; border-color: b4b4b4;" onclick="allcheckBtn()"> 선택상품 삭제하기</button>
+		<button style="border:1px; border-color: b4b4b4;" onclick="selectRemoveBtn()"> 선택상품 삭제하기</button>
 		<br>
 		<!-- 주문 버튼 -->
 		<div class="xans-element- xans-order xans-order-totalorder" align="center" >
@@ -194,6 +199,7 @@ function down(val){
 
 <script type="text/javascript">
 
+//한개 목록 삭제 버튼 눌렀을 때
 function cart(id){
 	var book_id = id;
 	var actionForm = $("#actionForm");
@@ -215,16 +221,7 @@ function cart(id){
 	});
 }	
 
-function cart2(){
-	var actionForm = $("#actionForm");
-    $('#cart_modal_body').html("선택하신 상품을 삭제하시겠습니까?");
-	$('#cartDelete_modal').modal('show');
-	
-	$('#deleteBtn').click(function(e) {
-		actionForm.attr("action", "/cart/remove").attr("method", "post");
-		actionForm.submit();
-	});
-}	
+// 수량 수정	
 function modifyAmount(id,amount){
 	var book_id = id;
 	var cartAmount = amount;
@@ -241,6 +238,7 @@ function modifyAmount(id,amount){
 	  });	
 }
 
+//수량 플러스 마이너스로 수정
 function modifyAmount2(id,amount){
 	var book_id = id;
 	var cartAmount = amount.value;
@@ -257,18 +255,7 @@ function modifyAmount2(id,amount){
 	  });	
 }
 
-function setAmount(choice){
-	
-	if(choice === 'up'){
-		var amount = $('#cartAmount').val()
-		amount *= 1;
-		++amount;
-		
-		
-		
-	}
-}
-
+// 선택상품 주문
 function checkBtn(){
 	
 	var indexArray = [];
@@ -297,37 +284,86 @@ function checkBtn(){
 		    	alert("상품을 선택해주세요!");	
 		    }
 		  });
-		
-	
 }
 
-
+// 전체상품 주문
 function allcheckBtn(){
 
-var indexArray = [];
-
-for(var i=0;i<${listSize};i++){
-	indexArray[i] = i;
-	console.log('yes');
-}
+	var indexArray = [];
 	
-console.log(indexArray);
+	for(var i=0;i<${listSize};i++){
+		indexArray[i] = i;
+		console.log('yes');
+	}
+		
+	console.log(indexArray);
+	
+		$.ajaxSettings.traditional = true;
+		$.ajax({
+		    url: "/order/selectlist",
+		    type: "POST",
+		    data: { "indexArray" : indexArray },
+		    success : function(){
+		     	location = '/order/selectlist';
+		    },
+		    error : function(){
+		    	alert("상품을 선택해주세요!");	
+		    }
+		  });
+	
 
+}
+
+//목록에서 한개의 상품 옆 주문하기 눌렀을 때
+function oneBookOrder(id,amount){
+	var book_id = id;
+	var cartAmount = amount.value;
 	$.ajaxSettings.traditional = true;
-	$.ajax({
-	    url: "/order/selectlist",
-	    type: "POST",
-	    data: { "indexArray" : indexArray },
-	    success : function(){
-	     	location = '/order/selectlist';
-	    },
-	    error : function(){
-	    	alert("상품을 선택해주세요!");	
-	    }
-	  });
+		$.ajax({
+		    url: "/order/oneBookOrder",
+		    type: "POST",
+		    data: { "book_id" : book_id , "cartAmount" : cartAmount },
+		    success : function(){
+		     	location = '/order/oneBookOrder';
+		    },
+		    error : function(){
+		    	alert("!!!!!!");	
+		    }
+		  });
+}	
+// 선택상품 삭제하기
+function selectRemoveBtn(){
 	
-
+var indexArray = [];
+	
+	for(var i=0;i<${listSize};i++){
+		if(($('#checkBox${status.index}'+i)).prop("checked")){
+			indexArray[i] = i;
+			console.log('yes');
+			
+		}else{
+			continue;
+		}
+	}
+		
+	console.log(indexArray);
+	
+		$.ajaxSettings.traditional = true;
+		$.ajax({
+		    url: "/cart/selectRemove",
+		    type: "POST",
+		    data: { "indexArray" : indexArray },
+		    success : function(){
+		     	location = '/cart/list';
+		    },
+		    error : function(){
+		    	alert("상품을 선택해주세요!");	
+		    }
+		  });
 }
+
+
+
 	
 </script>
 

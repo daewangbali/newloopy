@@ -44,5 +44,14 @@ public class OrderMapperTest {
 			log.info(bookVO);
 		}
 	}
+	
+
+	@Test
+	public void getOneBookTest() {
+		log.info("getOne()................");
+		BookVO bookVO = new BookVO();
+		bookVO.setBook_id(1);
+		log.info(ordermapper.getOneBook(bookVO.getBook_id()));
+	}
 
 }
