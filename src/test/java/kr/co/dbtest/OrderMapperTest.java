@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import kr.co.domain.BookVO;
 import kr.co.domain.CartVO;
+import kr.co.domain.OrderVO;
 import kr.co.mapper.OrderMapper;
 import lombok.extern.log4j.Log4j2;
 
@@ -20,6 +21,18 @@ public class OrderMapperTest {
 	
 	@Autowired
 	OrderMapper ordermapper;
+	
+	@Test
+	public void getListTest() {
+		log.info("getListTest()................");
+		OrderVO order = new OrderVO();
+		order.setUser_number(1);
+		List<OrderVO> list = ordermapper.getList(order.getUser_number());
+
+		for (OrderVO ordervo : list) {
+			log.info(ordervo);
+		}
+	}
 	
 	@Test
 	public void readCartListTest() {
@@ -47,11 +60,67 @@ public class OrderMapperTest {
 	
 
 	@Test
-	public void getOneBookTest() {
-		log.info("getOne()................");
-		BookVO bookVO = new BookVO();
-		bookVO.setBook_id(1);
-		log.info(ordermapper.getOneBook(bookVO.getBook_id()));
+	public void insertPayByCard() {
+		log.info("insertPayByCard Test()................");
+		OrderVO order = new OrderVO();
+		order.setBook_id(1);
+		order.setOrder_number(1);
+		order.setUser_number(1);
+		order.setOrder_amount(1);
+		order.setOrder_price(15000);
+		order.setOrderer_name("루피");
+		order.setOrderer_hp1("010");
+		order.setOrderer_hp2("1234");
+		order.setOrderer_hp3("5678");
+		order.setOrder_name("루피친구");
+		order.setOrder_hp1("010");
+		order.setOrder_hp2("1111");
+		order.setOrder_hp3("5555");
+		order.setOrder_zipcode("11100");
+		order.setOrder_roadAddress("임방울대로");
+		order.setOrder_jibunAddress("운남동");
+		order.setOrder_namujiAddress("2층");
+		order.setOrder_message("빠른배송");
+		order.setPayment_method("카드");
+		order.setCard_name("신한카드");
+		order.setCard_installment("3개월");
+		order.setDelivery_status("주문완료");
+		
+		ordermapper.insertPayByCard(order);
+		log.info(order);
 	}
+	
+	@Test
+	public void insertPayInCash() {
+		log.info("insertPayInCash Test()................");
+		OrderVO order = new OrderVO();
+		
+		order.setBook_id(1);
+		order.setOrder_number(1);
+		order.setUser_number(1);
+		order.setOrder_amount(1);
+		order.setOrder_price(15000);
+		order.setOrderer_name("루피");
+		order.setOrderer_hp1("010");
+		order.setOrderer_hp2("1234");
+		order.setOrderer_hp3("5678");
+		order.setOrder_name("루피친구");
+		order.setOrder_hp1("010");
+		order.setOrder_hp2("1111");
+		order.setOrder_hp3("5555");
+		order.setOrder_zipcode("11100");
+		order.setOrder_roadAddress("임방울대로");
+		order.setOrder_jibunAddress("운남동");
+		order.setOrder_namujiAddress("2층");
+		order.setOrder_message("빠른배송");
+		order.setDeposit_name("루피");
+		order.setPayment_method("계좌이체");
+		order.setDelivery_status("주문완료");
+		
+		ordermapper.insertPayInCash(order);
+		log.info(order);
+	}
+	
+	
 
 }

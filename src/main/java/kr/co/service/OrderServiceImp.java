@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.domain.BookVO;
 import kr.co.domain.CartVO;
+import kr.co.domain.OrderVO;
 import kr.co.mapper.OrderMapper;
 
 @Service
@@ -24,9 +25,28 @@ public class OrderServiceImp implements OrderService {
 	public List<BookVO> readBookList(int user_number) {
 		return orderMapper.getBookList(user_number);
 	}
+	
+	@Override
+	public List<OrderVO> readList(int user_number) {
+		return orderMapper.getList(user_number);
+	}
 
 	@Override
 	public BookVO readOneBook(int book_id) {
 		return orderMapper.getOneBook(book_id);
 	}
+
+	@Override
+	public void registerPayByCard(OrderVO order) {
+		orderMapper.insertPayByCard(order);
+		
+	}
+
+	@Override
+	public void registerPayInCash(OrderVO order) {
+		orderMapper.insertPayInCash(order);
+		
+	}
+
+	
 }

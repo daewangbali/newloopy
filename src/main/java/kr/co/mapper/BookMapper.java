@@ -3,6 +3,7 @@ package kr.co.mapper;
 import java.util.List;
 
 import kr.co.domain.BookVO;
+import kr.co.domain.OrderVO;
 
 public interface BookMapper {
 	

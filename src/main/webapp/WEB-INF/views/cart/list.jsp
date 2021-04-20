@@ -359,7 +359,7 @@ var indexArray = [];
 		    error : function(){
 		    	alert("상품을 선택해주세요!");	
 		    }
-		  });
+		});
 }
 
 
