@@ -11,6 +11,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.domain.BookVO;
 import kr.co.domain.CartVO;
+import kr.co.domain.OrderVO;
+import kr.co.domain.UserVO;
 import kr.co.service.OrderService;
 import lombok.extern.log4j.Log4j2;
 
@@ -84,6 +87,30 @@ public class OrderController {
 		model.addAttribute("bookVO", orderService.readOneBook(book_id));
 		session.setAttribute("cartAmount", cartAmount);
 		session.setAttribute("bookVO", orderService.readOneBook(book_id));
+	}
+	
+	@PostMapping("/orderCompleted" )
+	public String orderCompleted(Model model,HttpSession session,
+			@RequestParam("book_id")List<Integer> book_id_list, @ModelAttribute("order") OrderVO order) {
+		log.info("orderCompleted....................");
+		int user_number = (int)session.getAttribute("user_number");
+		order.setDelivery_status("주문완료");
+		order.setOrder_amount(book_id_list.size());
+		order.setOrder_number(order.getOrder_number()+1);
+		order.setUser_number(user_number);
+		
+		for(int i=0;i<book_id_list.size();i++) {
+			int book_id = book_id_list.get(i);
+			order.setBook_id(book_id);
+			if(order.getPayment_method().equals("카드")) {
+				orderService.registerPayByCard(order);
+			}else if(order.getPayment_method().equals("무통장입금")) {
+				orderService.registerPayInCash(order);
+			}
+		}
+		
+		
+		return "/order/orderCompleted";
 	}
 	
 	

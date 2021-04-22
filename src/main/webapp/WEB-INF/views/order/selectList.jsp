@@ -92,19 +92,20 @@
 
 						</tr>
 					</thead>
-
+					
+					
+					
 					<tbody class="xans-element- xans-order xans-order-list">
-						
 							<c:set var="sum" value="0" />
 							<c:forEach items="${newBookList }" var="newBookList" varStatus="status">
-
+								<input type="hidden" name="newBookList" value="${newBookList }">
 								<tr class="xans-record-">
 
 									<td><a><img style="width: 110px;"
 											src="${newBookList.fileName}"></a></td>
 									<td>
 										<p>${newBookList.book_title }</p> <input type="hidden"
-										name="book_id" id="book_id" value="${newBookList.book_id }">
+										name="book_id_list" id="book_id${statis.index }" value="${newBookList.book_id }">
 									</td>
 									<td>
 										<p>
@@ -176,15 +177,15 @@
 					<tr>
 						<th scope="row"><div class="txt-l">이름</div></th>
 						<td>
-						<input type="text" name="sender" form="order_form"
+						<input type="text" name="orderer_name" form="order_form"
 							id="sender" class="MS_input_txt" value="">
 						</td>
 					</tr>
 					
 					<tr>
 						<th scope="row"><div class="txt-l">연락처</div></th>
-						<td><select name="emergency11" form="order_form"
-							id="emergency11" class="MS_select MS_tel">
+						<td><select name="orderer_hp1" form="order_form"
+							id="orderer_hp1" class="MS_select MS_tel">
 								<option value="">선택</option>
 								<option value="010">010</option>
 								<option value="011">011</option>
@@ -217,9 +218,9 @@
 								<option value="0508">0508</option>
 								<option value="070">070</option>
 								<option value="080">080</option>
-						</select> - <input type="text" name="emergency12" form="order_form"
+						</select> - <input type="text" name="orderer_hp2" form="order_form"
 							id="emergency12" size="4" maxlength="4" class="MS_input_txt w60"
-							value=""> - <input type="text" name="emergency13"
+							value=""> - <input type="text" name="orderer_hp3"
 							form="order_form" id="emergency13" size="4" maxlength="4"
 							minlength="4" class="MS_input_txt w60" value=""></td>
 					</tr>
@@ -253,13 +254,13 @@
 				<tbody>
 					<tr>
 						<th scope="row"><div class="txt-l">이름</div></th>
-						<td><input type="text" name="receiver" form="order_form"
-							id="receiver" class="MS_input_txt" value=""></td>
+						<td><input type="text" name="order_name" form="order_form"
+							id="order_name" class="MS_input_txt" value=""></td>
 					</tr>
 					<tr>
 						<th scope="row"><div class="txt-l">연락처 </div></th>
-						<td><select name="emergency21" form="order_form"
-							id="emergency21" class="MS_select MS_tel">
+						<td><select name="order_hp1" form="order_form"
+							id="order_hp1" class="MS_select MS_tel">
 								<option value="">선택</option>
 								<option value="010">010</option>
 								<option value="011">011</option>
@@ -292,10 +293,10 @@
 								<option value="0508">0508</option>
 								<option value="070">070</option>
 								<option value="080">080</option>
-						</select> - <input type="text" name="emergency22" form="order_form"
-							id="emergency22" size="4" maxlength="4" class="MS_input_txt w60"
-							value=""> - <input type="text" name="emergency23"
-							form="order_form" id="emergency23" size="4" maxlength="4"
+						</select> - <input type="text" name="order_hp2" form="order_form"
+							id="order_hp2" size="4" maxlength="4" class="MS_input_txt w60"
+							value=""> - <input type="text" name="order_hp3"
+							form="order_form" id="order_hp3" size="4" maxlength="4"
 							minlength="4" class="MS_input_txt w60" value=""></td>
 					</tr>
 					
@@ -305,10 +306,10 @@
 					<input type="text" name="user_zipcode"
 						id="sample4_postcode" placeholder="우편번호" style="vertical-align: 2px"> 
 						<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-						<input type="text" name="user_roadAddress" id="sample4_roadAddress" placeholder="도로명주소"> 
-						<input type="text" name="user_jibunAddress" id="sample4_jibunAddress" placeholder="지번주소"> 
+						<input type="text" name="order_roadAddress" id="sample4_roadAddress" placeholder="도로명주소"> 
+						<input type="text" name="order_jibunAddress" id="sample4_jibunAddress" placeholder="지번주소"> 
 						<span id="guide" style="color: #999; display: none"></span> 
-						<input type="text" name="user_namujiAddress" id="sample4_detailAddress" placeholder="상세주소">
+						<input type="text" name="order_namujiAddress" id="sample4_detailAddress" placeholder="상세주소">
 						</td>
 					</tr>
 					<tr>
@@ -316,7 +317,7 @@
 								주문메세지<br>
 								<span>(100자내외)</span>
 							</div></th>
-						<td><textarea name="message" form="order_form" id="message"
+						<td><textarea name="order_message" form="order_form" id="order_message"
 								cols="50" rows="5" class="MS_textarea"></textarea></td>
 					</tr>
 				</tbody>
@@ -387,25 +388,24 @@
 		<div class="payArea">
 			<div class="payment">
 				<div class="method">
-					<span class="ec-base-label"><input id="addr_paymethod0"
-						name="addr_paymethod" fw-filter="isFill" fw-label="결제방식" fw-msg=""
-						value="cash" type="radio" checked="checked"><label
-						for="addr_paymethod0">무통장 입금   </label></span> <span class="ec-base-label"><input
-						id="addr_paymethod1" name="addr_paymethod" fw-filter="isFill"
+					<span class="ec-base-label"><input id="paymethod_cash"
+						name="paymethod_cash" fw-filter="isFill" fw-label="결제방식" fw-msg=""
+						value="cash" type="radio" ><label
+						for="addr_paymethod0">무통장 입금   </label></span> 
+						<span class="ec-base-label"><input
+						id="paymethod_card" name="paymethod_card" fw-filter="isFill"
 						fw-label="결제방식" fw-msg="" value="card" type="radio"><label
-						for="addr_paymethod1">카드 결제   </label></span> <span class="ec-base-label"><input
-						id="addr_paymethod5" name="addr_paymethod" fw-filter="isFill"
-						fw-label="결제방식" fw-msg="" value="cell" type="radio"><label
-						for="addr_paymethod5">휴대폰 결제</label></span>
+						for="addr_paymethod1" >카드 결제    </label></span> 
 				</div>
-
-				<div class="info">
+		<input type="hidden" id="payment_method"  value="무통장입금">	
+				<div class="info" id="payInCash" >
+					
 					<!-- 무통장입금 -->
 					<table>
 						<tbody>
 							<tr>
 								<th scope="row">입금자명</th>
-								<td><input id="pname" name="pname" fw-filter=""
+								<td><input id="deposit_name" name="deposit_name" fw-filter=""
 									fw-label="무통장 입금자명" fw-msg="" class="inputTypeText"
 									placeholder="" size="15" maxlength="20" value="" type="text"></td>
 							</tr>
@@ -419,18 +419,39 @@
 							</tr>
 						</tbody>
 					</table>
-					<!-- //무통장입금 -->
-					<!-- 실시간 계좌이체 -->
-					<table border="1" summary="" id="payment_input_tcash"
-						style="display: none;">
-
-						<tbody>
-							<tr>
-								<th scope="row">예금주명</th>
-								<td></td>
-							</tr>
-						</tbody>
+				</div>	
+				<div class="info" id="payByCard">
+					
+					<table>
+						<tr>
+						<td>
+						  <strong>카드 선택<strong>:&nbsp;&nbsp;&nbsp;
+						  <select id="card_name" name="card_name">
+								<option value="삼성" selected>삼성</option>
+								<option value="하나SK">하나SK</option>
+								<option value="현대">현대</option>
+								<option value="KB">KB</option>
+								<option value="신한">신한</option>
+								<option value="롯데">롯데</option>
+								<option value="BC">BC</option>
+								<option value="시티">시티</option>
+								<option value="NH농협">NH농협</option>
+						</select>
+						<br>
+						<strong>할부 기간:<strong>  &nbsp;&nbsp;&nbsp;
+						<select id="card_installment" name="card_installment">
+								<option value="일시불" selected>일시불</option>
+								<option value="2개월">2개월</option>
+								<option value="3개월">3개월</option>
+								<option value="4개월">4개월</option>
+								<option value="5개월">5개월</option>
+								<option value="6개월">6개월</option>
+						</select>
+						
+						</td>
+					</tr>
 					</table>
+				</div>	
 					
 				</div>
 
@@ -451,8 +472,8 @@
 					<strong id="current_pay_name">무통장 입금</strong> <span>최종 결제 금액</span>
 				</h4>
 				<h5 class="price">
-				
-					<span></span><fmt:formatNumber value="${sum}"></fmt:formatNumber><strong>원</strong>
+					<input type="hidden" name="order_price" id="order_price" value="${sum < 30000 ? sum+2500 : sum }">
+					<span></span><fmt:formatNumber value="${sum < 30000 ? sum+2500 : sum }"></fmt:formatNumber><strong>원</strong>
 				</h5>
 				<p class="paymentAgree" id="chk_purchase_agreement" style="">
 					<input id="chk_purchase_agreement0" name="chk_purchase_agreement"
@@ -461,7 +482,7 @@
 						for="chk_purchase_agreement0">결제정보를 확인하였으며, 구매진행에 동의합니다.</label>
 				</p>
 				<div class="d-grid gap-2 col-6 mx-auto">
- 				 <button class="btn btn-primary" style="width:40%; background-color: pink ;border: 0; color: black" type="button">결제하기</button>
+ 				 <button class="btn btn-primary" id="orderBtn" style="width:40%; background-color: pink ;border: 0; color: black" type="button">결제하기</button>
 </div>
 
 			</div>
@@ -476,11 +497,52 @@
 
 		<!-- 크로스 브라우징 지원 -->
 		
-	</div>
 </div>
 
 
+<script type="text/javascript">
 
+$(document).ready(function() {
+	
+	var actionForm = $("#actionForm");
+	
+	$('#payByCard').css('display', 'none'); //display 'none'은= div가 보이지않는!
+    $('#payInCash').css('display', 'block');
 
+	$('input:radio[id="paymethod_cash"]').prop('checked', true);
+
+			
+	$('input:radio[id="paymethod_card"]').click(function(e) {
+		$('input:radio[id="paymethod_card"]').prop('checked', true);
+		$('input:radio[id="paymethod_cash"]').prop('checked', false);
+
+		$('#payInCash').css('display', 'none'); //display 'none'은= div가 보이지않는!
+        $('#payByCard').css('display', 'block');
+        document.getElementById("payment_method").value = "카드";
+		console.log($('#payment_method').val());
+	});
+	
+	$('input:radio[id="paymethod_cash"]').click(function(e) {
+		$('input:radio[id="paymethod_cash"]').prop('checked', true);
+		$('input:radio[id="paymethod_card"]').prop('checked', false);
+
+		$ ('#payInCash').show();
+	    $ ('#payByCard').hide(); //클릭 시 첫 번째 요소 숨김
+	    document.getElementById("payment_method").value  = "무통장입금";
+	    console.log($('#payment_method').val());
+	});
+	
+	
+	
+	
+	//주문하기 버튼 클릭시
+	$('#orderBtn').click(function(e) {
+		actionForm.attr("action", "/order/orderCompleted").attr("method", "post");
+		actionForm.submit();
+	});
+
+});
+
+</script>
 
 <%@ include file="../includes/footer.jsp"%>
