@@ -26,19 +26,19 @@
 	</select>
 	
 	<insert id="insertPayByCard">
-		insert into tbl_order(order_number,user_number,book_id,order_amount,order_price,orderer_name,orderer_hp1,orderer_hp2,orderer_hp3, 
+		insert into tbl_order(order_number,user_number,order_price,orderer_name,orderer_hp1,orderer_hp2,orderer_hp3, 
 			order_name,order_hp1,order_hp2,order_hp3,order_zipcode,order_roadAddress,order_jibunAddress,order_namujiAddress,order_message, 
 			payment_method,card_name,card_installment,delivery_status,order_credate)  
-		values (#{order_number},#{user_number},#{book_id},#{order_amount},#{order_price},#{orderer_name},#{orderer_hp1},#{orderer_hp2},#{orderer_hp3},#{order_name},#{order_hp1},#{order_hp2},#{order_hp3},
+		values (seq_order.nextval,#{user_number},#{order_price},#{orderer_name},#{orderer_hp1},#{orderer_hp2},#{orderer_hp3},#{order_name},#{order_hp1},#{order_hp2},#{order_hp3},
 			#{order_zipcode},#{order_roadAddress},#{order_jibunAddress},#{order_namujiAddress},#{order_message}, #{payment_method},
 			#{card_name}, #{card_installment},#{delivery_status}, default )
 	</insert>
 	
 	<insert id="insertPayInCash">
-		insert into tbl_order(order_number,user_number,book_id,order_amount,order_price,orderer_name,orderer_hp1,orderer_hp2,orderer_hp3, 
+		insert into tbl_order(order_number,user_number,order_price,orderer_name,orderer_hp1,orderer_hp2,orderer_hp3, 
 			order_name,order_hp1,order_hp2,order_hp3,order_zipcode,order_roadAddress,order_jibunAddress,order_namujiAddress,order_message, 
 			payment_method,deposit_name, delivery_status,order_credate)  
-		values (#{order_number},#{user_number},#{book_id},#{order_amount},#{order_price},#{orderer_name},#{orderer_hp1},#{orderer_hp2},#{orderer_hp3},#{order_name},#{order_hp1},#{order_hp2},#{order_hp3},
+		values (seq_order.nextval,#{user_number},#{order_price},#{orderer_name},#{orderer_hp1},#{orderer_hp2},#{orderer_hp3},#{order_name},#{order_hp1},#{order_hp2},#{order_hp3},
 			#{order_zipcode},#{order_roadAddress},#{order_jibunAddress},#{order_namujiAddress},#{order_message}, #{payment_method},
 			#{deposit_name} ,#{delivery_status}, default )
 	</insert>

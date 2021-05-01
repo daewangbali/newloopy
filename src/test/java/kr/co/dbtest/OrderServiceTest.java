@@ -72,10 +72,10 @@ public class OrderServiceTest {
 	public void registerPayByCard() {
 		log.info("registerPayByCard Test()................");
 		OrderVO order = new OrderVO();
-		order.setBook_id(1);
+		
 		order.setOrder_number(1);
 		order.setUser_number(1);
-		order.setOrder_amount(1);
+		
 		order.setOrder_price(15000);
 		order.setOrderer_name("루피");
 		order.setOrderer_hp1("010");
@@ -104,10 +104,8 @@ public class OrderServiceTest {
 		log.info("registerPayInCash Test()................");
 		OrderVO order = new OrderVO();
 		
-		order.setBook_id(1);
 		order.setOrder_number(1);
 		order.setUser_number(1);
-		order.setOrder_amount(1);
 		order.setOrder_price(15000);
 		order.setOrderer_name("루피");
 		order.setOrderer_hp1("010");

@@ -89,6 +89,7 @@ public class OrderController {
 		session.setAttribute("bookVO", orderService.readOneBook(book_id));
 	}
 	
+	/*
 	@PostMapping("/orderCompleted" )
 	public String orderCompleted(Model model,HttpSession session,
 			@RequestParam("book_id")List<Integer> book_id_list, @ModelAttribute("order") OrderVO order) {
@@ -113,6 +114,7 @@ public class OrderController {
 		return "/order/orderCompleted";
 	}
 	
+	*/
 	
 	/*
 	@GetMapping("/selectlist" )
