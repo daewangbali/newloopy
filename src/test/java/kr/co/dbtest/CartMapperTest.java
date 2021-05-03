@@ -108,10 +108,10 @@ public class CartMapperTest {
 	public void deleteTest() {
 		log.info("deleteTest...............");
 		CartVO cvo = new CartVO();
-		cvo.setBook_id(15);
+		cvo.setUser_number(1);
 		
 		log.info(cvo);
-		log.info(cartMapper.delete(cvo.getBook_id()));
+		log.info(cartMapper.delete(cvo.getUser_number()));
 	}
 	
 	@Test

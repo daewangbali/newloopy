@@ -7,7 +7,12 @@
 
 	<select id="getList" resultType="kr.co.domain.UserVO">
 		select * from tbl_user
-	</select>	
+	</select>
+	
+	<select id="getUser" resultType="kr.co.domain.UserVO">
+		select * from tbl_user where user_number = ${user_number}
+	</select>
+		
 
 	<insert id="insert">
 		insert into tbl_user (user_number,user_id, user_pw, user_name, user_email,user_hp1,user_hp2,user_hp3,user_zipcode, user_roadAddress, user_jibunAddress, user_namujiAddress, 

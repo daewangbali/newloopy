@@ -55,7 +55,7 @@
 	</update>
 	
 	<delete id="delete">
-		delete from tbl_cart where book_id = #{book_id}
+		delete from tbl_cart where user_number = #{user_number}
 	</delete>
 
 </mapper>

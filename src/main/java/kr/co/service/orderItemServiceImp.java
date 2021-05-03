@@ -3,11 +3,13 @@ package kr.co.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import kr.co.domain.OrderItemVO;
 import kr.co.mapper.OrderItemMapper;
 
-public class orderItemServiceImp implements orderItemService {
+@Service
+public class OrderItemServiceImp implements OrderItemService {
 	
 	@Autowired
 	private OrderItemMapper orderItemMapper ;

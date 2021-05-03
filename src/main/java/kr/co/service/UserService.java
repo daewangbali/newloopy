@@ -8,6 +8,8 @@ public interface UserService {
 	
 	public List<UserVO> getList();
 	
+	public UserVO readUser(int user_number);
+	
 	public void join(UserVO user);
 	
 	public boolean idcheck(String user_id);

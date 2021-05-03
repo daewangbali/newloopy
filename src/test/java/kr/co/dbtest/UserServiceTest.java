@@ -30,6 +30,13 @@ public class UserServiceTest {
 			log.info(userVO);
 		}
 	}
+	@Test
+	public void readUserTest() {
+		log.info("readUserTest.....................");
+		UserVO vo = us.readUser(41);
+		log.info(vo);
+		
+	}
 	
 	@Test
 	public void joinTest() {

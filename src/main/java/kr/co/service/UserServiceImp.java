@@ -18,6 +18,13 @@ public class UserServiceImp implements UserService{
 	public List<UserVO> getList() {
 		return usermapper.getList();
 	}
+	
+	@Override
+	public UserVO readUser(int user_number) {
+		return usermapper.getUser(user_number);
+	}
+	
+	
 
 	@Override
 	public void join(UserVO user) {

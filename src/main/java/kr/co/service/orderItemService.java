@@ -4,7 +4,7 @@ import java.util.List;
 
 import kr.co.domain.OrderItemVO;
 
-public interface orderItemService {
+public interface OrderItemService {
 	
 	public List<OrderItemVO> readList(int order_number);
 	

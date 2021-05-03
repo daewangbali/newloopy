@@ -32,6 +32,15 @@ public class UserMapperTest {
 			log.info(userVO);
 		}
 	}
+	
+	@Test
+	public void getUserListTest() {
+		log.info("getUserListTest.....................");
+		UserVO vo = um.getUser(41);
+
+		log.info(vo);
+		
+	}
 
 	@Test
 	public void insertTest() {
@@ -91,7 +100,7 @@ public class UserMapperTest {
 	public void updateTest() {
 		log.info("updateTest......................");
 		UserVO vo = new UserVO();
-		vo.setUser_id("admin2");
+		vo.setUser_id("admin33");
 		vo.setUser_pw("1111");
 		vo.setUser_name("정강정22");
 		vo.setUser_email("admin2@loopy.com");

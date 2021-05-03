@@ -8,6 +8,9 @@ public interface UserMapper {
 	
 	public List<UserVO> getList();
 	
+	//로그인 정보
+	public UserVO getUser(int user_number);
+	
 	public void insert(UserVO user);
 	
 //	public void insertSelectKey(UserVO user);

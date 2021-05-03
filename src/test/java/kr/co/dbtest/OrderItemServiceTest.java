@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import kr.co.domain.BookVO;
 import kr.co.domain.OrderItemVO;
-import kr.co.service.orderItemService;
+import kr.co.service.OrderItemService;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -19,7 +19,7 @@ import lombok.extern.log4j.Log4j2;
 public class OrderItemServiceTest {
 	
 	@Autowired
-	orderItemService orderItemService;
+	OrderItemService orderItemService;
 	
 	@Test
 	public void getListTest() {

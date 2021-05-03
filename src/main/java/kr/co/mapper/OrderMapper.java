@@ -20,5 +20,6 @@ public interface OrderMapper {
 	public void insertPayByCard(OrderVO order);
 	// 주문하기-현금
 	public void insertPayInCash(OrderVO order);
+	
 
 }

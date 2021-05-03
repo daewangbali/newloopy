@@ -25,7 +25,7 @@ public interface CartMapper {
 	public int amountUpdate(CartVO cart);
 	
 	//장바구니에서 삭제
-	public int delete(int book_id);
+	public int delete(int user_number);
 
 	//장바구니 리스트 불러오기
 	public List<CartVO> getCartList(int user_number);

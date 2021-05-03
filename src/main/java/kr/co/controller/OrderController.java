@@ -20,9 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.domain.BookVO;
 import kr.co.domain.CartVO;
+import kr.co.domain.OrderItemVO;
 import kr.co.domain.OrderVO;
 import kr.co.domain.UserVO;
+import kr.co.service.CartService;
+import kr.co.service.OrderItemService;
 import kr.co.service.OrderService;
+import kr.co.service.UserService;
 import lombok.extern.log4j.Log4j2;
 
 @Controller
@@ -30,8 +34,20 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/order/*")
 public class OrderController {
 	
+	List<BookVO> orderlist = new ArrayList<BookVO>();
+	List<CartVO> orderAmountlist = new ArrayList<CartVO>();
+	
+	@Autowired
+	UserService userService;
+	
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	OrderItemService orderItemService;
+	
+	@Autowired
+	CartService cartService;
 	
 	@GetMapping("/selectlist")
 	public void getselectlist() {
@@ -43,12 +59,19 @@ public class OrderController {
 		log.info("oneBookOrder get................");
 	}
 	
+	@GetMapping("/orderCompleted")
+	public void orderCompleted() {
+		log.info("orderCompleted get................");
+	}
+	
 	@PostMapping("/selectlist" )
 	@ResponseBody
 	public String selectList(CartVO cart, BookVO book,Model model,HttpSession session,
 			@RequestParam List<Integer> indexArray) {
 		log.info("selectList....................");
 		int user_number = (int)session.getAttribute("user_number");
+		
+		UserVO user = userService.readUser(user_number);
 		
 		//새로 담을 리스트 
 		List<CartVO> newCartList = new ArrayList<CartVO>();
@@ -63,12 +86,16 @@ public class OrderController {
 			}
 		}
 		
+		orderlist = newBookList;
+		orderAmountlist = newCartList;
+		
 		model.addAttribute("user_numer", user_number);
 		model.addAttribute("newCartList", newCartList);
 		model.addAttribute("newBookList", newBookList);
+		model.addAttribute("user", user);
 		session.setAttribute("newCartList", newCartList);
 		session.setAttribute("newBookList", newBookList);
-		
+		session.setAttribute("user", user);
 		return "/order/selectlist";
 	}
 	
@@ -87,6 +114,48 @@ public class OrderController {
 		model.addAttribute("bookVO", orderService.readOneBook(book_id));
 		session.setAttribute("cartAmount", cartAmount);
 		session.setAttribute("bookVO", orderService.readOneBook(book_id));
+	}
+	
+	@PostMapping("/orderCompleted" )
+	public String orderCompleted(Model model,HttpSession session, @ModelAttribute("order") OrderVO order,
+			@RequestParam("paymentMethod") int paymentMethod) {
+		log.info("orderCompleted....................");
+		log.info("paymentMethod.........? : "+paymentMethod);
+		int user_number = (int)session.getAttribute("user_number");
+		
+		order.setUser_number(user_number);
+		
+		// 카드 or 무통장 입금?
+		if(paymentMethod==1) {
+			log.info("카드 .................");
+			order.setPayment_method("카드");
+			orderService.registerPayByCard(order);
+		}else {
+			log.info("무통장입금 .................");
+			order.setPayment_method("무통장입금");
+			orderService.registerPayInCash(order);
+		}
+		
+		// 주문번호 pk 가져오기
+		int size = orderService.readList(user_number).size();
+		int order_number = orderService.readList(user_number).get(size-1).getOrder_number();
+		
+		// 주문번호 set 한뒤 주문한 책 db에 넣기
+		for(int i=0;i<orderlist.size();i++) {
+			OrderItemVO orderItemVO = new OrderItemVO();
+			orderItemVO.setBook_id(orderlist.get(i).getBook_id());
+			orderItemVO.setBook_price(orderlist.get(i).getBook_price());
+			orderItemVO.setAmount(orderAmountlist.get(i).getAmount());
+			orderItemVO.setOrder_number(order_number);
+			orderItemService.regist(orderItemVO);
+			
+		}
+		
+		//주문 후 카트 삭제
+		cartService.remove(user_number);
+		
+		return "/order/orderCompleted";
+		
 	}
 	
 	/*
@@ -114,9 +183,6 @@ public class OrderController {
 		return "/order/orderCompleted";
 	}
 	
-	*/
-	
-	/*
 	@GetMapping("/selectlist" )
 	@ResponseBody
 	public String selectList(CartVO cart, BookVO book,Model model,HttpSession session,

@@ -65,10 +65,7 @@ public class OrderMapperTest {
 		OrderVO order = new OrderVO();
 		order.setUser_number(1);
 		order.setOrder_price(15000);
-		order.setOrderer_name("루피");
-		order.setOrderer_hp1("010");
-		order.setOrderer_hp2("1234");
-		order.setOrderer_hp3("5678");
+		
 		order.setOrder_name("루피친구");
 		order.setOrder_hp1("010");
 		order.setOrder_hp2("1111");
@@ -94,10 +91,7 @@ public class OrderMapperTest {
 		
 		order.setUser_number(1);
 		order.setOrder_price(15000);
-		order.setOrderer_name("루피");
-		order.setOrderer_hp1("010");
-		order.setOrderer_hp2("1234");
-		order.setOrderer_hp3("5678");
+		
 		order.setOrder_name("루피친구");
 		order.setOrder_hp1("010");
 		order.setOrder_hp2("1111");
