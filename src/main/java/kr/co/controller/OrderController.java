@@ -152,7 +152,7 @@ public class OrderController {
 		}
 		
 		//주문 후 카트 삭제
-		cartService.remove(user_number);
+		cartService.allRemove(user_number);
 		
 		return "/order/orderCompleted";
 		

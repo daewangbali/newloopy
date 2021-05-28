@@ -206,7 +206,7 @@
 
 		<h4 style="margin: 0">
 			배송 정보 <label style="margin: 0; font-size: 17px"> <input type="checkbox" name="same"
-				 id="same" onclick="copydata()"> 주문자 정보와 동일
+				 id="same" onclick="sameData()"> 주문자 정보와 동일
 			</label>
 		</h4>
 	<div style="height: 5px"></div>	
@@ -225,7 +225,7 @@
 					<tr>
 						<th scope="row"><div class="txt-l">이름</div></th>
 						<td><input type="text" name="order_name" form="actionForm"
-							id="order_name" class="MS_input_txt" value=""></td>
+							id="order_name" class="MS_input_txt" value="" ></td>
 					</tr>
 					<tr>
 						<th scope="row"><div class="txt-l">연락처 </div></th>
@@ -517,6 +517,33 @@ $(document).ready(function() {
 
 
 });
+
+//주문자와 정보가 같을 때
+
+function sameData(){
+	if( document.getElementById('same').checked == true){
+		document.getElementById("order_name").value = "${user.user_name }";
+		document.getElementById("order_hp1").value = "${user.user_hp1 }";
+		document.getElementById("order_hp2").value = "${user.user_hp2 }";
+		document.getElementById("order_hp3").value = "${user.user_hp3 }";
+		document.getElementById("sample4_postcode").value = "${user.user_zipcode }";
+		document.getElementById("sample4_roadAddress").value = "${user.user_roadAddress }";
+		document.getElementById("sample4_jibunAddress").value = "${user.user_jibunAddress }";
+		document.getElementById("sample4_detailAddress").value = "${user.user_namujiAddress }";
+		
+	}else if(document.getElementById('same').checked == false){
+		document.getElementById("order_name").value = "";
+		document.getElementById("order_hp1").value = "";
+		document.getElementById("order_hp2").value = "";
+		document.getElementById("order_hp3").value = "";
+		document.getElementById("sample4_postcode").value = "";
+		document.getElementById("sample4_roadAddress").value = "";
+		document.getElementById("sample4_jibunAddress").value = "";
+		document.getElementById("sample4_detailAddress").value = "";
+	}
+	
+}
+
 
 var actionForm = $("#actionForm");
 

@@ -24,8 +24,11 @@ public interface CartService {
 	
 	public int amountModify(CartVO cart);
 	
-	//장바구니 삭제
-	public int remove(int user_number);
+	//장바구니 목록에서 삭제
+	public int remove(CartVO cart);
+	
+	//주문후 장바구니 비우기
+	public int allRemove(int user_number);
 	
 	
 }

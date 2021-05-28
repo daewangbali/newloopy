@@ -54,8 +54,14 @@
 		where book_id = #{book_id} and user_number = #{user_number}
 	</update>
 	
-	<delete id="delete">
+	<!-- 장바구니 목록 삭제 -->
+	<delete id = "delete">
+		delete tbl_cart where user_number = #{user_number} and book_id = #{book_id}
+	</delete>
+	
+	<delete id="allDelete">
 		delete from tbl_cart where user_number = #{user_number}
 	</delete>
+	
 
 </mapper>

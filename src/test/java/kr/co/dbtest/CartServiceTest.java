@@ -101,10 +101,11 @@ public class CartServiceTest {
 	public void removeTest() {
 		log.info("removeTest...............");
 		CartVO cvo = new CartVO();
-		cvo.setBook_id(15);
+		cvo.setUser_number(81);
+		cvo.setBook_id(23);
 		
 		log.info(cvo);
-		log.info(cs.remove(cvo.getBook_id()));
+		log.info(cs.remove(cvo));
 	}
 	
 }

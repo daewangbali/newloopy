@@ -24,8 +24,12 @@ public interface CartMapper {
 	//장바구니 수량 변경
 	public int amountUpdate(CartVO cart);
 	
-	//장바구니에서 삭제
-	public int delete(int user_number);
+	//장바구니에서 목록 삭제
+	public int delete(CartVO cart);
+	
+	//주문후 장바구니 비우기
+	public int allDelete(int user_number);
+	
 
 	//장바구니 리스트 불러오기
 	public List<CartVO> getCartList(int user_number);

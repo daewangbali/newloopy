@@ -98,10 +98,14 @@ public class CartController {
 	
 	@ResponseBody
 	@PostMapping("/remove")
-	public String remove(@RequestParam("book_id")int book_id,HttpServletRequest request) {
+	public String remove(@RequestParam("book_id")int book_id,HttpServletRequest request,
+			HttpSession session,CartVO cartVO) {
 		log.info("remove...............");
 		log.info("book_id : " + book_id);
-		cartService.remove(book_id);
+		int user_number = (int)session.getAttribute("user_number");
+		cartVO.setUser_number(user_number);
+		cartVO.setBook_id(book_id);
+		cartService.remove(cartVO);
 //		String referer = request.getHeader("referer");
 		return "redirect:/cart/list";
 
@@ -111,9 +115,11 @@ public class CartController {
 	@ResponseBody
 	@PostMapping("/selectRemove")
 	public String selectRemove(@RequestParam List<Integer> indexArray,HttpServletRequest request
-			, HttpSession session) {
+			, HttpSession session, CartVO cartVO) {
 		log.info("selectRemove...............");
 		int user_number = (int)session.getAttribute("user_number");
+		cartVO.setUser_number(user_number);
+		
 		List<Integer> newbook_id= new ArrayList<Integer>();
 		//받아온 index 확인
 		for(int i=0;i<indexArray.size();i++) {
@@ -123,7 +129,8 @@ public class CartController {
 			}
 		}
 		for(int i=0;i<newbook_id.size();i++) {
-			cartService.remove(newbook_id.get(i));
+			cartVO.setBook_id(newbook_id.get(i));
+			cartService.remove(cartVO);
 		}
 		
 

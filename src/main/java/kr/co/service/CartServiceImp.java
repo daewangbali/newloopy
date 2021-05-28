@@ -51,9 +51,16 @@ public class CartServiceImp implements CartService {
 	}
 
 	@Override
-	public int remove(int user_number) {
-		return cartMapper.delete(user_number);
+	public int remove(CartVO cart) {
+		return cartMapper.delete(cart);
 	}
+	
+	@Override
+	public int allRemove(int user_number) {
+		return cartMapper.allDelete(user_number);
+	}
+	
+	
 
 	@Override
 	public int amountModify(CartVO cart) {
