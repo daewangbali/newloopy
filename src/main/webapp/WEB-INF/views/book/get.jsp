@@ -34,7 +34,7 @@
 								<tr>
 									<td class="fixed">수량</td>
 									<td class="fixed">
-									<select style="width: 60px;" name="amount">
+									<select style="width: 60px;" name="amount" id="amount">
 											<option value="1">1</option>
 											<option value="2">2</option>
 											<option value="3">3</option>
@@ -48,9 +48,13 @@
 
 						<div class="card-body">
 							<input type="hidden" id="book_id" name="book_id" value="${book.book_id }">
+							<input type="hidden" id="cartAmount" name="cartAmount" value="${amount }">
 							<input type="hidden" id="user_number" name="user_number" value="${sessionScope.user_number }">						
 							<!--<input class="btn btn-success" id="addcartBtn" value="장바구니 추가"> -->
-							<button type="button" class="btn btn-warning" onclick="location.href='/order/list'">바로 구매하기</button>
+							
+							<a href="javascript:;" class="btn btn btn-warning"
+								onclick="oneOrder()">바로 구매하기</a>
+								
 							<button type="submit" class="btn btn-success">장바구니 추가</button>
 						</div>
 					</div>
@@ -85,6 +89,23 @@
 
 
 <script type="text/javascript">
+
+	function oneOrder(){
+		var amount = document.getElementById("amount").value;
+		
+		$.ajax({
+			url: "/order/oneBookOrder",
+			type: "POST",
+			data: { "book_id" : ${book.book_id } , "cartAmount" : amount },
+			success : function(){
+	    		location = '/order/oneBookOrder';
+			 	},
+		  	error : function(){
+			    alert("상품을 선택해주세요!");	
+			}
+		});
+	}
+
 	if(${message} != null){
 		if(confirm("장바구니에 담겼습니다! 지금 바로 장바구니로 이동하시겠습니까? ")) {
 			location.href="/cart/list";
@@ -92,6 +113,8 @@
 			history.go(-1);
 		}
 	}
+	
+	
 
 /*
 	function gocart(){
