@@ -97,48 +97,42 @@
 					
 					
 					<tbody class="xans-element- xans-order xans-order-list">
-							<c:set var="sum" value="0" />
-							<c:forEach items="${newBookList }" var="newBookList" varStatus="status">
-								<input type="hidden" name="newBookList" value="${newBookList }">
+						
 								<tr class="xans-record-">
 
 									<td><a><img style="width: 110px;"
-											src="${newBookList.fileName}"></a></td>
+											src="<c:out value='${bookVO.fileName }'></c:out>"></a></td>
 									<td>
-										<p>${newBookList.book_title }</p> <input type="hidden"
-										name="book_id_list" id="book_id${statis.index }" value="${newBookList.book_id }">
+										<p><c:out value='${bookVO.book_title }'></c:out></p>
 									</td>
 									<td>
 										<p>
-											<fmt:formatNumber value="${newBookList.book_price }"
+											<fmt:formatNumber value="${bookVO.book_price}"
 												type="currency"></fmt:formatNumber>
 										</p>
 									</td>
 
 									<td>
-										<p>${newCartList[status.index].amount }권</p>
+										<p>${cartAmount }권</p>
 									</td>
 
 									<td class="total"><strong id="price" name="totalPrice"
 										style="text-align: center;"><fmt:formatNumber
-												value="${newBookList.book_price * newCartList[status.index].amount  }"
+												value="${bookVO.book_price * cartAmount }"
 												type="currency"></fmt:formatNumber></strong> <input type="hidden"
 										name="totalPrice" value=""></td>
 
 
 								</tr>
-								<c:set var="sum"
-									value="${sum + (newBookList.book_price * newCartList[status.index].amount )}" />
-							</c:forEach>
 						
 					<tfoot>
 
 						<tr>
 							<td colspan="10">상품구매금액 <strong><fmt:formatNumber
-										value="${sum}"></fmt:formatNumber></strong> <span class="displaynone">
-							</span> + 배송비 <strong> ${sum < 30000 ? 2500 : 0 }</strong> <span
+										value="${bookVO.book_price * cartAmount}"></fmt:formatNumber></strong> <span class="displaynone">
+							</span> + 배송비 <strong> ${bookVO.book_price * cartAmount < 30000 ? 2500 : 0 }</strong> <span
 								class="displaynone"> </span> = 합계 : <strong><fmt:formatNumber
-										value="${sum < 30000 ? sum+2500 : sum }" type="currency"></fmt:formatNumber></strong>
+										value="${bookVO.book_price * cartAmount < 30000 ? bookVO.book_price * cartAmount + 2500 : bookVO.book_price * cartAmount }" type="currency"></fmt:formatNumber></strong>
 								<span class="displaynone"> </span></td>
 						</tr>
 					</tfoot>

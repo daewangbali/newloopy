@@ -13,8 +13,7 @@
 		<div class="row" style="justify-content: center">
 
 			<div class="col-lg-9" style="text-align: center; width: 800px">
-				<form name="goCart" action="/cart/addCart" method="post" 
-							style="margin: 0 0 10px">
+				
 				<div class="card mt-4">
 					<img class="card-img-top" src="${book.fileName}" alt="">
 					<div class="card-body">
@@ -28,7 +27,7 @@
 						<p>${book.book_writer } | ${book.book_publisher }</p>
 						<p class="card-text">${book.book_intro }</p>
 
-						
+						<form id="actionForm" method="post">
 							<div class="input-group"
 								style="width: 15px 0; justify-content: center">
 								<tr>
@@ -47,20 +46,23 @@
 						
 
 						<div class="card-body">
-							<input type="hidden" id="book_id" name="book_id" value="${book.book_id }">
-							<input type="hidden" id="cartAmount" name="cartAmount" value="${amount }">
-							<input type="hidden" id="user_number" name="user_number" value="${sessionScope.user_number }">						
+													
 							<!--<input class="btn btn-success" id="addcartBtn" value="장바구니 추가"> -->
 							
-							<a href="javascript:;" class="btn btn btn-warning"
-								onclick="oneOrder()">바로 구매하기</a>
-								
-							<button type="submit" class="btn btn-success">장바구니 추가</button>
+							
+							<button type="button" id="goOrderBtn"  class="btn btn-warning">바로 구매하기</button>
+							<button type="button" id="addCartBtn" class="btn btn-success">장바구니 추가</button>
 						</div>
+						
+							<input type="hidden" id="book_id" name="book_id" value="${book.book_id }">
+							
+							<input type="hidden" id="user_number" name="user_number" value="${sessionScope.user_number }">
+					</form>
+						
 					</div>
 					</div>
 					<!-- /.card -->
-				</form>
+				
 				</div>
 			</div>
 		</div>
@@ -90,73 +92,39 @@
 
 <script type="text/javascript">
 
-	function oneOrder(){
-		var amount = document.getElementById("amount").value;
+$(document).ready(function() {
+	var actionForm = $("#actionForm");
+	
+	$('#goOrderBtn').click(function(e) {
 		
+		var amount = $('#amount').val();
+		
+		$.ajaxSettings.traditional = true;
 		$.ajax({
-			url: "/order/oneBookOrder",
-			type: "POST",
-			data: { "book_id" : ${book.book_id } , "cartAmount" : amount },
-			success : function(){
-	    		location = '/order/oneBookOrder';
-			 	},
-		  	error : function(){
-			    alert("상품을 선택해주세요!");	
-			}
-		});
-	}
-
-	if(${message} != null){
-		if(confirm("장바구니에 담겼습니다! 지금 바로 장바구니로 이동하시겠습니까? ")) {
-			location.href="/cart/list";
-		}else {
-			history.go(-1);
-		}
-	}
-	
-	
-
-/*
-	function gocart(){
-		$('#cartCheck').modal('show');
-   		var form = document.goCart;
-   		form.submit();
-
-   		
-	}
-
-	$(document).ready(function() {
-		var actionForm = $("#actionForm");
+		    url: "/order/oneBookOrder",
+		    type: "POST",
+		    data: { "book_id" : ${book.book_id } , "amount" : amount },
+		    success : function(){
+		     	location = '/order/oneBookOrder';
+		    },
+		    error : function(){
+		    	alert("!!!!!!");	
+		    }
+		  });
 		
 		
-		$('#addcartBtn').click(function(e) {
-			e.preventDefault();//이벤트 자동발생 막아줌
-			gocart();
-			
-			if(modalShow != null){
-				
-			$('#cartCheck').modal('show');
-			}
-			
-			
-		});
 		
-		$('#goCartList').click(function(e) {
-			gocart();
-		});
-		
-		$('#stay').click(function(e) {
-			gocart();
-		});
-		
-		
-		$('#stayBtn').click(function(e) {
-			actionForm.attr("action", "/board/remove").attr("method", "post");
-			actionForm.submit();
-		});
-
 	});
-*/
+	
+	
+	$('#addCartBtn').click(function(e) {
+		actionForm.attr("action", "/cart/addCart").attr("method", "post");
+		actionForm.submit();
+		
+		
+	});
+	
+});
 </script>
 
 <%@ include file="../includes/footer.jsp"%>

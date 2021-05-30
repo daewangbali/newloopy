@@ -101,19 +101,21 @@ public class OrderController {
 	
 	@ResponseBody
 	@PostMapping("/oneBookOrder" )
-	public void oneBookOrder(Model model,HttpSession session,
-			@RequestParam("cartAmount")int cartAmount,@RequestParam("book_id")int book_id) {
+	public String oneBookOrder(Model model,HttpSession session,
+			@RequestParam("amount")int amount,@RequestParam("book_id")int book_id) {
 		log.info("oneItemOrder....................");
 		int user_number = (int)session.getAttribute("user_number");
 
 		log.info("book_id : " + book_id);
-		log.info("cartAmount : " + cartAmount);
+		log.info("cartAmount : " + amount);
 		
 		model.addAttribute("user_numer", user_number);
-		model.addAttribute("cartAmount", cartAmount);
+		model.addAttribute("cartAmount", amount);
 		model.addAttribute("bookVO", orderService.readOneBook(book_id));
-		session.setAttribute("cartAmount", cartAmount);
+		session.setAttribute("cartAmount", amount);
 		session.setAttribute("bookVO", orderService.readOneBook(book_id));
+		
+		return "/order/oneBookOrder";
 	}
 	
 	@PostMapping("/orderCompleted" )

@@ -4,21 +4,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ include file="../includes/header.jsp"%>
-
-<br>
-<br>
-<br>
-<br>
+<div >
 <div class="card" style="width: 18rem;">
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">주문해주셔서 감사합니다</p>
-    <a href="#" class="card-link">메인 페이지로 가기</a>
-    <a href="#" class="card-link">주문목록으로 가기</a>
+    <h5 class="card-title" style="justify-content: center">주문완료!!</h5>
+   
+    <p class="card-text">주문해주셔서 감사합니다.</p>
+    <a href="../" class="card-link" style="border:1;border-color: pink;">메인페이지</a>
+    <a href="#" class="card-link">주문목록</a>
   </div>
 </div>
-
-
+</div>
 
 <%@ include file="../includes/footer.jsp"%>

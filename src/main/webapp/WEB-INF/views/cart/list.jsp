@@ -322,7 +322,7 @@ function oneBookOrder(id,amount){
 		$.ajax({
 		    url: "/order/oneBookOrder",
 		    type: "POST",
-		    data: { "book_id" : book_id , "cartAmount" : cartAmount },
+		    data: { "book_id" : book_id , "amount" : cartAmount },
 		    success : function(){
 		     	location = '/order/oneBookOrder';
 		    },
