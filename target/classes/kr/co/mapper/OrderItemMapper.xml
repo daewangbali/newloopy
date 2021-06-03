@@ -6,7 +6,9 @@
 <mapper namespace="kr.co.mapper.OrderItemMapper">
 
 	<select id="getList" resultType="kr.co.domain.OrderItemVO">
-		select * from tbl_orderItem
+		select * from tbl_order o, tbl_orderitem i
+		where o.order_number = i.order_number and
+        o.order_number = #{o.order_number}
 	</select>
 	
 	<insert id="insert">

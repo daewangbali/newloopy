@@ -17,5 +17,7 @@ public interface OrderService {
 	
 	public void registerPayByCard(OrderVO order);
 	public void registerPayInCash(OrderVO order);
+	
+	public int findOrderNumber(int user_number);
 
 }

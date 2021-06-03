@@ -6,7 +6,7 @@
 <mapper namespace="kr.co.mapper.OrderMapper">
 
 	<select id="getList" resultType="kr.co.domain.OrderVO">
-		select * from tbl_order
+		select * from tbl_order where user_number = #{user_number}
 	</select>
 
 	<select id="getCartList" resultType="kr.co.domain.CartVO">
@@ -23,6 +23,11 @@
 	
 	<select id="getOneBook" resultType="kr.co.domain.BookVO">
 		select * from tbl_book where book_id = #{book_id}
+	</select>
+	
+	<select id="findOrderNumber" resultType="int">
+		select order_number from tbl_order where order_number = (SELECT max(order_number) FROM tbl_order where user_number = #{c.user_number} )
+	
 	</select>
 	
 	<insert id="insertPayByCard">

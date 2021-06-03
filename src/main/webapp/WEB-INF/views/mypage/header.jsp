@@ -54,7 +54,7 @@
 							<li class="nav-item"><a class="nav-link active"
 								aria-current="page" href="#" style="color: hotpink;">${sessionScope.user_id} 님, </a></li>
 							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="/order/order_list">My Page</a></li>
+								aria-current="page" href="#">My Page</a></li>
 							<li class="nav-item"><a class="nav-link active"
 								aria-current="page" href="/cart/list">Cart</a></li>
 							<li class="nav-item"><a class="nav-link" href="/user/logout">LOG OUT</a>
@@ -86,23 +86,14 @@
 
 			<div class="col-lg-2" style="margin:">
 
-				<h3 class="my-4">Loopy Girls' Bookstore</h3>
+				<h3 class="my-4">My page</h3>
 				<div class="list-group">
-					<a href="/book/list?book_kategorie=all" class="list-group-item"
-						style="color: hotpink;">도서 전체 목록</a> <a
-						href="/book/list?book_kategorie=IT/컴퓨터" class="list-group-item"
-						style="color: hotpink;">- IT/컴퓨터</a> <a
-						href="/book/list?book_kategorie=외국어" class="list-group-item"
-						style="color: hotpink;">- 외국어</a> <a
-						href="/book/list?book_kategorie=소설" class="list-group-item"
-						style="color: hotpink;">- 소설</a> <a
-						href="/book/list?book_kategorie=여행" class="list-group-item"
-						style="color: hotpink;">- 여행</a> <a
-						href="/book/list?book_kategorie=요리" class="list-group-item"
-						style="color: hotpink;">- 요리</a> <a
-						href="/book/list?book_kategorie=어린이" class="list-group-item"
-						style="color: hotpink;">- 어린이</a> 
-						<a href="/notice/list" class="list-group-item" style="color: hotpink;">공지사항</a>
+					<a href="" class="list-group-item"
+						style="color: hotpink;">주문조회</a> <a
+						href="" class="list-group-item"
+						style="color: hotpink;">회원정보수정</a> <a
+						href="" class="list-group-item"
+						style="color: hotpink;">회원탈퇴</a>
 				</div>
 
 			</div>

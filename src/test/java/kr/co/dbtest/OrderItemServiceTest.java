@@ -25,7 +25,7 @@ public class OrderItemServiceTest {
 	public void getListTest() {
 		log.info("getListTest()................");
 		
-		List<OrderItemVO> list = orderItemService.readList(1);
+		List<OrderItemVO> list = orderItemService.readList(41);
 
 		for (OrderItemVO orderItemvo : list) {
 			log.info(orderItemvo);

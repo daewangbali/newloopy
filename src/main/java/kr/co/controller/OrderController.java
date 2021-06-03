@@ -1,6 +1,7 @@
 package kr.co.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +63,17 @@ public class OrderController {
 	@GetMapping("/orderCompleted")
 	public void orderCompleted() {
 		log.info("orderCompleted get................");
+	}
+	
+	@GetMapping("/order_list")
+	public void order_list(Model model,HttpSession session) {
+		log.info("order_list get................");
+
+		int user_number = (int)session.getAttribute("user_number");
+		
+		model.addAttribute("orderList",orderService.readList(user_number));
+//		model.addAttribute("orderItemList",orderItemService.readList(order_number));
+		
 	}
 	
 	@PostMapping("/selectlist" )
@@ -138,9 +150,8 @@ public class OrderController {
 			orderService.registerPayInCash(order);
 		}
 		
-		// 주문번호 pk 가져오기
-		int size = orderService.readList(user_number).size();
-		int order_number = orderService.readList(user_number).get(size-1).getOrder_number();
+		// 주문번호 
+		int order_number = orderService.findOrderNumber(user_number);
 		
 		// 주문번호 set 한뒤 주문한 책 db에 넣기
 		for(int i=0;i<orderlist.size();i++) {
@@ -161,6 +172,24 @@ public class OrderController {
 	}
 	
 	/*
+	
+	//주문내역 불러오기
+	@PostMapping("/order_list" )
+	public String orderList(Model model,HttpSession session) {
+		log.info("orderList....................");
+		
+		int user_number = (int)session.getAttribute("user_number");
+//		int order_number = orderService.readList(user_number).get(1).getOrder_number();
+			
+		model.addAttribute("orderList",orderService.readList(user_number));
+//		model.addAttribute("orderItemList",orderItemService.readList(order_number));
+			
+		return "/order/order_list";
+			
+	}
+	
+	
+	
 	@PostMapping("/orderCompleted" )
 	public String orderCompleted(Model model,HttpSession session,
 			@RequestParam("book_id")List<Integer> book_id_list, @ModelAttribute("order") OrderVO order) {

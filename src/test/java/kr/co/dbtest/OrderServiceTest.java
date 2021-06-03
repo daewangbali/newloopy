@@ -27,7 +27,7 @@ public class OrderServiceTest {
 	public void getListTest() {
 		log.info("getListTest()................");
 		OrderVO order = new OrderVO();
-		order.setUser_number(1);
+		order.setUser_number(41);
 		List<OrderVO> list = os.readList(order.getUser_number());
 
 		for (OrderVO ordervo : list) {

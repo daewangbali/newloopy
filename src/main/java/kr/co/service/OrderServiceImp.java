@@ -48,5 +48,10 @@ public class OrderServiceImp implements OrderService {
 		
 	}
 
+	@Override
+	public int findOrderNumber(int user_number) {
+		return orderMapper.findOrderNumber(user_number);
+	}
+
 	
 }

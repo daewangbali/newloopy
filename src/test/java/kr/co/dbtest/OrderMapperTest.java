@@ -26,7 +26,7 @@ public class OrderMapperTest {
 	public void getListTest() {
 		log.info("getListTest()................");
 		OrderVO order = new OrderVO();
-		order.setUser_number(1);
+		order.setUser_number(41);
 		List<OrderVO> list = ordermapper.getList(order.getUser_number());
 
 		for (OrderVO ordervo : list) {
@@ -107,6 +107,15 @@ public class OrderMapperTest {
 		
 		ordermapper.insertPayInCash(order);
 		log.info(order);
+	}
+	
+	@Test
+	public void findOrderNumberTest() {
+		log.info("findOrderNumberTest()................");
+		
+		int number = ordermapper.findOrderNumber(41);
+		log.info(number);
+		
 	}
 	
 	
