@@ -88,11 +88,11 @@
 
 				<h3 class="my-4">My page</h3>
 				<div class="list-group">
-					<a href="" class="list-group-item"
+					<a href="../order/order_list" class="list-group-item"
 						style="color: hotpink;">주문조회</a> <a
-						href="" class="list-group-item"
+						href="../user/modify" class="list-group-item"
 						style="color: hotpink;">회원정보수정</a> <a
-						href="" class="list-group-item"
+						href="../user/remove" class="list-group-item"
 						style="color: hotpink;">회원탈퇴</a>
 				</div>
 

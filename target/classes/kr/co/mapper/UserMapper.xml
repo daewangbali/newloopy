@@ -36,9 +36,7 @@
 	
 	<update id="update">
 		UPDATE tbl_user set
-		user_id = #{user_id},
 		user_pw = #{user_pw},
-		user_name = #{user_name},
 		user_email = #{user_email},
 		user_hp1 = #{user_hp1},
 		user_hp2 = #{user_hp2},
@@ -48,7 +46,8 @@
 		user_jibunAddress = #{user_jibunAddress},
 		user_namujiAddress = #{user_namujiAddress},
 		user_birthY = #{user_birthY},
-		user_birthM = #{user_birthM}	
+		user_birthM = #{user_birthM},
+		user_birthD = #{user_birthD}		
 		where user_number = #{user_number}
 	</update>
 	

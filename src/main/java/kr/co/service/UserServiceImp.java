@@ -42,4 +42,9 @@ public class UserServiceImp implements UserService{
 		return usermapper.read(User);
 	}
 
+	@Override
+	public void modify(UserVO user) {
+		usermapper.update(user);
+	}
+
 }

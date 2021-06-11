@@ -1,5 +1,7 @@
 package kr.co.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -46,6 +48,25 @@ public class UserController {
 		return userService.idcheck(user_id);
 		
 	}
+	
+	@GetMapping("/modify")
+	public void getmodify(HttpSession session,Model model) {
+		log.info("modify get................");
+		
+		int user_number = (int)session.getAttribute("user_number");
+		UserVO user = userService.readUser(user_number);
+		
+		model.addAttribute("user",user);
+		session.setAttribute("user", user);
+	}
+	
+	@GetMapping("/remove") 
+	public void getremove(@ModelAttribute("user") UserVO user) {
+		log.info("remove get...............");
+//		userService.idcheck(user_id);
+	}
+	
+	
 	/*
 	@PostMapping("/join_success")
 	public void joinSuccess(HttpSession session,@ModelAttribute("user") UserVO user){
@@ -60,6 +81,16 @@ public class UserController {
 	public void joinSuccess(@ModelAttribute("user") UserVO user) {
 		log.info("join_success...............");
 		userService.join(user);
+	}
+	
+	@PostMapping("/modify")
+	public String modify(HttpSession session,@ModelAttribute("user") UserVO user) {
+		log.info("modify...............");
+		int user_number = (int)session.getAttribute("user_number");
+		user.setUser_number(user_number);
+		userService.modify(user);
+		
+		return "/user/modify_success";
 	}
 	
 	@GetMapping("/login") 
@@ -112,11 +143,15 @@ public class UserController {
 		
 	}
 	
+	
+	
 	@GetMapping("/logout")
 	public void logout(HttpServletRequest request) {
 		log.info("logout_success................");
 		request.getSession().invalidate();
 	}
+	
+	
 		
 	
 }

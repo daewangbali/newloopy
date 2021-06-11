@@ -18,7 +18,7 @@ public interface UserService {
 	
 	public UserVO login(UserVO User);
 	//
-	//public int update(UserVO user);
+	public void modify(UserVO user);
 	//
 	//public int delete(int user_number);
 	
