@@ -20,6 +20,6 @@ public interface UserService {
 	//
 	public void modify(UserVO user);
 	//
-	//public int delete(int user_number);
+	public void remove(int user_number);
 	
 }

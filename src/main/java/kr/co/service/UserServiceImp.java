@@ -47,4 +47,9 @@ public class UserServiceImp implements UserService{
 		usermapper.update(user);
 	}
 
+	@Override
+	public void remove(int user_number) {
+		usermapper.delete(user_number);
+	}
+
 }

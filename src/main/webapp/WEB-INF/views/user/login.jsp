@@ -47,21 +47,3 @@
 
   </body>
   
-<script type="text/javascript">
-$(document).ready(function() {
-	var actionForm = $("#actionForm");
-	
-	$('#btn1').click(function(e) {
-		e.preventDefault();
-		$('#board_modal_body').html("join?")
-		$('#board_modal').modal("show");
-	});
-	$('#btn2').click(function(e) {
-		actionForm.attr("action", "/board/remove").attr("method", "post");
-		actionForm.submit();
-	});
-	
-	
-	
-}
-</script>

@@ -66,6 +66,22 @@ public class UserController {
 //		userService.idcheck(user_id);
 	}
 	
+	@GetMapping("/remove_success") 
+	public void remove(HttpSession session) {
+		log.info("remove_success...............");
+		int user_number = (int)session.getAttribute("user_number");
+		userService.remove(user_number);
+		
+		session.removeAttribute("user_number"); 
+		session.invalidate(); // 세션 전체 제거, 무효화 
+
+		
+	}
+	
+	
+	
+	
+	
 	
 	/*
 	@PostMapping("/join_success")
