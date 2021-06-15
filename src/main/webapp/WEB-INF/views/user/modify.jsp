@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@ include file="../mypage/header.jsp"%>
+<%@ include file="../includes/mypage_header.jsp"%>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -163,10 +163,7 @@
 	                  0="disabled" value="" type="password">&nbsp;<span id="check"></span></td>
 	            </tr>
 
-				<tr>
-					<th scope="row" id="user_name" name="user_name">이름</th>
-					<td> <p>${user.user_name }</p> </td>
-				</tr>
+				
 				<tr>
 					<th scope="row">주소</th>
 					<td >

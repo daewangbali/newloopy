@@ -114,6 +114,7 @@ public class UserController {
 		log.info("login...............");
 		String referer = request.getHeader("referer");
 		model.addAttribute("referer", referer);
+		
 //		userService.idcheck(user_id);
 	}
 	
@@ -143,6 +144,7 @@ public class UserController {
 		log.info("login_success................");
 		user = userService.login(user);
 		if(user != null && user.getUser_id() != null) {
+			
 			session = request.getSession();
 			session.setAttribute("user_number", user.getUser_number());
 			session.setAttribute("user_id", user.getUser_id());

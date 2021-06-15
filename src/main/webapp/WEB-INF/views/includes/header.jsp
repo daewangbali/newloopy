@@ -48,19 +48,35 @@
 			<div class="collapse navbar-collapse" id="navbarNav"
 				style="justify-content: flex-end">
 				<c:choose>
-				
-					<c:when test="${sessionScope.user_id != null}">
-						<ul class="navbar-nav">
-							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="#" style="color: hotpink;">${sessionScope.user_id} 님, </a></li>
-							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="/order/order_list">My Page</a></li>
-							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="/cart/list">Cart</a></li>
-							<li class="nav-item"><a class="nav-link" href="/user/logout">LOG OUT</a>
-							</li>
-						</ul>
+					<c:when test="${sessionScope.user_id != null}"> 
+						<c:choose>
+							<c:when test="${sessionScope.user_id eq 'admin77'}">
+								<ul class="navbar-nav">
+									<li class="nav-item"><a class="nav-link active"
+										aria-current="page" href="#" style="color: hotpink;">관리자 님, </a></li>
+									<li class="nav-item"><a class="nav-link active"
+										aria-current="page" href="../admin/list">Admin page</a></li>
+									<li class="nav-item"><a class="nav-link" href="/user/logout">LOG OUT</a>
+									</li>
+								</ul>
+							</c:when>
+							<c:otherwise>
+								<ul class="navbar-nav">
+									<li class="nav-item"><a class="nav-link active"
+										aria-current="page" href="#" style="color: hotpink;">${sessionScope.user_id} 님, </a></li>
+									<li class="nav-item"><a class="nav-link active"
+										aria-current="page" href="/order/order_list">My Page</a></li>
+									<li class="nav-item"><a class="nav-link active"
+										aria-current="page" href="/cart/list">Cart</a></li>
+									<li class="nav-item"><a class="nav-link" href="/user/logout">LOG OUT</a>
+									</li>
+								</ul>
+							
+							</c:otherwise>
+						
+						</c:choose>
 					</c:when>
+					
 					<c:otherwise>
 						<ul class="navbar-nav">
 							<li class="nav-item"><a class="nav-link active"
