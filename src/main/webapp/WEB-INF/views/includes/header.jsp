@@ -55,7 +55,7 @@
 									<li class="nav-item"><a class="nav-link active"
 										aria-current="page" href="#" style="color: hotpink;">관리자 님, </a></li>
 									<li class="nav-item"><a class="nav-link active"
-										aria-current="page" href="../admin/list">Admin page</a></li>
+										aria-current="page" href="../admin/addBook">Admin page</a></li>
 									<li class="nav-item"><a class="nav-link" href="/user/logout">LOG OUT</a>
 									</li>
 								</ul>

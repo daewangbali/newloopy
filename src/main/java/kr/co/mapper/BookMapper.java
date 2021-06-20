@@ -9,6 +9,8 @@ public interface BookMapper {
 	
 	public List<BookVO> getList(String book_kategorie);
 	
+	public List<BookVO> getAllList();
+	
 	public void insert(BookVO book);
 	
 //	public void insertSelectKey(BookVO book);

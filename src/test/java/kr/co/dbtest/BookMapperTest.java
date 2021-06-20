@@ -30,6 +30,8 @@ public class BookMapperTest {
 		}
 	}
 	
+	
+	
 	@Test
 	public void insertTest() {
 		BookVO vo = new BookVO();

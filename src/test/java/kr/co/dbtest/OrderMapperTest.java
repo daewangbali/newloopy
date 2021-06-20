@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import kr.co.domain.BookVO;
 import kr.co.domain.CartVO;
+import kr.co.domain.OrderItemVO;
 import kr.co.domain.OrderVO;
 import kr.co.mapper.OrderMapper;
 import lombok.extern.log4j.Log4j2;
@@ -116,6 +117,32 @@ public class OrderMapperTest {
 		int number = ordermapper.findOrderNumber(41);
 		log.info(number);
 		
+	}
+	
+	@Test
+	public void getOrderListTest() {
+		log.info("getOrderListTest()................");
+		OrderVO order = new OrderVO();
+		order.setUser_number(41);
+		order.setOrder_number(142);
+		List<OrderVO> list = ordermapper.getOrderList(order.getUser_number(), order.getOrder_number());
+
+		for (OrderVO ordervo : list) {
+			log.info(ordervo);
+		}
+	}
+	
+	@Test
+	public void getOrderItemListTest() {
+		log.info("getOrderListTest()................");
+		OrderItemVO order = new OrderItemVO();
+		int user_number = 41;
+		
+		order.setOrder_number(142);
+		List<OrderItemVO> list = ordermapper.getOrderItemList(user_number, order.getOrder_number());
+		for (OrderItemVO ordervo : list) {
+			log.info(ordervo);
+		}
 	}
 	
 	

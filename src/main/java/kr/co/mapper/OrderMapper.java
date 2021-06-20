@@ -2,6 +2,8 @@ package kr.co.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.co.domain.BookVO;
 import kr.co.domain.CartVO;
 import kr.co.domain.OrderItemVO;
@@ -29,5 +31,7 @@ public interface OrderMapper {
 	// 주문하기-현금
 	public void insertPayInCash(OrderVO order);
 	
-
+	// 내 주문목록 리스트
+	public List<OrderVO> getOrderList(@Param("user_number")int user_number, @Param("order_number")int order_number);
+	public List<OrderItemVO> getOrderItemList(@Param("user_number")int user_number, @Param("order_number")int order_number);
 }

@@ -51,7 +51,7 @@
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="#" style="color: hotpink;">관리자 님, </a></li>
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="#">Admin page</a></li>
+						aria-current="page" href="../admin/addBook">Admin page</a></li>
 					<li class="nav-item"><a class="nav-link" href="/user/logout">LOG OUT</a> </li>
 				</ul>
 			</div>
@@ -71,13 +71,14 @@
 
 				<h3 class="my-4">Admin page</h3>
 				<div class="list-group">
-					<a href="../admin/list" class="list-group-item"
-						style="color: hotpink;">도서 수정or삭제</a> <a
-						href="../" class="list-group-item"
-						style="color: hotpink;">도서 추가하기</a> <a
-						href="../" class="list-group-item"
-						style="color: hotpink;">주문관리</a> <a
-						href="../" class="list-group-item"
+					
+					<a href="../admin/addBook" class="list-group-item"
+						style="color: hotpink;">도서 추가하기</a> 
+					<a href="../admin/book_list" class="list-group-item"
+						style="color: hotpink;">도서 수정or삭제</a> 	
+					<a href="../" class="list-group-item"
+						style="color: hotpink;">주문관리</a> 
+					<a href="../" class="list-group-item"
 						style="color: hotpink;">회원관리</a>
 				</div>
 

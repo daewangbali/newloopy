@@ -13,6 +13,10 @@
 		book_id>=0
 	</select>
 	
+	<select id="getAllList" resultType="kr.co.domain.BookVO">
+		select * from tbl_book 
+	</select>
+	
 	<insert id="insert">
 		insert into tbl_book (book_id, fileName, book_title, book_writer, book_publisher, book_kategorie, book_intro, book_price )  
 		values (seq_book.nextval, #{fileName}, #{book_title}, #{book_writer}, #{book_publisher}, #{book_kategorie}, #{book_intro}, #{book_price} )

@@ -27,8 +27,24 @@
 	
 	<select id="findOrderNumber" resultType="int">
 		select order_number from tbl_order where order_number = (SELECT max(order_number) FROM tbl_order where user_number = #{c.user_number} )
-	
 	</select>
+	
+	<select id="getOrderList" resultType="kr.co.domain.OrderVO">
+		select * from tbl_order o, tbl_orderitem i
+		where o.order_number = i.order_number and
+        o.user_number = #{user_number} and 
+        o.order_number = #{order_number}
+	</select>
+	
+	<select id="getOrderItemList" resultType="kr.co.domain.OrderItemVO">
+		select * from tbl_order o, tbl_orderitem i
+		where o.order_number = i.order_number and
+        o.user_number = #{user_number} and 
+        o.order_number = #{order_number}
+	</select>
+	
+	
+	
 	
 	<insert id="insertPayByCard">
 		insert into tbl_order(order_number,user_number,order_price,

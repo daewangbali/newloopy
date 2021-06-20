@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -71,7 +72,21 @@ public class OrderController {
 
 		int user_number = (int)session.getAttribute("user_number");
 		
-		model.addAttribute("orderList",orderService.readList(user_number));
+		List<OrderVO> list = orderService.readList(user_number);
+		List<Integer> list2 = new ArrayList<Integer>();
+		for(int i= 0;i<list.size();i++) {
+			list2.add(list.get(i).getOrder_number());
+		}
+		
+		List<OrderVO> orderList = new ArrayList<OrderVO>();
+		for(int i= 0;i<list2.size();i++) {
+			List<OrderVO> orderlist = orderService.readOrderList(user_number,list2.get(i));
+			orderList.add((OrderVO) orderlist);
+		}
+		
+		model.addAttribute("orderList",orderList);
+//		model.addAttribute("orderList",orderService.readList(user_number));
+//		model.addAttribute("orderItemList",orderService.readList(user_number));
 //		model.addAttribute("orderItemList",orderItemService.readList(order_number));
 		
 	}
