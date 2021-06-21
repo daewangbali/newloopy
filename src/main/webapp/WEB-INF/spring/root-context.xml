@@ -38,6 +38,12 @@
 		base-package="kr.co.service" />
 	<context:component-scan
 		base-package="kr.co.loopy" />
+		
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="100000000" />
+		<property name="maxInMemorySize" value="100000000" />
+	</bean>	
 
 
 

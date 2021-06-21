@@ -18,8 +18,8 @@
 	</select>
 	
 	<insert id="insert">
-		insert into tbl_book (book_id, fileName, book_title, book_writer, book_publisher, book_kategorie, book_intro, book_price )  
-		values (seq_book.nextval, #{fileName}, #{book_title}, #{book_writer}, #{book_publisher}, #{book_kategorie}, #{book_intro}, #{book_price} )
+		insert into tbl_book (book_id, fileName,filepath, book_title, book_writer, book_publisher, book_kategorie, book_intro, book_price )  
+		values (seq_book.nextval, #{fileName, jdbcType=VARCHAR}, #{filepath, jdbcType=VARCHAR}, #{book_title}, #{book_writer}, #{book_publisher}, #{book_kategorie}, #{book_intro}, #{book_price} )
 	</insert>
 	
 	<select id="read" resultType="kr.co.domain.BookVO">
