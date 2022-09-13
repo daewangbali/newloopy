@@ -65,30 +65,47 @@ public class OrderController {
 	public void orderCompleted() {
 		log.info("orderCompleted get................");
 	}
+
+	@GetMapping("/oneOrderCompleted")
+	public void oneOrderCompleted() {
+		log.info("oneOrderCompleted get................");
+	}
 	
 	@GetMapping("/order_list")
-	public void order_list(Model model,HttpSession session) {
+	public String order_list(Model model,HttpSession session) {
 		log.info("order_list get................");
-
+		
 		int user_number = (int)session.getAttribute("user_number");
 		
 		List<OrderVO> list = orderService.readList(user_number);
-		List<Integer> list2 = new ArrayList<Integer>();
-		for(int i= 0;i<list.size();i++) {
-			list2.add(list.get(i).getOrder_number());
-		}
 		
-		List<OrderVO> orderList = new ArrayList<OrderVO>();
-		for(int i= 0;i<list2.size();i++) {
-			List<OrderVO> orderlist = orderService.readOrderList(user_number,list2.get(i));
-			orderList.add((OrderVO) orderlist);
-		}
+		@SuppressWarnings("unchecked")
+		List<OrderItemVO> orderItemList = (List<OrderItemVO>) orderItemService.getOrderItemList(user_number);
 		
-		model.addAttribute("orderList",orderList);
+		List<BookVO> orderBookList = orderItemService.getOrderItemBookList(user_number);
+		
+		model.addAttribute("orderList",list);
+		model.addAttribute("orderItemList",orderItemList);
+		model.addAttribute("orderBookList",orderBookList);
+		/*
+		 * List<Integer> list2 = new ArrayList<Integer>(); for(int i=
+		 * 0;i<list.size();i++) { list2.add(list.get(i).getOrder_number()); }
+		 * 
+		 * List<OrderVO> orderList = new ArrayList<OrderVO>(); for(int i=
+		 * 0;i<list2.size();i++) { List<OrderVO> orderlist =
+		 * orderService.readOrderList(user_number,list2.get(i)); orderList.add((OrderVO)
+		 * orderlist); }
+		 */
+		
+		
+	
+//		model.addAttribute("orderList",orderList);
+//		model.addAttribute("orderItemList",orderItemList);
 //		model.addAttribute("orderList",orderService.readList(user_number));
 //		model.addAttribute("orderItemList",orderService.readList(user_number));
 //		model.addAttribute("orderItemList",orderItemService.readList(order_number));
 		
+		return "/order/order_list";
 	}
 	
 	@PostMapping("/selectlist" )
@@ -146,7 +163,7 @@ public class OrderController {
 	}
 	
 	@PostMapping("/orderCompleted" )
-	public String orderCompleted(Model model,HttpSession session, @ModelAttribute("order") OrderVO order,
+	public String orderCompleted(Model model,HttpSession session,@RequestParam("directOrder") String directOrder, @ModelAttribute("order") OrderVO order,
 			@RequestParam("paymentMethod") int paymentMethod) {
 		log.info("orderCompleted....................");
 		log.info("paymentMethod.........? : "+paymentMethod);
@@ -167,24 +184,65 @@ public class OrderController {
 		
 		// 주문번호 
 		int order_number = orderService.findOrderNumber(user_number);
-		
 		// 주문번호 set 한뒤 주문한 책 db에 넣기
-		for(int i=0;i<orderlist.size();i++) {
-			OrderItemVO orderItemVO = new OrderItemVO();
-			orderItemVO.setBook_id(orderlist.get(i).getBook_id());
-			orderItemVO.setBook_price(orderlist.get(i).getBook_price());
-			orderItemVO.setAmount(orderAmountlist.get(i).getAmount());
-			orderItemVO.setOrder_number(order_number);
-			orderItemService.regist(orderItemVO);
-			
+		if(!directOrder.equals("directOrder")) {
+		
+			for(int i=0;i<orderlist.size();i++) {
+				OrderItemVO orderItemVO = new OrderItemVO();
+				orderItemVO.setBook_id(orderlist.get(i).getBook_id());
+				orderItemVO.setBook_price(orderlist.get(i).getBook_price());
+				orderItemVO.setAmount(orderAmountlist.get(i).getAmount());
+				orderItemVO.setOrder_number(order_number);
+				orderItemService.regist(orderItemVO);
+				
+			}
+			cartService.allRemove(user_number);
 		}
 		
 		//주문 후 카트 삭제
-		cartService.allRemove(user_number);
 		
-		return "/order/orderCompleted";
+		
+		return "redirect:/order/orderCompleted";
 		
 	}
+	
+	@RequestMapping("/oneOrderCompleted" )
+	public String oneOrderCompleted(Model model,HttpSession session,@ModelAttribute("order") OrderVO order,
+			@RequestParam("paymentMethod") int paymentMethod, @RequestParam("totalPrice") int totalPrice , @RequestParam("book_id") int book_id
+			, @RequestParam("book_price") int book_price) {
+		log.info("oneOrderCompleted....................");
+		log.info("paymentMethod.........? : "+paymentMethod);
+		int user_number = (int)session.getAttribute("user_number");
+		
+		order.setUser_number(user_number);
+		
+		// 카드 or 무통장 입금?
+		if(paymentMethod==1) {
+			log.info("카드 .................");
+			order.setPayment_method("카드");
+			orderService.registerPayByCard(order);
+		}else {
+			log.info("무통장입금 .................");
+			order.setPayment_method("무통장입금");
+			orderService.registerPayInCash(order);
+		}
+		
+		// 주문번호 
+		int order_number = orderService.findOrderNumber(user_number);
+		
+		OrderItemVO orderItemVO = new OrderItemVO();
+		orderItemVO.setBook_id(book_id);
+		orderItemVO.setBook_price(book_price);
+		orderItemVO.setOrder_number(order_number);
+		orderItemService.regist(orderItemVO);
+		
+		//주문 후 카트 삭제
+		
+		
+		return "redirect:/order/orderCompleted";
+		
+	}
+	
 	
 	/*
 	

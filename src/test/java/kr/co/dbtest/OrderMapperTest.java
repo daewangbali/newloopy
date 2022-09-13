@@ -27,7 +27,7 @@ public class OrderMapperTest {
 	public void getListTest() {
 		log.info("getListTest()................");
 		OrderVO order = new OrderVO();
-		order.setUser_number(41);
+		order.setUser_number(141);
 		List<OrderVO> list = ordermapper.getList(order.getUser_number());
 
 		for (OrderVO ordervo : list) {

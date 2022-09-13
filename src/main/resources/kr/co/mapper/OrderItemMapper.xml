@@ -9,11 +9,31 @@
 		select * from tbl_order o, tbl_orderitem i
 		where o.order_number = i.order_number and
         o.order_number = #{o.order_number}
+        order by ORDER_CREDATE
+	</select>
+	
+	<select id="getOrderItemList" resultType="kr.co.domain.OrderItemVO">
+		select i.order_number,i.book_id,i.book_price,i.amount,b.book_title,b.filename,b.book_price,o.order_price
+		from  tbl_orderitem i , tbl_book b , tbl_order o
+		where i.book_id = b.book_id
+		and i.order_number = o.order_number
+		and o.user_number = #{user_number}
+		order by ORDER_CREDATE
 	</select>
 	
 	<insert id="insert">
 		insert into tbl_orderItem(order_number, book_id, book_price, amount)  
 		values (#{order_number},#{book_id},#{book_price},#{amount})
 	</insert>
+	
+	<select id="getOrderItemBookList" resultType="kr.co.domain.BookVO">
+		select b.book_title,b.filename,b.book_price
+		from  tbl_orderitem i , tbl_book b , tbl_order o
+		where i.book_id = b.book_id
+		and i.order_number = o.order_number
+		and o.user_number = #{user_number}
+		order by ORDER_CREDATE
+	</select>
+	
 	
 </mapper>

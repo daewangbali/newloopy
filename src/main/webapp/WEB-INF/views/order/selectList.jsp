@@ -139,7 +139,7 @@
 							</span> + 배송비 <strong> ${sum < 30000 ? 2500 : 0 }</strong> <span
 								class="displaynone"> </span> = 합계 : <strong><fmt:formatNumber
 										value="${sum < 30000 ? sum+2500 : sum }" type="currency"></fmt:formatNumber></strong>
-								<span class="displaynone"> </span></td>
+								<span class="displaynone">(3만원 이상 무료배송)</span></td>
 						</tr>
 					</tfoot>
 					</tbody>
@@ -451,7 +451,7 @@
 					<span></span><fmt:formatNumber value="${sum < 30000 ? sum+2500 : sum }"></fmt:formatNumber><strong>원</strong>
 				</h5>
 				<p class="paymentAgree" id="chk_purchase_agreement" style="">
-					<input id="chk_purchase_agreement0" name="chk_purchase_agreement"
+					<input id="chk_purchase_agreement0" name="chk_purchase_agreement" required="required"
 						fw-filter="" fw-label="구매진행 동의" fw-msg="" value="T"
 						type="checkbox" style=""><label
 						for="chk_purchase_agreement0">결제정보를 확인하였으며, 구매진행에 동의합니다.</label>
@@ -459,6 +459,7 @@
 				<input type="hidden" form="actionForm"  name="delivery_status" id="delivery_status" value="주문완료">
 				<div class="d-grid gap-2 col-6 mx-auto">
  				 <button class="btn btn-primary" id="orderBtn" style="width:40%; background-color: pink ;border: 0; color: black" type="button">결제하기</button>
+ 				 <input type="hidden" form="actionForm"  name="directOrder" id="directOrder" value="listOrder">
 </div>
 
 			</div>
@@ -480,8 +481,6 @@
 
 $(document).ready(function() {
 	
-	
-	
 	$('#payByCard').css('display', 'none'); //display 'none'은= div가 보이지않는!
     $('#payInCash').css('display', 'block');
 
@@ -491,7 +490,7 @@ $(document).ready(function() {
 	$('input:radio[id="paymethod_card"]').click(function(e) {
 		$('input:radio[id="paymethod_card"]').prop('checked', true);
 		$('input:radio[id="paymethod_cash"]').prop('checked', false);
-
+		$('#current_pay_name').text("카드");
 		$('#payInCash').css('display', 'none'); //display 'none'은= div가 보이지않는!
         $('#payByCard').css('display', 'block');
         document.getElementById("payment_method").value = "카드";
@@ -503,7 +502,7 @@ $(document).ready(function() {
 	$('input:radio[id="paymethod_cash"]').click(function(e) {
 		$('input:radio[id="paymethod_cash"]').prop('checked', true);
 		$('input:radio[id="paymethod_card"]').prop('checked', false);
-
+		$('#current_pay_name').text("무통장입금");
 		$ ('#payInCash').show();
 	    $ ('#payByCard').hide(); //클릭 시 첫 번째 요소 숨김
 	    document.getElementById("payment_method").value  = "무통장입금";
@@ -548,9 +547,32 @@ function sameData(){
 var actionForm = $("#actionForm");
 
 $('#orderBtn').click(function(e) {
-	
-	actionForm.attr("action", "/order/orderCompleted").attr("method", "post");
-	actionForm.submit();
+	if($('#order_name').val()==""){
+		$('#order_name').focus();
+	}else if($('#order_hp1').val()==""){
+		$('#order_hp1').focus();
+	}else if($('#order_hp2').val()==""){
+		$('#order_hp2').focus();
+	}else if($('#order_hp3').val()==""){
+		$('#order_hp3').focus();
+	}else if($('#sample4_postcode').val()==""){
+		$('#sample4_postcode').focus();
+	}else if($('#sample4_roadAddress').val()==""){
+		$('#sample4_roadAddress').focus();
+	}else if($('#sample4_jibunAddress').val()==""){
+		$('#sample4_jibunAddress').focus();
+	}else if($('#sample4_detailAddress').val()==""){
+		$('#sample4_detailAddress').focus();
+	}else if(($('#paymethod_cash').is(":checked") == true) && $('#deposit_name').val()==""){
+		$('#deposit_name').focus();
+	}else if(($('#paymethod_cash').is(":checked") == true) && $('#deposit_name').val()==""){
+		$('#deposit_name').focus();
+	}else if($('#chk_purchase_agreement0').is(":checked") == false){
+		alert("결제정보 확인 후 구매 진행 동의에 체크해주세요");
+	}else{	
+		actionForm.attr("action", "/order/orderCompleted").attr("method", "post");
+		actionForm.submit();
+	}
 });
 
 

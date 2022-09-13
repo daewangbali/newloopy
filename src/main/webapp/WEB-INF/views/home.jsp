@@ -18,17 +18,17 @@
 				<div class="carousel-item active">
 					<img class="d-block img-fluid"
 						style="display: block; margin: 0px auto;"
-						src="resources/img/11.jpg" alt="First slide">
+						src="resources/img/o11.jpg" alt="First slide">
 				</div>
 				<div class="carousel-item">
 					<img class="d-block img-fluid"
 						style="display: block; margin: 0px auto;"
-						src="http://placehold.it/900x350" alt="Second slide">
+						src="resources/img/b11.jpg" alt="Second slide">
 				</div>
 				<div class="carousel-item">
 					<img class="d-block img-fluid"
 						style="display: block; margin: 0px auto;"
-						src="http://placehold.it/900x350" alt="Third slide">
+						src="resources/img/it11.jpg" alt="Third slide">
 				</div>
 			</div>
 			<a class="carousel-control-prev" href="#carouselExampleIndicators"
@@ -48,7 +48,7 @@
 		<div class="col-lg-3 col-md-5 mb-3" 
 				style="text-align: center ; padding: 0 5px">
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src= "${bookList.fileName}" alt=""></a>
+              <a href="/book/get?book_id=${bookList.book_id }"><img class="card-img-top" src= "${bookList.fileName}" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
                   <a href="/book/get?book_id=${bookList.book_id }">${bookList.book_title }</a>

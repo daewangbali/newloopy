@@ -6,7 +6,8 @@
 <%@ include file="../includes/header.jsp"%>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
+<script type="text/javascript">
+
     //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
     function sample4_execDaumPostcode() {
         new daum.Postcode({
@@ -56,7 +57,12 @@
             }
         }).open();
     }
-	
+    
+ 
+    	
+    var idcheck = 0;
+    var checkPwValue = 0;
+    
 	function checkUserIdExist() {
 		console.log("-------------------");
 		var user_id = $("#user_id").val();
@@ -70,9 +76,11 @@
 			type : 'get',
 			success : function(result) {
 				if(result) {
+					idcheck = 0;
 					alert('사용할 수 있는 아이디입니다.');
 					//$("#userIdExist").val('true');
 				}else {
+					idcheck = 1;
 					alert('이미 존재하는 아이디입니다.');
 					//$("#userIdExist").val('false');
 				}
@@ -101,16 +109,20 @@
 	          }
 	    }
 	 
+	
+	 
 	 function check_pw(){
 	      var user_pw = document.getElementById('user_pw').value;
 	      
 	       if(document.getElementById('user_pw').value !='' && document.getElementById('user_pw_confirm').value!=''){
 	             if(document.getElementById('user_pw').value==document.getElementById('user_pw_confirm').value){
 	                 document.getElementById('check').innerHTML='비밀번호가 일치합니다.'
+	                 checkPwValue = 0;
 	                 document.getElementById('check').style.color='blue';
 	             }
 	             else{
 	                 document.getElementById('check').innerHTML='비밀번호가 일치하지 않습니다.';
+	                 checkPwValue = 1;
 	                 document.getElementById('check').style.color='red';
 	             }
 	       }
@@ -123,8 +135,8 @@
 </script>
 
 <main>
-<form action="/user/join_success" method="post">
-	<div class="joinBox" style="padding: 150px 150px; line-height: 1.7;">
+<form id="actionForm" action="/user/join_success" method="post">
+	<div class="joinBox" style="padding: 100px 150px; line-height: 1.7;">
 		 <h2 style="padding: 5px">회원가입</h2>
 		<div class="boardWrite">
 			<table >
@@ -178,13 +190,13 @@
 					<td>
 						<input id="user_birthY" name="user_birthY"
 						class="inputTypeText" placeholder="" maxlength="4" value=""
-						type="text"> 년 
+						type="number"> 년 
 						<input id="user_birthM" name="user_birthM"
 						class="inputTypeText" placeholder="" maxlength="2" value=""
-						type="text"> 월 
+						type="number"> 월 
 						<input id="user_birthD" name="user_birthD"
 						class="inputTypeText" placeholder="" maxlength="2" value=""
-						type="text"> 일</td>
+						type="number"> 일</td>
 
 				</tr>
 				<tr>
@@ -200,13 +212,13 @@
 							<option value="019">019</option>
 					</select> - <input id="user_hp2" name="user_hp2" maxlength="4"
 						fw-filter="isNumber&amp;isFill" fw-label="휴대전화" fw-alone="N"
-						fw-msg="" value="" type="text"> -
+						fw-msg="" value="" type="number"> -
 						<input id="user_hp3" name="user_hp3" maxlength="4" fw-filter="isNumber&amp;isFill"
-						fw-label="휴대전화" fw-alone="N" fw-msg="" value="" type="text"></td>
+						fw-label="휴대전화" fw-alone="N" fw-msg="" value="" type="number"></td>
 				</tr>
 				<tr class="">
 					<th scope="row">SMS 수신여부</th>
-					<td>
+					<td style="margin-top: 5px; margin-bottom: 5px">
 						<p style=" margin-bottom:-3px ">쇼핑몰에서 제공하는 유익한 이벤트 소식을 SMS로 받으실 수 있습니다.</p>
 					<input type="checkbox">동의함
 						</td>
@@ -222,7 +234,7 @@
 				</tr>
 			</table>
 			<div>
-				<input type="submit" value="가입하기" class="btn btn-outline-success" required="required" style="float: right">
+				<input type="button" id="submitBtn" value="가입하기" class="btn btn-outline-success" required="required" style="float: right">
 				</div>
 		</div>
 	</div>
@@ -242,7 +254,20 @@ $(document).ready(function() {
 		actionForm.submit();
 	});
 	
-}
+	var actionForm = $("#actionForm");
+		 
+	$('#submitBtn').click(function(e) {
+		if(idcheck == 1){
+			alert("중복 아이디로 가입할 수 없습니다.");
+		}else if(checkPwValue == 1){
+			alert("비밀번호를 확인해주세요.");
+		}else{
+			actionForm.submit();	
+		}
+	 });
+
+	
+});
 </script>
 
 <%@ include file="../includes/footer.jsp"%>

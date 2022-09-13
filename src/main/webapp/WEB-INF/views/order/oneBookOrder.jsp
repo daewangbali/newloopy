@@ -75,7 +75,7 @@
 	<div id="container">
 		<div id="contents">
 
-		<form id="actionForm" >
+		<form id="actionForm" action="/order/oneOrderCompleted" method="post">
 			
 				<!-- 일반상품 (기본배송) -->
 				<table  summary=""
@@ -88,7 +88,7 @@
 							<th scope="col" class="product" style="width: 10%">ITEM</th>
 							<th scope="col" class="title" style="width: 60%">TITLE</th>
 							<th scope="col" class="price" style="width: 10%">PRICE</th>
-							<th scope="col" class="amount" style="width: 10%">AMOUNT</th>
+							<th scope="col" class="cartAmount" style="width: 10%">cartAmount</th>
 							<th scope="col" class="total" style="width: 10%">TOTAL</th>
 
 						</tr>
@@ -99,7 +99,7 @@
 					<tbody class="xans-element- xans-order xans-order-list">
 						
 								<tr class="xans-record-">
-
+									
 									<td><a><img style="width: 110px;"
 											src="<c:out value='${bookVO.fileName }'></c:out>"></a></td>
 									<td>
@@ -113,14 +113,14 @@
 									</td>
 
 									<td>
-										<p>${cartAmount }권</p>
+										<p>${cartAmount}권</p>
 									</td>
 
 									<td class="total"><strong id="price" name="totalPrice"
 										style="text-align: center;"><fmt:formatNumber
 												value="${bookVO.book_price * cartAmount }"
 												type="currency"></fmt:formatNumber></strong> <input type="hidden"
-										name="totalPrice" value=""></td>
+										name="totalPrice" value="${bookVO.book_price * cartAmount }"></td>
 
 
 								</tr>
@@ -141,8 +141,9 @@
 				</table>
 			</form>
 		</div>
-	</div>
-	<div style="height: 30px;"></div>
+	</div>				
+		
+<div style="height: 30px;"></div>
 	
 	
 	<!-- 국내 배송지 정보 -->
@@ -200,7 +201,7 @@
 
 		<h4 style="margin: 0">
 			배송 정보 <label style="margin: 0; font-size: 17px"> <input type="checkbox" name="same"
-				 id="same" onclick="copydata()"> 주문자 정보와 동일
+				 id="same" onclick="sameData()"> 주문자 정보와 동일
 			</label>
 		</h4>
 	<div style="height: 5px"></div>	
@@ -218,12 +219,12 @@
 				<tbody>
 					<tr>
 						<th scope="row"><div class="txt-l">이름</div></th>
-						<td><input type="text" name="order_name" form="actionForm"
-							id="order_name" class="MS_input_txt" value=""></td>
+						<td><input type="text" name="order_name" form="actionForm" required="required"
+							id="order_name" class="MS_input_txt" ></td>
 					</tr>
 					<tr>
 						<th scope="row"><div class="txt-l">연락처 </div></th>
-						<td><select name="order_hp1" form="actionForm"
+						<td><select name="order_hp1" form="actionForm" required="required"
 							id="order_hp1" class="MS_select MS_tel">
 								<option value="">선택</option>
 								<option value="010">010</option>
@@ -258,22 +259,22 @@
 								<option value="070">070</option>
 								<option value="080">080</option>
 						</select> - <input type="text" name="order_hp2" form="actionForm"
-							id="order_hp2" size="4" maxlength="4" class="MS_input_txt w60"
+							id="order_hp2" size="4" maxlength="4" class="MS_input_txt w60" required="required"
 							value=""> - <input type="text" name="order_hp3"
-							form="actionForm" id="order_hp3" size="4" maxlength="4"
+							form="actionForm" id="order_hp3" size="4" maxlength="4" required="required"
 							minlength="4" class="MS_input_txt w60" value=""></td>
 					</tr>
 					
 					<tr>
 					<th scope="row">주소</th>
 					<td >
-					<input type="text" name="order_zipcode" form="actionForm"
+					<input type="text" name="order_zipcode" form="actionForm" required="required"
 						id="sample4_postcode" placeholder="우편번호" style="vertical-align: 2px"> 
-						<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-						<input type="text" name="order_roadAddress" id="sample4_roadAddress" placeholder="도로명주소" form="actionForm"> 
-						<input type="text" name="order_jibunAddress" id="sample4_jibunAddress" placeholder="지번주소" form="actionForm"> 
+						<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" required="required"><br>
+						<input type="text" name="order_roadAddress" id="sample4_roadAddress" required="required" placeholder="도로명주소" form="actionForm"> 
+						<input type="text" name="order_jibunAddress" id="sample4_jibunAddress" required="required" placeholder="지번주소" form="actionForm"> 
 						<span id="guide" style="color: #999; display: none"></span> 
-						<input type="text" name="order_namujiAddress" id="sample4_detailAddress" placeholder="상세주소" form="actionForm">
+						<input type="text" name="order_namujiAddress" id="sample4_detailAddress" required="required" placeholder="상세주소" form="actionForm">
 						</td>
 					</tr>
 					<tr>
@@ -316,19 +317,19 @@
 					<tr>
 						<td class="price"><div class="box">
 								<strong id="total_order_price_view"><fmt:formatNumber
-										value="${sum}"></fmt:formatNumber></strong><strong
+										value="${bookVO.book_price * cartAmount}"></fmt:formatNumber></strong><strong
 									class="tail">원</strong><span id="total_order_price_ref_view"
 									class="tail displaynone"></span>
 							</div></td>
 						<td class="option "><div class="box">
-								<strong> ${sum < 30000 ? 2500 : 0 }</strong><strong
+								<strong> ${bookVO.book_price * cartAmount < 30000 ? 2500 : 0 }</strong><strong
 									class="tail">원</strong><span id="total_sale_price_ref_view"
 									class="tail displaynone"></span>
 							</div></td>
 						<td class="total"><div class="box">
 							
 								<strong id="total_order_sale_price_view"><fmt:formatNumber
-										value="${sum < 30000 ? sum+2500 : sum }"></fmt:formatNumber></strong><strong
+										value="${bookVO.book_price * cartAmount < 30000 ? bookVO.book_price * cartAmount + 2500 : bookVO.book_price * cartAmount }"></fmt:formatNumber></strong><strong
 									class="tail">원</strong><span
 									id="total_order_sale_price_ref_view" class="tail displaynone"></span>
 							</div></td>
@@ -438,21 +439,27 @@
 			<!-- 최종결제금액 -->
 			<div class="total" align="center">
 				<h4>
-					<strong id="current_pay_name">무통장 입금</strong> <span>최종 결제 금액</span>
+					<span id="current_pay_name" style="font-weight: bold;" >무통장입금</span> <span>최종 결제 금액</span>
 				</h4>
 				<h5 class="price">
-					<input type="hidden" form="actionForm"  name="order_price" id="order_price" value="${sum < 30000 ? sum+2500 : sum }">
-					<span></span><fmt:formatNumber value="${sum < 30000 ? sum+2500 : sum }"></fmt:formatNumber><strong>원</strong>
+					<input type="hidden" form="actionForm"  name="order_price" id="order_price" value="${bookVO.book_price * cartAmount < 30000 ? bookVO.book_price * cartAmount + 2500 : bookVO.book_price * cartAmount}">
+					<fmt:formatNumber
+										value="${bookVO.book_price * cartAmount < 30000 ? bookVO.book_price * cartAmount + 2500 : bookVO.book_price * cartAmount }"></fmt:formatNumber></strong><strong
+									class="tail">원</strong>
 				</h5>
 				<p class="paymentAgree" id="chk_purchase_agreement" style="">
-					<input id="chk_purchase_agreement0" name="chk_purchase_agreement"
+					<input id="chk_purchase_agreement0" name="chk_purchase_agreement" required="required"
 						fw-filter="" fw-label="구매진행 동의" fw-msg="" value="T"
-						type="checkbox" style=""><label
+						type="checkbox" style="" ><label
 						for="chk_purchase_agreement0">결제정보를 확인하였으며, 구매진행에 동의합니다.</label>
 				</p>
 				<input type="hidden" form="actionForm"  name="delivery_status" id="delivery_status" value="주문완료">
+				<!-- <input type="hidden" form="actionForm"  name="directOrder" id="directOrder" value="directOrder"> -->
+				<input type="hidden" form="actionForm"  name="book_id" id="book_id" value="${bookVO.book_id}">
+				<input type="hidden" form="actionForm"  name="book_price" id="book_price" value="${bookVO.book_price}">
 				<div class="d-grid gap-2 col-6 mx-auto">
  				 <button class="btn btn-primary" id="orderBtn" style="width:40%; background-color: pink ;border: 0; color: black" type="button">결제하기</button>
+ 	</div>
 </div>
 
 			</div>
@@ -467,7 +474,6 @@
 
 		<!-- 크로스 브라우징 지원 -->
 		
-</div>
 
 
 <script type="text/javascript">
@@ -485,7 +491,7 @@ $(document).ready(function() {
 	$('input:radio[id="paymethod_card"]').click(function(e) {
 		$('input:radio[id="paymethod_card"]').prop('checked', true);
 		$('input:radio[id="paymethod_cash"]').prop('checked', false);
-
+		$('#current_pay_name').text("카드");
 		$('#payInCash').css('display', 'none'); //display 'none'은= div가 보이지않는!
         $('#payByCard').css('display', 'block');
         document.getElementById("payment_method").value = "카드";
@@ -497,7 +503,7 @@ $(document).ready(function() {
 	$('input:radio[id="paymethod_cash"]').click(function(e) {
 		$('input:radio[id="paymethod_cash"]').prop('checked', true);
 		$('input:radio[id="paymethod_card"]').prop('checked', false);
-
+		$('#current_pay_name').text("무통장입금");
 		$ ('#payInCash').show();
 	    $ ('#payByCard').hide(); //클릭 시 첫 번째 요소 숨김
 	    document.getElementById("payment_method").value  = "무통장입금";
@@ -512,16 +518,67 @@ $(document).ready(function() {
 
 });
 
+//주문자와 정보가 같을 때
+
+function sameData(){
+	if( document.getElementById('same').checked == true){
+		document.getElementById("order_name").value = "${user.user_name }";
+		document.getElementById("order_hp1").value = "${user.user_hp1 }";
+		document.getElementById("order_hp2").value = "${user.user_hp2 }";
+		document.getElementById("order_hp3").value = "${user.user_hp3 }";
+		document.getElementById("sample4_postcode").value = "${user.user_zipcode }";
+		document.getElementById("sample4_roadAddress").value = "${user.user_roadAddress }";
+		document.getElementById("sample4_jibunAddress").value = "${user.user_jibunAddress }";
+		document.getElementById("sample4_detailAddress").value = "${user.user_namujiAddress }";
+		
+	}else if(document.getElementById('same').checked == false){
+		document.getElementById("order_name").value = "";
+		document.getElementById("order_hp1").value = "";
+		document.getElementById("order_hp2").value = "";
+		document.getElementById("order_hp3").value = "";
+		document.getElementById("sample4_postcode").value = "";
+		document.getElementById("sample4_roadAddress").value = "";
+		document.getElementById("sample4_jibunAddress").value = "";
+		document.getElementById("sample4_detailAddress").value = "";
+	}
+	
+}
+
+
 var actionForm = $("#actionForm");
 
 $('#orderBtn').click(function(e) {
+	if($('#order_name').val()==""){
+		$('#order_name').focus();
+	}else if($('#order_hp1').val()==""){
+		$('#order_hp1').focus();
+	}else if($('#order_hp2').val()==""){
+		$('#order_hp2').focus();
+	}else if($('#order_hp3').val()==""){
+		$('#order_hp3').focus();
+	}else if($('#sample4_postcode').val()==""){
+		$('#sample4_postcode').focus();
+	}else if($('#sample4_roadAddress').val()==""){
+		$('#sample4_roadAddress').focus();
+	}else if($('#sample4_jibunAddress').val()==""){
+		$('#sample4_jibunAddress').focus();
+	}else if($('#sample4_detailAddress').val()==""){
+		$('#sample4_detailAddress').focus();
+	}else if(($('#paymethod_cash').is(":checked") == true) && $('#deposit_name').val()==""){
+		$('#deposit_name').focus();
+	}else if(($('#paymethod_cash').is(":checked") == true) && $('#deposit_name').val()==""){
+		$('#deposit_name').focus();
+	}else if($('#chk_purchase_agreement0').is(":checked") == false){
+		alert("결제정보 확인 후 구매 진행 동의에 체크해주세요");
+	}
 	
-	actionForm.attr("action", "/order/orderCompleted").attr("method", "post");
-	actionForm.submit();
+	else{	
+		actionForm.submit();
+	}
+	//actionForm.attr("action", "/order/oneOrderCompleted").attr("method", "post");
 });
 
 
 
 </script>
-
 <%@ include file="../includes/footer.jsp"%>

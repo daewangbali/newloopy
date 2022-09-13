@@ -150,7 +150,7 @@
 				</tr>
 				
                <th scope="row">비밀번호</th>
-               <td><input id="user_pw" name="user_pw" onchange="check_pw()"
+               <td><input id="user_pw" name="user_pw" onchange="check_pw()" required="required"
                   fw-filter="isFill&amp;isMin[4]&amp;isMax[16]" fw-label="비밀번호"
                   fw-msg="" autocomplete="off" maxlength="16" 0="disabled" value=""
                   type="password"> (영문 대소문자/숫자 4자~16자)</td>
@@ -158,7 +158,7 @@
 	            <tr>
 	               <th scope="row">비밀번호 확인</th>
 	               <td><input id="user_pw_confirm" name="user_pw_confirm" onchange="check_pw()"
-	                  fw-filter="isFill&amp;isMatch[passwd]" fw-label="비밀번호 확인"
+	                  fw-filter="isFill&amp;isMatch[passwd]" fw-label="비밀번호 확인" required="required"
 	                  fw-msg="비밀번호가 일치하지 않습니다." autocomplete="off" maxlength="16"
 	                  0="disabled" value="" type="password">&nbsp;<span id="check"></span></td>
 	            </tr>
@@ -168,12 +168,12 @@
 					<th scope="row">주소</th>
 					<td >
 					<input type="text" name="user_zipcode"
-						id="sample4_postcode" placeholder="우편번호" style="vertical-align: 2px"> 
-						<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-						<input type="text" name="user_roadAddress" id="sample4_roadAddress" placeholder="도로명주소"> 
-						<input type="text" name="user_jibunAddress" id="sample4_jibunAddress" placeholder="지번주소"> 
+						id="sample4_postcode" placeholder="우편번호" style="vertical-align: 2px" value="${user.user_zipcode}"> 
+						<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" ><br>
+						<input type="text" name="user_roadAddress" id="sample4_roadAddress" placeholder="도로명주소" value="${user.user_roadAddress}"> 
+						<input type="text" name="user_jibunAddress" id="sample4_jibunAddress" placeholder="지번주소" value="${user.user_jibunAddress}"> 
 						<span id="guide" style="color: #999; display: none"></span> 
-						<input type="text" name="user_namujiAddress" id="sample4_detailAddress" placeholder="상세주소">
+						<input type="text" name="user_namujiAddress" id="sample4_detailAddress" placeholder="상세주소" value="${user.user_namujiAddress}">
 						</td>
 					</tr>
 						

@@ -5,7 +5,7 @@
 <mapper namespace="kr.co.mapper.NoticeMapper">
 
 	<select id="getList" resultType="kr.co.domain.NoticeVO">
-		select * from tbl_notice
+		select * from tbl_notice order by bno desc
 	</select>
 	
 	<insert id="insert">

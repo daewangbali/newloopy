@@ -34,11 +34,38 @@
 </head>
 
 <body class="sb-nav-fixed" style="padding: 10px 0 0">
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#registerBook').click(function(e) {
+		location = '/book/registerBookForm';
+		
+	});
+	
+	$('#logoutBtn').click(function(e) {
+		let result = confirm("로그아웃 하시겠습니까?");
+		if(result){			
+			$.ajaxSettings.traditional = true;
+			$.ajax({
+			    url: "/user/logout",
+			    type: "POST",
+			    success : function(){
+			    	alert("로그아웃 되었습니다.");
+			     	location = '/';
+			    },
+			    error : function(){
+			    	alert("에러!!!");	
+			    }
+			});
+			
+		}
+	});	
+});
+</script>
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="/"><i class="fas fa-book"></i>
-				Loopy Girls' Bookstore</a>
+				Loopy Bookstore</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarNav"
 				aria-controls="navbarNav" aria-expanded="false"
@@ -68,7 +95,7 @@
 										aria-current="page" href="/order/order_list">My Page</a></li>
 									<li class="nav-item"><a class="nav-link active"
 										aria-current="page" href="/cart/list">Cart</a></li>
-									<li class="nav-item"><a class="nav-link" href="/user/logout">LOG OUT</a>
+									<li class="nav-item"><button class="nav-link active" id="logoutBtn" style="color: gray;background: none;border: none;">LOG OUT</button>
 									</li>
 								</ul>
 							
@@ -102,7 +129,7 @@
 
 			<div class="col-lg-2" style="margin:">
 
-				<h3 class="my-4">Loopy Girls' Bookstore</h3>
+				<h3 class="my-4">Loopy Bookstore</h3>
 				<div class="list-group">
 					<a href="/book/list?book_kategorie=all" class="list-group-item"
 						style="color: hotpink;">도서 전체 목록</a> <a
@@ -119,8 +146,12 @@
 						href="/book/list?book_kategorie=어린이" class="list-group-item"
 						style="color: hotpink;">- 어린이</a> 
 						<a href="/notice/list" class="list-group-item" style="color: hotpink;">공지사항</a>
+				<c:choose>
+					<c:when test="${sessionScope.user_id == 'admin'}"> 		
+						<button type="button" style="margin-top: 10px;" class="btn btn-light" id="registerBook">책등록하기</button>
+					</c:when>
+				</c:choose>				
 				</div>
-
 			</div>
 
 			<div class="col-lg-10">

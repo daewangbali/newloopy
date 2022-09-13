@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script>
-alert("Logout Success!")
-location.href="/";
+<script type="text/javascript">
+let result = confirm("로그아웃 하시겠습니까?");
+if(result){		
+	alert("Logout Success!")
+	location.href="/";
+}
 </script>
 </head>
 <body>

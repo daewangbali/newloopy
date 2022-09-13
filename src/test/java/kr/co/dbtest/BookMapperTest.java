@@ -35,13 +35,13 @@ public class BookMapperTest {
 	@Test
 	public void insertTest() {
 		BookVO vo = new BookVO();
-		vo.setBook_title("다락원 일본어 독해");
-		vo.setBook_writer("코가 마키코");
-		vo.setBook_publisher("다락원");
-		vo.setBook_price(12000);
-		vo.setBook_kategorie("외국어");
-		vo.setBook_intro("다락원 일본어 시리즈의 독해 버전 개념으로 새롭게 출간되는 독해 일본어 시리즈. 게임이나 패션 등 우리 생활에 가까운 주제부터, 일본의 옛날이야기나 위인전, 동물보호와 같은 사회문제까지 폭넓게 다루고 있다.");
-		vo.setFileName("/resources/img/다락원독해.jpg");
+		vo.setBook_title("면접을 위한 CS 전공지식 노트");
+		vo.setBook_writer("주홍철");
+		vo.setBook_publisher("길벗");
+		vo.setBook_price(24000);
+		vo.setBook_kategorie("IT/컴퓨터");
+		vo.setBook_intro("디자인 패턴, 네트워크, 운영체제, 데이터베이스, 자료 구조 등 면접에 필요한 CS 전공지식을 모두 담고 있다. 200여 개의 그림과 코드로 이론을 자세히 설명하고, 실제 라이브러리에서 사용된 디자인 패턴 등으로 실무 활용법을 함께 다뤄 이론과 실무를 놓치지 않고 학습할 수 있도록 구성했다.");
+		vo.setFileName("/resources/img/면접을위한CS전공지식노트.jpg");
 		log.info(vo);
 		
 		bm.insert(vo);
@@ -76,9 +76,9 @@ public class BookMapperTest {
 	@Test
 	public void deleteTest() {
 		log.info("deleteTest......................");
-		log.info(bm.delete(61));
+		log.info(bm.delete(101));
 		
-		this.getListTest();
+		//this.getListTest();
 	}
 	
 

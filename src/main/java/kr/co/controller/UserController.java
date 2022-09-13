@@ -163,7 +163,10 @@ public class UserController {
 	
 	
 	
-	@GetMapping("/logout")
+	
+	
+	@ResponseBody
+	@PostMapping("/logout")
 	public void logout(HttpServletRequest request) {
 		log.info("logout_success................");
 		request.getSession().invalidate();

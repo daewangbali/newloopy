@@ -6,7 +6,10 @@
 <mapper namespace="kr.co.mapper.OrderMapper">
 
 	<select id="getList" resultType="kr.co.domain.OrderVO">
-		select * from tbl_order where user_number = #{user_number}
+		select * 
+		from tbl_order 
+		where user_number = #{user_number}
+        order by ORDER_CREDATE
 	</select>
 
 	<select id="getCartList" resultType="kr.co.domain.CartVO">

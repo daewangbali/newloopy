@@ -15,7 +15,7 @@
 			<div class="col-lg-9" style="text-align: center; width: 800px">
 				
 				<div class="card mt-4">
-					<img class="card-img-top" src="${book.fileName}" alt="">
+					<img style="height: 70%" class="card-img-top" src="${book.fileName}" alt="">
 					<div class="card-body">
 						<h4 class="card-title">
 							<a href="/book/get?book_id=${book.book_id }">${book.book_title }</a>
@@ -52,6 +52,7 @@
 							
 							<button type="button" id="goOrderBtn"  class="btn btn-warning">바로 구매하기</button>
 							<button type="button" id="addCartBtn" class="btn btn-success">장바구니 추가</button>
+							
 						</div>
 						
 							<input type="hidden" id="book_id" name="book_id" value="${book.book_id }">
@@ -95,33 +96,41 @@
 $(document).ready(function() {
 	var actionForm = $("#actionForm");
 	
+	var book_id = [[${book.book_id }]];
+	
 	$('#goOrderBtn').click(function(e) {
+		if($('#user_number').val()==""){
+			alert("로그인 후 이용가능합니다.");
+		}
+		else{
+			var amount = $('#amount').val();
+			
+			$.ajaxSettings.traditional = true;
+			$.ajax({
+			    url: "/order/oneBookOrder",
+			    type: "POST",
+			    data: { "book_id" : ${book.book_id } , "amount" : amount },
+			    success : function(){
+			     	location = '/order/oneBookOrder';
+			    },
+			    error : function(){
+			    	alert("!!!!!!");	
+			    }
+			  });
 		
-		var amount = $('#amount').val();
-		
-		$.ajaxSettings.traditional = true;
-		$.ajax({
-		    url: "/order/oneBookOrder",
-		    type: "POST",
-		    data: { "book_id" : ${book.book_id } , "amount" : amount },
-		    success : function(){
-		     	location = '/order/oneBookOrder';
-		    },
-		    error : function(){
-		    	alert("!!!!!!");	
-		    }
-		  });
-		
-		
+		}
 		
 	});
 	
 	
 	$('#addCartBtn').click(function(e) {
-		actionForm.attr("action", "/cart/addCart").attr("method", "post");
-		actionForm.submit();
-		
-		
+		if($('#user_number').val()==""){
+			alert("로그인 후 이용가능합니다.");
+		}
+		else{
+			actionForm.attr("action", "/cart/addCart").attr("method", "post");
+			actionForm.submit();
+		}
 	});
 	
 });

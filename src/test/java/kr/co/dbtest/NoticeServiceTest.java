@@ -48,9 +48,9 @@ public class NoticeServiceTest {
 		log.info("registerSelectKeyTest......................");
 		
 		NoticeVO vo = new NoticeVO();
-		vo.setTitle("새글제목 registerSelectKeyTest 10");
-		vo.setContent("새글제목 registerSelectKeyTest 10");
-		vo.setWriter("작성자 registerSelectKeyTest 10");
+		vo.setTitle("새글 registerSelectKeyTest 20");
+		vo.setContent("새글 registerSelectKeyTest 20");
+		vo.setWriter("작성자 registerSelectKeyTest 20");
 		log.info(vo);
 		
 		long bno = ns.registerSelectKey(vo);

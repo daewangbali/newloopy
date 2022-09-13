@@ -4,31 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ include file="../includes/header.jsp"%>
- <!--
-<script>
-  function numcheck(val,jaego){
-                        if (val>jaego-1){
-                                alert("재고량이 없습니다")
-                                document.frm.ea.value=jaego}
-                        else if (val<2){
-                                document.frm.ea.value=1        }
-        }
-function up(val,jaego){
-                        if (val>jaego-1){
-                                alert("재고량이 없습니다")
-                                document.frm.ea.value=jaego}
-                        else{
-                                document.frm.ea.value=(val/1)+1}
-}
-                                                         
-function down(val){
-                        if (val<2){
-                                document.frm.ea.value=1}
-                        else{
-                                document.frm.ea.value=val-1}
-}
-</script>
-  -->
  
 <div class="container-fluid">
 <br>
@@ -257,33 +232,26 @@ function modifyAmount2(id,amount){
 
 // 선택상품 주문
 function checkBtn(){
-	
 	var indexArray = [];
-	
 	for(var i=0;i<${listSize};i++){
 		if(($('#checkBox${status.index}'+i)).prop("checked")){
 			indexArray[i] = i;
-			console.log('yes');
-			
 		}else{
 			continue;
 		}
 	}
-		
-	console.log(indexArray);
-	
-		$.ajaxSettings.traditional = true;
-		$.ajax({
-		    url: "/order/selectlist",
-		    type: "POST",
-		    data: { "indexArray" : indexArray },
-		    success : function(){
-		     	location = '/order/selectlist';
-		    },
-		    error : function(){
-		    	alert("상품을 선택해주세요!");	
-		    }
-		  });
+	$.ajaxSettings.traditional = true;
+	$.ajax({
+		url: "/order/selectlist",
+		type: "POST",
+		data: { "indexArray" : indexArray },
+		success : function(){
+		    location = '/order/selectlist';
+		},
+		error : function(){
+		    alert("상품을 선택해주세요!");	
+		}
+	});
 }
 
 // 전체상품 주문
@@ -333,9 +301,7 @@ function oneBookOrder(id,amount){
 }	
 // 선택상품 삭제하기
 function selectRemoveBtn(){
-	
 var indexArray = [];
-	
 	for(var i=0;i<${listSize};i++){
 		if(($('#checkBox${status.index}'+i)).prop("checked")){
 			indexArray[i] = i;
@@ -345,9 +311,6 @@ var indexArray = [];
 			continue;
 		}
 	}
-		
-	console.log(indexArray);
-	
 		$.ajaxSettings.traditional = true;
 		$.ajax({
 		    url: "/cart/selectRemove",

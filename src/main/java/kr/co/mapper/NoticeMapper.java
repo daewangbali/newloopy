@@ -17,5 +17,6 @@ public interface NoticeMapper {
 	public int update(NoticeVO notice);
 	
 	public int delete(Long bno);
+	
 
 }

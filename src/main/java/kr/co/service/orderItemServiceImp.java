@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.domain.BookVO;
 import kr.co.domain.OrderItemVO;
 import kr.co.mapper.OrderItemMapper;
 
@@ -23,5 +24,17 @@ public class OrderItemServiceImp implements OrderItemService {
 	public void regist(OrderItemVO orderItem) {
 		orderItemMapper.insert(orderItem);
 	}
+
+	@Override
+	public List<OrderItemVO> getOrderItemList(int user_number) {
+		return orderItemMapper.getOrderItemList(user_number);
+	}
+
+	@Override
+	public List<BookVO> getOrderItemBookList(int user_number) {
+		return orderItemMapper.getOrderItemBookList(user_number);
+	}
+
+	
 
 }
